@@ -1,4 +1,4 @@
-# Brickea' learning records
+# Brickea' learning records <!-- omit in toc -->
 
 ![](https://img.shields.io/badge/Author-Brickea-blue)
 ![](https://img.shields.io/github/license/Brickea/Brickea-learning-records)
@@ -6,6 +6,17 @@
 ![](https://img.shields.io/github/commit-activity/w/Brickea/Brickea-learning-records?color=orange)
 
 三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩
+
+---
+
+目录
+- [课程](#课程)
+  - [数据结构与算法快速入门](#数据结构与算法快速入门)
+  - [CS50-s-Web-Programming](#cs50-s-web-programming)
+  - [Algorithms Robert Sedgewick and Kevin Wayne](#algorithms-robert-sedgewick-and-kevin-wayne)
+- [Leetcode 练习](#leetcode-练习)
+
+---
 
 ## 课程
 
