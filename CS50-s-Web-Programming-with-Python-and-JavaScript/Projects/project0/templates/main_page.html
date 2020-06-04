@@ -1,0 +1,85 @@
+{% extends 'layout/layout_main_page.html' %}
+
+{% block main_body_title %}
+
+Brickea
+
+{% endblock main_body_title %}
+
+{% block main_body_sub_title %}
+
+Now u find me, dude
+
+{% endblock main_body_sub_title %}
+
+{% block person_photo %}
+
+<img src="{{ url_for('static', filename='img/person_photo.png') }}">
+
+{% endblock person_photo %}
+
+{% block main_body_content %}
+
+That's me, Zixiao Wang. You can just call me Brickea. I'm currently pursuing a master's degree at Northeastern
+University.
+
+So in this website, you will find there are some travel pictures from my journal. Besides, I also share some of my study
+or workout plan.
+
+Btw, if u don't mind, u can also check my cover music. 😊
+
+{% endblock main_body_content %}
+
+{% block photo_boxes %}
+
+<div class="photo_box">
+    <img src="{{ url_for('static', filename='img/travel.png') }}">
+    <div class="photo_box_detail">
+        <div class="box_title">
+            Travel
+        </div>
+        <div class="box_sub_title">
+            Enjoy our lifes
+        </div>
+        <div class="description">
+            My life in NEU and the story with my friends
+        </div>
+        <a href="{{ url_for('travel_nav') }} ">Click!</a>
+    </div>
+</div>
+
+<div class="photo_box">
+    <img src="{{ url_for('static', filename='img/plan.png') }}">
+    <div class="photo_box_detail">
+        <div class="box_title">
+            Plans
+        </div>
+        <div class="box_sub_title">
+            Checkmate!
+        </div>
+        <div class="description">
+            content
+        </div>
+        <a href="{{ url_for('plan_nav') }} ">Click!</a>
+    </div>
+</div>
+
+<div class="photo_box">
+    <img src="{{ url_for('static', filename='img/guitar.png') }}">
+    <div class="photo_box_detail">
+        <div class="box_title">
+            Music
+        </div>
+        <div class="box_sub_title">
+            Save the world!
+        </div>
+        <div class="description">
+            content
+        </div>
+        <a href="{{ url_for('music_nav') }} ">Click!</a>
+    </div>
+</div>
+
+
+
+{% endblock photo_boxes %}

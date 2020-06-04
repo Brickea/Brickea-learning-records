@@ -1,0 +1,86 @@
+{% extends 'layout/layout_content_page.html' %}
+
+{% block page_title %}
+
+Music
+
+{% endblock page_title %}
+
+{% block story %}
+
+<div class="content">
+    <div class="title">
+        Music
+    </div>
+    <div class="img_content">
+        <img style="width: 60%; " src="{{ url_for('static', filename='img/music/guitar.jpeg') }}" alt="">
+    </div>
+
+    <div class="sub_title">
+        Here are some of my covered music. Enjoy!
+    </div>
+</div>
+
+<div class="story_content">
+    <ul class="list-unstyled">
+        <li class="media my-4">
+            <img src="{{ url_for('static', filename='img/music/one_call_away.jpg') }}" class="mr-3" alt="...">
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">One call away: Cover Charlie Puth</h3>
+                <audio controls height="100" width="100">
+                    <source src="{{ url_for('static', filename='media/music/Bricke - One call away：Cover 断眉哥.mp3') }}"
+                        type="audio/mpeg">
+                </audio>
+                <br>
+                This picture was taken when I was an undergraduate student. After three years, we are still together.
+                <br>
+                永远年轻，永远热泪盈眶
+                <br>
+                I always be here for you, Sandy
+            </div>
+
+        </li>
+        <li class="media my-4">
+            <img src="{{ url_for('static', filename='img/music/lulu.jpg') }}" class="mr-3" alt="...">
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">嘿，裤衩: Cover 宋冬野</h3>
+                <audio controls height="100" width="100">
+                    <source src="{{ url_for('static', filename='media/music/Bricke - 嗨，裤衩儿：Cover宋冬野.mp3') }}"
+                        type="audio/mpeg">
+                </audio>
+                <br>
+                Say hello to Lulu. It is really my luck to adopt you.
+            </div>
+        </li>
+        <li class="media my-4">
+            <img src="{{ url_for('static', filename='img/music/fxxking_life.jpg') }}" class="mr-3" alt="...">
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">狗日的青春: Cover 贰佰</h3>
+                <audio controls height="100" width="100">
+                    <source src="{{ url_for('static', filename='media/music/Bricke - 狗日的青春：Cover贰佰.mp3') }}"
+                        type="audio/mpeg">
+
+                </audio>
+                <br>
+                Wherever you go, we are brothers
+            </div>
+        </li>
+        <li class="media my-4">
+            <img src="{{ url_for('static', filename='img/music/to_myself.jpg') }}" class="mr-3" alt="...">
+            <div class="media-body">
+                <h3 class="mt-0 mb-1">致自己: Cover 齐一</h3>
+                <audio controls height="100" width="100">
+                    <source src="{{ url_for('static', filename='media/music/Bricke - 这个年纪_Cover：齐一.mp3') }}"
+                        type="audio/mpeg">
+
+                </audio>
+                <br>
+                Wake up & Grow up
+            </div>
+        </li>
+    </ul>
+</div>
+
+
+
+{% endblock story %}

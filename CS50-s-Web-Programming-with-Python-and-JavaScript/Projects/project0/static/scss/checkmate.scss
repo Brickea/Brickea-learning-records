@@ -1,0 +1,268 @@
+a {
+    color: #41403e;
+    cursor: pointer;
+}
+
+a:hover {
+    color: #41403e;
+    text-decoration: none;
+}
+
+body {
+    background-image: url("../img/background.png");
+    font-size: large;
+}
+
+div.main_body {
+    background-color: rgba(255, 255, 255, 0.767);
+    color: #41403e;
+    width: 60%;
+    box-shadow: -1px 5px 35px -9px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    font-family: serif;
+
+    .title {
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 6rem;
+        font-family: "Gill Sans", sans-serif;
+    }
+
+    .sub_title {
+        margin-bottom: 1rem;
+        text-align: center;
+        font-size: 1.5rem;
+        font-family: sans-serif;
+    }
+
+    .content {
+        margin-top: 2rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+
+        .img_content {
+            width: 100%;
+            text-align: center;
+        }
+
+        img{
+            width: 80%;
+        }
+    }
+
+    .story_content {
+        width: 85%;
+        margin: auto;
+
+        p {
+            margin-top: .75rem;
+            font-size: 1.25rem;
+            font-family: sans-serif;
+        }
+    }
+
+    #person_photo {
+        margin: auto;
+        text-align: center;
+
+        img {
+            box-shadow: 10px 10px 20px rgb(170, 170, 170);
+            width: 70%;
+        }
+    }
+
+    #copyright {
+        font-size: large;
+        margin: auto;
+        text-align: center;
+        padding: 10px;
+        clear: both;
+    }
+}
+
+div.photo_box_row {
+    margin: auto;
+    width: 90%;
+    text-align: center;
+}
+
+$hover_duration: 0.2s;
+
+div.photo_box {
+    background-color: inherit;
+    float: left;
+    width: 29%;
+    margin: 2%;
+    border: 1px solid rgb(233, 233, 233);
+    position: relative;
+
+    // Box hover animation
+    transition-property: top, box-shadow;
+    transition-duration: $hover_duration;
+    box-shadow: 20px 25px 20px -15px rgb(206, 206, 206);
+    top: 0px;
+
+    img {
+        width: 100%;
+    }
+
+    div.photo_box_detail {
+        width: 90%;
+        margin: auto;
+        padding: 0.75rem;
+
+        div.box_title {
+            font-family: "Gill Sans", sans-serif;
+            text-align: left;
+            font-size: 2rem;
+        }
+
+        div.box_sub_title {
+            font-size: 1.5rem;
+            text-align: left;
+            color: rgb(134, 134, 255);
+        }
+
+        div.description {
+            font-size: 1rem;
+            text-align: left;
+        }
+    }
+
+    a {
+        font-family: Georgia, "Times New Roman", Times, serif;
+        float: left;
+
+        border-bottom-left-radius: 15px 255px;
+        border-bottom-right-radius: 225px 15px;
+        border-top-left-radius: 255px 15px;
+        border-top-right-radius: 15px 225px;
+
+        margin-bottom: 1rem;
+
+        // Style reference: paperCSS from Rhyne ->
+        transition: all 235ms ease 0s;
+        box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, 0.2);
+        transition: all 235ms ease-in-out 0s;
+        align-self: center;
+        background: 0 0;
+        border: 2px solid #41403e;
+        color: #41403e;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 1rem;
+        outline: 0;
+        padding: 0.75rem;
+        // Style reference: paperCSS from Rhyne ->
+
+        // Box hover animation
+        position: relative;
+        transition-property: top, box-shadow;
+        transition-duration: $hover_duration;
+        box-shadow: 15px 20px 20px -10px rgb(206, 206, 206);
+        top: 0px;
+    }
+
+    a:hover {
+        transition-property: top, box-shadow;
+        transition-duration: $hover_duration;
+        position: relative;
+        top: 5px;
+        box-shadow: 5px 5px 15px -5px rgb(92, 92, 92);
+
+        text-decoration: none;
+    }
+}
+
+// Box hover animation
+div.photo_box:hover {
+    transition-property: top, box-shadow;
+    transition-duration: $hover_duration;
+    position: relative;
+    top: 5px;
+    box-shadow: 5px 5px 15px -5px rgb(92, 92, 92);
+}
+
+.top_nav {
+    font-family: "Gill Sans", sans-serif;
+    font-size: 2rem;
+
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-top: 0.75rem;
+    width: 90%;
+
+    // Style reference: paperCSS from Rhyne ->
+    border: 2px solid #41403e;
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    // Style reference: paperCSS from Rhyne ->
+
+    .nav_brand {
+        float: left;
+        margin-left: 0.75rem;
+    }
+    .collapsible {
+        float: right;
+        font-size: 2rem;
+        ul {
+            list-style: none;
+            display: block;
+            li {
+                margin-right: 1rem;
+                display: inline;
+                a:hover {
+                    border-bottom: 5px solid #b1ada4;
+                    border-bottom-left-radius: 15px 3px;
+                    border-bottom-right-radius: 15px 5px;
+                    padding-bottom: 0.1rem;
+                }
+                a.active {
+                    border-bottom: 5px solid #41403e;
+                    border-bottom-left-radius: 15px 3px;
+                    border-bottom-right-radius: 15px 5px;
+                    padding-bottom: 0.1rem;
+                }
+            }
+        }
+    }
+}
+
+img.story_img {
+    // Style reference: paperCSS from Rhyne ->
+    border-bottom-left-radius: 15px 255px;
+    border-bottom-right-radius: 225px 15px;
+    border-top-left-radius: 255px 15px;
+    border-top-right-radius: 15px 225px;
+    border: 2px solid #41403e;
+    display: block;
+    height: auto;
+    max-width: 100%;
+    // Style reference: paperCSS from Rhyne ->
+}
+
+.form_body{
+    margin: auto;
+    padding: 1rem;
+    width: 100%;
+    background-color: rgba(240, 240, 240, 0.767);
+}
+
+.media img.mr-3{
+    border-radius: 40% 20% / 20% 40%;;
+    width: 25%;
+}
+
+.media .media-body{
+    margin: auto;
+}
+
+
+@media screen and (max-width: 800px) {
+    div.main_body{
+        width: 90%;
+    }
+}

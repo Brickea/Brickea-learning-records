@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Display something when using pinrt</title>
+        <style>
+            @media print{
+                .screen-only{
+                    display: none;
+                }
+            }
+        </style>
+        <body>
+            <p>This is text</p>
+            <p>This is text again</p>
+            <p class="screen-only">This text will not display when you are using print</p>
+        </body>
+    </head>
+</html>

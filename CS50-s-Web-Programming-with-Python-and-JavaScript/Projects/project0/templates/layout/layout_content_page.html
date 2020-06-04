@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- Make the webpage be scalable for any type of device -->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- Costomed CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/checkmate.css') }}">
+    <title>
+        {% block page_title %}
+
+        {% endblock page_title %}
+    </title>
+</head>
+
+<body>
+    <div class="main_body">
+        <div class="nav">
+            <nav class="top_nav">
+                <div class="nav_brand">
+                    <a href="{{ url_for('index') }}">Brickea</a>
+                </div>
+                <div class="collapsible">
+                    <ul>
+                        {% if flag=='travel_nav' %}
+                        <li><a class="active" href="{{ url_for('travel_nav') }}">Travel</a> </li>
+                        <li><a href="{{ url_for('plan_nav') }}">Plan</a></li>
+                        <li><a href="{{ url_for('music_nav') }}">Music</a></li>
+                        {% endif %}
+
+                        {% if flag=='plan_nav' %}
+                        <li><a href="{{ url_for('travel_nav') }}">Travel</a> </li>
+                        <li><a class="active" href="{{ url_for('plan_nav') }}">Plan</a></li>
+                        <li><a href="{{ url_for('music_nav') }}">Music</a></li>
+                        {% endif %}
+
+                        {% if flag=='music_nav' %}
+                        <li><a href="{{ url_for('travel_nav') }}">Travel</a> </li>
+                        <li><a href="{{ url_for('plan_nav') }}">Plan</a></li>
+                        <li><a class="active" href="{{ url_for('music_nav') }}">Music</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="content_detail">
+            {% block story %}
+            
+            {% endblock story %}
+        </div>
+        <div id="copyright">
+            ~~~
+            <br>
+            Made with 🐈 and ☕ by Brickea
+        </div>
+    </div>
+</body>
+
+</html>

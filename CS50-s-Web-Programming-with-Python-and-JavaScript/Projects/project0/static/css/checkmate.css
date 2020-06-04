@@ -1,0 +1,281 @@
+a {
+  color: #41403e;
+  cursor: pointer;
+}
+
+a:hover {
+  color: #41403e;
+  text-decoration: none;
+}
+
+body {
+  background-image: url("../img/background.png");
+  font-size: large;
+}
+
+div.main_body {
+  background-color: rgba(255, 255, 255, 0.767);
+  color: #41403e;
+  width: 60%;
+  -webkit-box-shadow: -1px 5px 35px -9px rgba(0, 0, 0, 0.2);
+          box-shadow: -1px 5px 35px -9px rgba(0, 0, 0, 0.2);
+  margin: auto;
+  font-family: serif;
+}
+
+div.main_body .title {
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 6rem;
+  font-family: "Gill Sans", sans-serif;
+}
+
+div.main_body .sub_title {
+  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-family: sans-serif;
+}
+
+div.main_body .content {
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
+div.main_body .content .img_content {
+  width: 100%;
+  text-align: center;
+}
+
+div.main_body .content img {
+  width: 80%;
+}
+
+div.main_body .story_content {
+  width: 85%;
+  margin: auto;
+}
+
+div.main_body .story_content p {
+  margin-top: .75rem;
+  font-size: 1.25rem;
+  font-family: sans-serif;
+}
+
+div.main_body #person_photo {
+  margin: auto;
+  text-align: center;
+}
+
+div.main_body #person_photo img {
+  -webkit-box-shadow: 10px 10px 20px #aaaaaa;
+          box-shadow: 10px 10px 20px #aaaaaa;
+  width: 70%;
+}
+
+div.main_body #copyright {
+  font-size: large;
+  margin: auto;
+  text-align: center;
+  padding: 10px;
+  clear: both;
+}
+
+div.photo_box_row {
+  margin: auto;
+  width: 90%;
+  text-align: center;
+}
+
+div.photo_box {
+  background-color: inherit;
+  float: left;
+  width: 29%;
+  margin: 2%;
+  border: 1px solid #e9e9e9;
+  position: relative;
+  -webkit-transition-property: top, -webkit-box-shadow;
+  transition-property: top, -webkit-box-shadow;
+  transition-property: top, box-shadow;
+  transition-property: top, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+  -webkit-box-shadow: 20px 25px 20px -15px #cecece;
+          box-shadow: 20px 25px 20px -15px #cecece;
+  top: 0px;
+}
+
+div.photo_box img {
+  width: 100%;
+}
+
+div.photo_box div.photo_box_detail {
+  width: 90%;
+  margin: auto;
+  padding: 0.75rem;
+}
+
+div.photo_box div.photo_box_detail div.box_title {
+  font-family: "Gill Sans", sans-serif;
+  text-align: left;
+  font-size: 2rem;
+}
+
+div.photo_box div.photo_box_detail div.box_sub_title {
+  font-size: 1.5rem;
+  text-align: left;
+  color: #8686ff;
+}
+
+div.photo_box div.photo_box_detail div.description {
+  font-size: 1rem;
+  text-align: left;
+}
+
+div.photo_box a {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  float: left;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  margin-bottom: 1rem;
+  -webkit-transition: all 235ms ease 0s;
+  transition: all 235ms ease 0s;
+  -webkit-box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, 0.2);
+          box-shadow: 15px 28px 25px -18px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 235ms ease-in-out 0s;
+  transition: all 235ms ease-in-out 0s;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  background: 0 0;
+  border: 2px solid #41403e;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  outline: 0;
+  padding: 0.75rem;
+  position: relative;
+  -webkit-transition-property: top, -webkit-box-shadow;
+  transition-property: top, -webkit-box-shadow;
+  transition-property: top, box-shadow;
+  transition-property: top, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+  -webkit-box-shadow: 15px 20px 20px -10px #cecece;
+          box-shadow: 15px 20px 20px -10px #cecece;
+  top: 0px;
+}
+
+div.photo_box a:hover {
+  -webkit-transition-property: top, -webkit-box-shadow;
+  transition-property: top, -webkit-box-shadow;
+  transition-property: top, box-shadow;
+  transition-property: top, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+  position: relative;
+  top: 5px;
+  -webkit-box-shadow: 5px 5px 15px -5px #5c5c5c;
+          box-shadow: 5px 5px 15px -5px #5c5c5c;
+  text-decoration: none;
+}
+
+div.photo_box:hover {
+  -webkit-transition-property: top, -webkit-box-shadow;
+  transition-property: top, -webkit-box-shadow;
+  transition-property: top, box-shadow;
+  transition-property: top, box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+  position: relative;
+  top: 5px;
+  -webkit-box-shadow: 5px 5px 15px -5px #5c5c5c;
+          box-shadow: 5px 5px 15px -5px #5c5c5c;
+}
+
+.top_nav {
+  font-family: "Gill Sans", sans-serif;
+  font-size: 2rem;
+  margin: auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 0.75rem;
+  width: 90%;
+  border: 2px solid #41403e;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+}
+
+.top_nav .nav_brand {
+  float: left;
+  margin-left: 0.75rem;
+}
+
+.top_nav .collapsible {
+  float: right;
+  font-size: 2rem;
+}
+
+.top_nav .collapsible ul {
+  list-style: none;
+  display: block;
+}
+
+.top_nav .collapsible ul li {
+  margin-right: 1rem;
+  display: inline;
+}
+
+.top_nav .collapsible ul li a:hover {
+  border-bottom: 5px solid #b1ada4;
+  border-bottom-left-radius: 15px 3px;
+  border-bottom-right-radius: 15px 5px;
+  padding-bottom: 0.1rem;
+}
+
+.top_nav .collapsible ul li a.active {
+  border-bottom: 5px solid #41403e;
+  border-bottom-left-radius: 15px 3px;
+  border-bottom-right-radius: 15px 5px;
+  padding-bottom: 0.1rem;
+}
+
+img.story_img {
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  border: 2px solid #41403e;
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
+.form_body {
+  margin: auto;
+  padding: 1rem;
+  width: 100%;
+  background-color: rgba(240, 240, 240, 0.767);
+}
+
+.media img.mr-3 {
+  border-radius: 40% 20% / 20% 40%;
+  width: 25%;
+}
+
+.media .media-body {
+  margin: auto;
+}
+
+@media screen and (max-width: 800px) {
+  div.main_body {
+    width: 90%;
+  }
+}
+/*# sourceMappingURL=checkmate.css.map */
