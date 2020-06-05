@@ -26,6 +26,9 @@
 - [Improve further - path compression](#improve-further---path-compression)
   - [Quick-union with path compression implementation](#quick-union-with-path-compression-implementation)
 - [Summary](#summary)
+- [Union-find application - percolation 渗滤](#union-find-application---percolation-渗滤)
+  - [Likelihood of percolation](#likelihood-of-percolation)
+  - [Monte Carlo simulation](#monte-carlo-simulation)
 
 ## Overview
 
@@ -457,3 +460,31 @@ quick union|MN|
 weighted QU|M+N$\lg N$|
 path compression QU|M+N$\lg N$|
 weighted + path compression QU|M+N$\lg^* N$(almost close to linear)|
+
+## Union-find application - percolation 渗滤
+
+Percolation is a model for many physical systems.
+* $N$-by-$N$ grid of sites
+* Each site is open with probability $p$ (or blocked with probility $1-p$)
+* System percolates if top and bottom are connected by open sites.
+
+![](Union-find/res/Percolation.png)
+
+### Likelihood of percolation
+
+When $N$ is large, theory guarantees a sharp threshold $p^*$
+
+* $p>p^*$: almost certainly percolate
+* $p<p^*$: almost certainly does not percolate
+
+![](Union-find/res/Percolation%20threshold.png)
+
+### Monte Carlo simulation
+
+How to estimate the $p^*$?
+* Initialize $N$-by-$N$ whole grid to be blocked
+* Declare random sites open until top connected to bottom
+* Vacancy percentage estimates $p^*$
+* Repeate this process billion times
+
+The $p^*$ is about 0.592746
