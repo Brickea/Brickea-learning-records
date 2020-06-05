@@ -52,7 +52,7 @@
   * placeholder
   * route
 * [```Project 0```](CS50-s-Web-Programming-with-Python-and-JavaScript/Projects/project0/README.md)
-* SQL
+* [SQL and SQLAlchemy](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%204%20-%20SQL/SQL.md)
 
 ### Algorithms Robert Sedgewick and Kevin Wayne
 
