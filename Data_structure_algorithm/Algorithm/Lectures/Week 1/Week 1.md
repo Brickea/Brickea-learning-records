@@ -25,7 +25,7 @@
   - [Weighted quick-union is quick](#weighted-quick-union-is-quick)
 - [Improve further - path compression](#improve-further---path-compression)
   - [Quick-union with path compression implementation](#quick-union-with-path-compression-implementation)
-- [Summary](#summary)
+- [Summary - Union-find](#summary---union-find)
 - [Union-find application - percolation 渗滤](#union-find-application---percolation-渗滤)
   - [Likelihood of percolation](#likelihood-of-percolation)
   - [Monte Carlo simulation](#monte-carlo-simulation)
@@ -451,7 +451,7 @@ public class WeightedQU{
 }
 ```
 
-## Summary
+## Summary - Union-find
 
 |algorithm|worst-case time|
 |--|--|
