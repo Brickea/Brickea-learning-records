@@ -58,6 +58,8 @@
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
+* [Week 1 - Union-find](Data_structure_algorithm/Algorithm/Lectures/Week%201/Week%201.md)
+
 
 ## Leetcode 练习
 
