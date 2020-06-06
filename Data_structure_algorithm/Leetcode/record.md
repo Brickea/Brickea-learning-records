@@ -26,3 +26,29 @@
 * 92 Reverse Linked List II
   * iteratively
     * 28 ms	82% faster 14 MB 7.4% memory less python3
+
+待整理
+
+---
+
+## Tree
+
+* 144 Binary Tree Preorder Traversal 进阶：迭代方法
+  * recursively
+    * 28 ms 73% faster	13.7 MB	91% memory less python3
+* 94 Binary Tree Inorder Traversal
+  * recursively
+    * 32 ms	45% faster 14 MB 5% memory less	python3
+* 145 Binary Tree Postorder Traversal
+  * recursively
+    * 32 ms	44% faster 13.8 MB	57% memory less python3
+* 102 Binary Tree Level Order Traversal
+  * 32 ms 80% faster	14 MB	72% memory less python3
+* 107 Binary Tree Level Order Traversal II
+  * 28 ms	57% faster 14.1 MB	87% memory less python3
+* 103 Binary Tree Zigzag Level Order Traversal
+  * 28 ms	88% faster 14.1 MB 13% memory less	python3
+
+待整理
+
+---

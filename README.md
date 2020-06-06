@@ -64,8 +64,8 @@
 
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-33-brightgreen)
-![](https://img.shields.io/badge/Medium-9-orange)
-![](https://img.shields.io/badge/Hard-0-red)
+![](https://img.shields.io/badge/Easy-34-brightgreen)
+![](https://img.shields.io/badge/Medium-13-orange)
+![](https://img.shields.io/badge/Hard-1-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
