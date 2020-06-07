@@ -129,6 +129,8 @@ public class Percolation {
         int convertCol = col - 1;
         // check if row and col are valid
         if ((convertRow < 0 || convertRow > this.N) || (convertCol < 0 || convertCol > this.N)) {
+            StdOut.println(row);
+            StdOut.println(col);
             throw new IllegalArgumentException();
         }
         if (!this.grid[convertRow][convertCol]) {
@@ -178,18 +180,18 @@ public class Percolation {
 
     }
 
-    public void display() {
-        for (int i = 0; i < this.N; i++) {
-            for (int j = 0; j < this.N; j++) {
-                if (!this.grid[i][j]) {
-                    StdOut.print(" - ");
-                } else {
-                    StdOut.print(" | ");
-                }
-            }
-            StdOut.println();
-        }
-    }
+//    public void display() {
+//        for (int i = 0; i < this.N; i++) {
+//            for (int j = 0; j < this.N; j++) {
+//                if (!this.grid[i][j]) {
+//                    StdOut.print(" - ");
+//                } else {
+//                    StdOut.print(" | ");
+//                }
+//            }
+//            StdOut.println();
+//        }
+//    }
 
     // test client (optional)
     public static void main(String[] args) {
@@ -199,7 +201,7 @@ public class Percolation {
         StdOut.println(test.numberOfOpenSites());
 
         StdOut.println("Open (1,1) and (2,1)");
-        test.open(1, 1);
+        test.open(0, 2);
         test.open(2, 1);
         StdOut.println("The open size of current grid");
         StdOut.println(test.numberOfOpenSites());
@@ -207,6 +209,6 @@ public class Percolation {
         StdOut.println("If current grid percolation");
         StdOut.println(test.percolates());
 
-        test.display();
+//        test.display();
     }
 }
