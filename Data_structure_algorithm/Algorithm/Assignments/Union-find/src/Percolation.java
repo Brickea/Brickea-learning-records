@@ -1,3 +1,5 @@
+import edu.princeton.cs.algs4.StdOut;
+
 public class Percolation {
     private boolean[][] grid;
     private int N;
@@ -20,8 +22,8 @@ public class Percolation {
         this.sz = new int[n * n + 2];
         this.id[n * n] = n * n;
         this.id[n * n + 1] = n * n + 1;
-        this.sz[n * n] = 1;
-        this.sz[n * n + 1] = 1;
+        this.sz[n * n] = 1; // top of the grid
+        this.sz[n * n + 1] = 1; // bottom of the grid
 
         for (int i = 0; i < this.N; i++) {
             for (int j = 0; j < this.N; j++) {
@@ -67,79 +69,99 @@ public class Percolation {
             this.id[rootP] = rootQ;
             this.sz[rootP] += this.sz[rootQ];
         }
-
-
     }
 
     private void connectedOpenSurroundings(int row, int col) {
         // connect surround of input site
-        int convert_row = row - 1;
-        int convert_col = col - 1;
+        int convertRow = row - 1;
+        int convertCol = col - 1;
         // check if row and col are valid
-        if ((convert_row < 0 || convert_row > this.N) || (convert_col < 0 || convert_col > this.N)) {
+        if ((convertRow < 0 || convertRow > this.N) || (convertCol < 0 || convertCol > this.N)) {
             throw new IllegalArgumentException();
         }
-        int inputSiteId = convert_row * this.N + convert_col;
+        int inputSiteId = convertRow * this.N + convertCol;
 
-
-        // <-- TODO -->>
-
-        int topRow = convert_row - 1;
-        int topCol = convert_col;
-        int topSiteId = topRow * this.N + topCol;
-
-        if (topRow > 0 && this.isOpen(row - 1, col)) {
-            // top is a normal site
-            // this.union();
+        // connect input site surroundings
+        // connect top
+        int topConvertRow = convertRow - 1;
+        int topConvertCol = convertCol;
+        int topSiteId = topConvertRow * this.N + topConvertCol;
+        if (topConvertRow > 0 && this.isOpen(row - 1, col)) {
+            // top site of input site is a normal site
+            this.union(inputSiteId, topSiteId);
+        } else if (topConvertRow == 0) {
+            // input site is the top of the grid
+            this.union(inputSiteId, this.N * this.N);
         }
 
-        int leftRow = convert_row;
-        int leftCol = convert_col - 1;
+        // connect left
+        int leftConvertRow = convertRow;
+        int leftConvertCol = convertCol - 1;
+        int leftSiteId = leftConvertRow * this.N + leftConvertCol;
+        if (leftConvertCol >= 0 && this.isOpen(row, col - 1)) {
+            // left site of input site is inside the grid
+            this.union(inputSiteId, leftSiteId);
+        }
 
-        int bottomRow = convert_row + 1;
-        int bottomCol = convert_col;
+        int bottomConvertRow = convertRow + 1;
+        int bottomConvertCol = convertCol;
+        int bottomSiteId = bottomConvertRow * this.N + bottomConvertCol;
+        if (bottomConvertRow < this.N && this.isOpen(row + 1, col)) {
+            // bottom site of input site is inside the grid
+            this.union(inputSiteId, bottomSiteId);
+        } else if (bottomConvertRow == this.N) {
+            // input site is the bottom of the grid
+            this.union(inputSiteId, this.N * this.N + 1);
+        }
 
-        int rightRow = convert_row;
-        int rightCol = convert_col + 1;
-
+        int rightConvertRow = convertRow;
+        int rightConvertCol = convertCol + 1;
+        int rigthSiteId = rightConvertRow * this.N + rightConvertCol;
+        if (rightConvertCol < this.N && this.isOpen(row, col + 1)) {
+            // right site of input site is inside the grid
+            this.union(inputSiteId, rigthSiteId);
+        }
     }
 
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) throws IllegalArgumentException {
-        int convert_row = row - 1;
-        int convert_col = col - 1;
+        int convertRow = row - 1;
+        int convertCol = col - 1;
         // check if row and col are valid
-        if ((convert_row < 0 || convert_row > this.N) || (convert_col < 0 || convert_col > this.N)) {
+        if ((convertRow < 0 || convertRow > this.N) || (convertCol < 0 || convertCol > this.N)) {
             throw new IllegalArgumentException();
         }
-        this.grid[convert_row][convert_col] = true; // open that cell
-
-        this.openSize++;
+        if (!this.grid[convertRow][convertCol]) {
+            // if the site is not open
+            this.grid[convertRow][convertCol] = true; // open that cell
+            this.connectedOpenSurroundings(row, col);
+            this.openSize++;
+        }
     }
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        int convert_row = row - 1;
-        int convert_col = col - 1;
+        int convertRow = row - 1;
+        int convertCol = col - 1;
         // check if row and col are valid
-        if ((convert_row < 0 || convert_row > this.N) || (convert_col < 0 || convert_col > this.N)) {
+        if ((convertRow < 0 || convertRow > this.N) || (convertCol < 0 || convertCol > this.N)) {
             throw new IllegalArgumentException();
         }
-        return this.grid[convert_row][convert_col];
+        return this.grid[convertRow][convertCol];
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
         // this is actually checking if the site is connected to the top.
-        int convert_row = row - 1;
-        int convert_col = col - 1;
+        int convertRow = row - 1;
+        int convertCol = col - 1;
         // check if row and col are valid
-        if ((convert_row < 0 || convert_row > this.N) || (convert_col < 0 || convert_col > this.N)) {
+        if ((convertRow < 0 || convertRow > this.N) || (convertCol < 0 || convertCol > this.N)) {
             throw new IllegalArgumentException();
         }
         int topSiteId = this.N * this.N;
-        int inputSiteId = convert_row * this.N + convert_col;
-        return this.find(topSiteId, inputSiteId);
+        int inputSiteId = convertRow * this.N + convertCol;
+        return this.find(inputSiteId, topSiteId);
     }
 
     // returns the number of open sites
@@ -150,12 +172,41 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates() {
-        return false;
+        int topSiteId = this.N * this.N;
+        int bottomSiteId = this.N * this.N + 1;
+        return this.find(topSiteId, bottomSiteId);
 
+    }
+
+    public void display() {
+        for (int i = 0; i < this.N; i++) {
+            for (int j = 0; j < this.N; j++) {
+                if (!this.grid[i][j]) {
+                    StdOut.print(" - ");
+                } else {
+                    StdOut.print(" | ");
+                }
+            }
+            StdOut.println();
+        }
     }
 
     // test client (optional)
     public static void main(String[] args) {
-        Percolation test = new Percolation(2);
+        Percolation test = new Percolation(10);
+        StdOut.println("<--test 2-by-2 grid -->");
+        StdOut.println("The open size of current grid");
+        StdOut.println(test.numberOfOpenSites());
+
+        StdOut.println("Open (1,1) and (2,1)");
+        test.open(1, 1);
+        test.open(2, 1);
+        StdOut.println("The open size of current grid");
+        StdOut.println(test.numberOfOpenSites());
+
+        StdOut.println("If current grid percolation");
+        StdOut.println(test.percolates());
+
+        test.display();
     }
 }
