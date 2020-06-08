@@ -31,10 +31,35 @@
   - [Monte Carlo simulation](#monte-carlo-simulation)
 - [Analysis of Algorithm Introduction](#analysis-of-algorithm-introduction)
   - [Scientific method applied to analysis of algorithms](#scientific-method-applied-to-analysis-of-algorithms)
-- [Observations](#observations)
-  - [Example 3-Sum](#example-3-sum)
-    - [Brute-force algorithm](#brute-force-algorithm)
+  - [Observations](#observations)
+    - [Example 3-Sum](#example-3-sum)
+      - [Brute-force algorithm](#brute-force-algorithm)
     - [Stopwatch to measure the time cost](#stopwatch-to-measure-the-time-cost)
+    - [Power-law 幂定律](#power-law-幂定律)
+      - [Doubling hypothesis](#doubling-hypothesis)
+      - [Experimental algorithmics](#experimental-algorithmics)
+  - [Mathematical models](#mathematical-models)
+    - [Sum of cost](#sum-of-cost)
+    - [Frequency](#frequency)
+      - [Example 1-Sum](#example-1-sum)
+      - [Example 2-Sum](#example-2-sum)
+      - [Simplification 1: cost model](#simplification-1-cost-model)
+      - [Simplification 2: tilde notation](#simplification-2-tilde-notation)
+      - [Simplified 2-Sum](#simplified-2-sum)
+      - [Simplified 3-Sum](#simplified-3-sum)
+    - [Estimating a discrete sum](#estimating-a-discrete-sum)
+  - [Order-of-growth classifications](#order-of-growth-classifications)
+- [Binary search demo](#binary-search-demo)
+  - [Binary search Java implementation](#binary-search-java-implementation)
+  - [Binary search mathematical analysis](#binary-search-mathematical-analysis)
+  - [3-Sum based on binary search](#3-sum-based-on-binary-search)
+- [Theory of algorithm](#theory-of-algorithm)
+  - [Commnly-used notations](#commnly-used-notations)
+  - [Summary for notations](#summary-for-notations)
+- [Memory](#memory)
+  - [Basics](#basics)
+  - [Typical memory usage for primitive types and arrays](#typical-memory-usage-for-primitive-types-and-arrays)
+  - [Typical memory usage for object in Java](#typical-memory-usage-for-object-in-java)
 
 ## Overview
 
@@ -519,16 +544,15 @@ Principles
 * Experiments must be **reproducible**
 * Hypotheses must be **falsifiable**
 
-## Observations
+### Observations
 
 Observe the running time
 
-### Example 3-Sum
+#### Example 3-Sum
 
 Given $N$ distinct integers, how many triples sum to exactly zero?
 
-
-#### Brute-force algorithm
+##### Brute-force algorithm
 
 ```java
 
@@ -564,8 +588,12 @@ public static void main(String[] args){
 **Standard plot** plot running time $T(N)$ vs. input size $N$.
 ![](Analysis%20of%20Algorithm/res/Data%20analysis.png)
 
+#### Power-law 幂定律
+
 **Log-Log plot** plot running time $T(N)$ vs. input size $N$
 ![](Analysis%20of%20Algorithm/res/loglog%20plot.png)
+
+If we fit the running time data and get following formula
 
 $\lg(T(N))=b\times\lg N+c$
 
@@ -573,4 +601,235 @@ $b=2.99$
 
 $c=-33.21$
 
+Then we can get this. And this is called 'power law 幂定律'
+
 $T(N)=a\times N^b where a=2^c$
+
+##### Doubling hypothesis
+
+Quick way to estimate $b$ in a power-law relationship
+
+Run program, doubling the size of the input.
+
+![](Analysis%20of%20Algorithm/res/Converge%20in%20power%20law.png)
+
+And then we can run the program and sovle for $a$
+
+![](Analysis%20of%20Algorithm/res/Estimate%20a%20in%20power-law.png)
+
+##### Experimental algorithmics
+
+**System independent effects**
+* Algorithm
+* Input data
+
+Determines exponent $b$ in power law
+
+**System dependent effects**
+* Hardware: CPU, memory, cache,...
+* Software: compiler, interpreter,...
+* System: operating system, network,...
+
+Determines constant $a$ in power law.
+
+### Mathematical models
+
+Total running time: sum of cost $\times$ frequency for all operations
+
+#### Sum of cost
+
+![](Analysis%20of%20Algorithm/res/Sum%20of%20cost.png)
+
+![](Analysis%20of%20Algorithm/res/Sum%20of%20cost%202.png)
+
+#### Frequency
+
+##### Example 1-Sum
+
+How many instructions as a function of input size $N$?
+
+```java
+int count = 0;
+for (int i=0;i<N;i++){
+    if(a[i]==0)
+        count++;
+}
+```
+
+|Operation|Frequency|
+|--|--|
+variable declaration|2
+assignment statement|2
+less than compare| $N$+1
+equal to compare|$N$
+array access|$N$
+increment|$N$ to $2N$
+
+##### Example 2-Sum
+
+How many instructions as a function of input size $N$?
+
+```java
+int count = 0;
+for (int i=0;i<N;i++){
+    for (int j=i+1;j<N;j++){
+        if(a[i]+a[j]==0)
+            count++;
+    }
+}
+```
+
+|Operation|Frequency|
+|--|--|
+variable declaration|N + 2
+assignment statement|N + 2
+less than compare| $1/2 (N+1) (N+2)$
+equal to compare|$1/2 N(N-1)$
+array access|$N(N-1)$
+increment|$1/2 N (N-1)$ to $N (N-1)$
+
+##### Simplification 1: cost model
+
+We don't need to consider every detail in the program. We can just consider some basic operation as a proxy for running time
+
+##### Simplification 2: tilde notation
+
+* Estimate running time as a function of input size $N$
+* Ignore lower order terms.
+  * When $N$ is large, terms are negligible
+  * When $N$ is small, we don't care
+
+![](Analysis%20of%20Algorithm/res/Tilde%20notation.png)
+
+
+##### Simplified 2-Sum
+
+* Cost model is **array accesses**
+
+So there are ~ $N^2$ array accesses
+
+##### Simplified 3-Sum
+
+![](Analysis%20of%20Algorithm/res/3-sum.png)
+
+#### Estimating a discrete sum
+
+![](Analysis%20of%20Algorithm/res/Discrete%20Sum.png)
+
+### Order-of-growth classifications
+
+We can use the small set of functions to describe the order-of-growth of typical algorithms.
+
+![](Analysis%20of%20Algorithm/res/order-of-growth%20classifications.png)
+
+![](Analysis%20of%20Algorithm/res/commen%20order-of-growth.png)
+
+## Binary search demo
+
+Goal: Given a sorted array and a key, find index of the key in the array?
+
+Binary search: Compare key against middle entry
+* Too small, go left
+* Too big, go right
+* Equal, found
+
+### Binary search Java implementation
+
+```java
+public static int binarySearch(int[] a,int key){
+    int lo=0,hi=a.length-1;
+    while(lo <= hi){
+        int mid = lo + (hi - lo) / 2;
+        if (key < a[mid]) hi = mid -1;
+        else if (key > a[mid]) lo = mid +1;
+        else return mid;
+    }
+    return -1;
+}
+```
+
+### Binary search mathematical analysis
+
+![](Analysis%20of%20Algorithm/res/Binary%20search%20mathematical%20analysis.png)
+
+### 3-Sum based on binary search
+
+Sorting-based algorithm.
+* Sort the $N$ numbers
+* For each pair of numbers ```a[i]``` and ```a[j]```, binary search for ```-(a[i]+a[j])```
+
+The sorting-based $N^2\lg N$ algorithm for 3-sum is faster than the brute-force algorithm
+
+![](Analysis%20of%20Algorithm/res/Good%203-Sum%20algorithm.png)
+
+## Theory of algorithm
+
+**Types of analyses**
+
+* Best case. Lower bound on cost
+  * Determined by "easiest" input
+  * Provides a goal for all inputs
+* Worst case. Upper bound on cost
+  * Determined by "most difficult" input
+  * Provides a guarantee for all inputs.
+* Average case. Expected cost for random input
+  * Need a model for "random" input
+  * Provides a way to predict performance
+
+**Goals**
+* Establish "difficulty" of a problem.
+* Develop "optimal" algorithms
+
+**Approach**
+* Supress details in analysis: analyze "to within a constant factor"
+* Eliminate variability in input modle by focusing on the worst case.
+
+**Optimal algorithm**
+* Performance guarantee for any input
+* No algorithm can provide a better performance guarantee.
+
+
+### Commnly-used notations
+
+![](Analysis%20of%20Algorithm/res/Notations.png)
+
+![](Analysis%20of%20Algorithm/res/Notation%20use%20example.png)
+
+### Summary for notations
+
+![](Analysis%20of%20Algorithm/res/Notation%20summary.png)
+
+## Memory
+
+### Basics
+
+* Bit 0 or 1
+* Byte 8 bits
+* Megabyte MB 1 million or $2^20$ bytes
+* Gigabyte GB 1 billion or $2^30$ bytes
+
+64-bit machine with 8 byte pointers
+* Can address more memory
+* Pointers use more space
+
+
+### Typical memory usage for primitive types and arrays
+
+|Type|bytes|
+|--|--|
+boolean|1
+byte|1
+char|2
+int|4
+float|4
+long|8
+double|8
+char[]|2N+24
+int[]|4N+24
+double[]|8N+24
+
+### Typical memory usage for object in Java
+
+* Object overhead: 16 bytes
+* Reference: 8 bytes
+* Padding: Each object uses a multiple of 8 bytes

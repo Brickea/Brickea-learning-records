@@ -27,3 +27,9 @@ Given a set of nn integers S={0,1,...,n−1} and a sequence of requests of the f
 design a data type so that all operations (except construction) take logarithmic time or better in the worst case.
 
 Answer: use the modification of the union−find data discussed in the previous question.
+
+## Interview Questions: Analysis of Algorithms
+
+![](../Lectures/Week%201/Analysis%20of%20Algorithm/res/q1.png)
+
+![](../Lectures/Week%201/Analysis%20of%20Algorithm/res/q2.png)
