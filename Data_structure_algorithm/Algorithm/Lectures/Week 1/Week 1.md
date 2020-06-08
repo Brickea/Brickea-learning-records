@@ -29,6 +29,12 @@
 - [Union-find application - percolation 渗滤](#union-find-application---percolation-渗滤)
   - [Likelihood of percolation](#likelihood-of-percolation)
   - [Monte Carlo simulation](#monte-carlo-simulation)
+- [Analysis of Algorithm Introduction](#analysis-of-algorithm-introduction)
+  - [Scientific method applied to analysis of algorithms](#scientific-method-applied-to-analysis-of-algorithms)
+- [Observations](#observations)
+  - [Example 3-Sum](#example-3-sum)
+    - [Brute-force algorithm](#brute-force-algorithm)
+    - [Stopwatch to measure the time cost](#stopwatch-to-measure-the-time-cost)
 
 ## Overview
 
@@ -488,3 +494,83 @@ How to estimate the $p^*$?
 * Repeate this process billion times
 
 The $p^*$ is about 0.592746
+
+
+## Analysis of Algorithm Introduction
+
+Reasons to analyze algorithm
+* Predict performance.
+* Compare algorithms.
+* Provide guarantees
+* Understand theoretical basis.
+* **Primary** practical reason: avoid performance bugs.
+
+### Scientific method applied to analysis of algorithms
+
+A framework for predicting performance and comparing algorithms.
+
+* **Observe** some feature of the natural world.
+* **Hypothesize** a model that is consistemt with the observations.
+* **Predict** events using the hypothesis.
+* **Verify** the predictions by making further observations.
+* **Validate** by repeating until the hypothesis and observations agree.
+
+Principles
+* Experiments must be **reproducible**
+* Hypotheses must be **falsifiable**
+
+## Observations
+
+Observe the running time
+
+### Example 3-Sum
+
+Given $N$ distinct integers, how many triples sum to exactly zero?
+
+
+#### Brute-force algorithm
+
+```java
+
+public class ThreeSum{
+    public static int count(int[] a){
+        int N = a.length;
+        int count = 0;
+        for(int i=0;i<N;i++){
+            for(int j=i+1;j<N;j++){
+                for(int k=j+1;k<N;k++){
+                    if(a[i]+a[j]+a[k]==0){
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+#### Stopwatch to measure the time cost
+
+```java
+public static void main(String[] args){
+    Stopwatch stopwatch = new Stopwatch();
+    ...
+    double timeCost = stopwatch.dlapsedTimer();
+}
+```
+
+**Empirical analysis** run the porgram for various input sizes and measure running time.
+
+**Standard plot** plot running time $T(N)$ vs. input size $N$.
+![](Analysis%20of%20Algorithm/res/Data%20analysis.png)
+
+**Log-Log plot** plot running time $T(N)$ vs. input size $N$
+![](Analysis%20of%20Algorithm/res/loglog%20plot.png)
+
+$\lg(T(N))=b\times\lg N+c$
+
+$b=2.99$
+
+$c=-33.21$
+
+$T(N)=a\times N^b where a=2^c$
