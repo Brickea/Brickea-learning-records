@@ -73,7 +73,7 @@ We begin our study of algorithms with a motivating example and an overview of th
 
 **Job Interview Questions.** Algorithmic interview questions based on the lecture material.
 
-Suggested Readings. Section 1.4 and 1.5 in Algorithms, 4th edition.
+Suggested Readings. Section [1.4](https://algs4.cs.princeton.edu/14analysis/) and [1.5](https://algs4.cs.princeton.edu/15uf/) in Algorithms, 4th edition.
 
 ## Union-find 并查集
 
@@ -805,8 +805,8 @@ The sorting-based $N^2\lg N$ algorithm for 3-sum is faster than the brute-force 
 
 * Bit 0 or 1
 * Byte 8 bits
-* Megabyte MB 1 million or $2^20$ bytes
-* Gigabyte GB 1 billion or $2^30$ bytes
+* Megabyte MB 1 million or $2^{20}$ bytes
+* Gigabyte GB 1 billion or $2^{30}$ bytes
 
 64-bit machine with 8 byte pointers
 * Can address more memory

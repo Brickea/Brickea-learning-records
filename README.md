@@ -53,6 +53,7 @@
   * route
 * [```Project 0```](CS50-s-Web-Programming-with-Python-and-JavaScript/Projects/project0/README.md)
 * [SQL and SQLAlchemy](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%204%20-%20SQL/SQL.md)
+* [FlaskSQL JSON ORM](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%205%20-%20ORM%20Flask-sql/ORM%20and%20Flask-SQL.md)
 
 ### Algorithms Robert Sedgewick and Kevin Wayne
 
@@ -60,6 +61,7 @@
 
 * [Week 1 - Union-find & Algorithm Analysis](Data_structure_algorithm/Algorithm/Lectures/Week%201/Week%201.md)
 * [```Practice 1 percolation```](Data_structure_algorithm/Algorithm/Assignments/Union-find/README.md)
+* [Week 2 - Stack and Queues](Data_structure_algorithm/Algorithm/Lectures/Week%202/Week%202.md)
 
 
 ## Leetcode 练习
