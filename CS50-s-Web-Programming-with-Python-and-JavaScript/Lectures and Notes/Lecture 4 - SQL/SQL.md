@@ -19,6 +19,7 @@
   - [SQL Injection](#sql-injection)
     - [Race conditions](#race-conditions)
 - [Connect Python with database](#connect-python-with-database)
+- [JSON](#json)
 
 ## SQL
 
@@ -213,3 +214,4 @@ def main():
 
 ```
 
+## JSON
