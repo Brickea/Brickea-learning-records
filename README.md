@@ -14,6 +14,8 @@
   - [数据结构与算法快速入门](#数据结构与算法快速入门)
   - [CS50-s-Web-Programming](#cs50-s-web-programming)
   - [Algorithms Robert Sedgewick and Kevin Wayne](#algorithms-robert-sedgewick-and-kevin-wayne)
+  - [Introduction to Statistical Learning - Gareth James, ...](#introduction-to-statistical-learning---gareth-james-)
+  - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
 - [Leetcode 练习](#leetcode-练习)
 
 ---
@@ -63,6 +65,16 @@
 * [```Practice 1 percolation```](Data_structure_algorithm/Algorithm/Assignments/Union-find/README.md)
 * [Week 2 - Stack and Queues](Data_structure_algorithm/Algorithm/Lectures/Week%202/Week%202.md)
 
+
+### Introduction to Statistical Learning - Gareth James, ...
+
+![](https://img.shields.io/badge/Status-Updating-red)
+
+### Machine Learning - Hung-yi Lee
+
+![](https://img.shields.io/badge/Status-Updating-red)
+
+![](Machine-Learning-Hung-yi%20Lee/Learning%20Map.png)
 
 ## Leetcode 练习
 
