@@ -62,8 +62,10 @@
 ![](https://img.shields.io/badge/Status-Updating-red)
 
 * [Week 1 - Union-find & Algorithm Analysis](Data_structure_algorithm/Algorithm/Lectures/Week%201/Week%201.md)
+  * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%201.md)
 * [```Practice 1 percolation```](Data_structure_algorithm/Algorithm/Assignments/Union-find/README.md)
 * [Week 2 - Stack and Queues](Data_structure_algorithm/Algorithm/Lectures/Week%202/Week%202.md)
+  * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%202.md)
 
 
 ### Introduction to Statistical Learning - Gareth James, ...
