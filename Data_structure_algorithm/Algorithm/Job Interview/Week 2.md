@@ -21,3 +21,9 @@ Use two stacks, one to store all of the items and a second stack to store the ma
 ```
 to start, you need to understand that Java arrays are covariant but Java generics are not: that is, String[] is a subtype of Object[], but Stack<String> is not a subtype of Stack<Object>.
 ```
+
+## Elementary Sorts
+
+![](../Lectures/Week%202/Elementary%20Sorts/res/interviewQ.png)
+
+We can use shell sort by using 3x+1 sequence increment.
