@@ -30,6 +30,43 @@
   - [Java collections library](#java-collections-library)
   - [Stack Application](#stack-application)
     - [Arithmetic expression evaluation](#arithmetic-expression-evaluation)
+- [Elementary Sorts](#elementary-sorts)
+  - [Rules of the game](#rules-of-the-game)
+    - [Sort any type of data - Example](#sort-any-type-of-data---example)
+    - [Sort any type of data - Callback](#sort-any-type-of-data---callback)
+    - [Total order 全序关系](#total-order-全序关系)
+    - [Comparable API](#comparable-api)
+    - [Two Sorting abstraction](#two-sorting-abstraction)
+    - [Sort Testing](#sort-testing)
+  - [Selection sort 选择排序](#selection-sort-选择排序)
+    - [Selection sort inner loop](#selection-sort-inner-loop)
+    - [Selection sort Java implementation](#selection-sort-java-implementation)
+    - [Selection sort mathematical analysis](#selection-sort-mathematical-analysis)
+  - [Insertion sort](#insertion-sort)
+    - [Insertion sort inner loop](#insertion-sort-inner-loop)
+    - [Insertion sort Java implementation](#insertion-sort-java-implementation)
+    - [Insertion sort mathematical analysis](#insertion-sort-mathematical-analysis)
+      - [Insertion sort best and worst case](#insertion-sort-best-and-worst-case)
+    - [Insertion sort in partially-sorted arrays (Has good performance!)](#insertion-sort-in-partially-sorted-arrays-has-good-performance)
+  - [Shell sort](#shell-sort)
+    - [H-sorting](#h-sorting)
+    - [Which increment sequence to use?](#which-increment-sequence-to-use)
+    - [Shell sort Java implementation](#shell-sort-java-implementation)
+    - [Shell sort mathematical analysis](#shell-sort-mathematical-analysis)
+    - [Why we interested in shellsort?](#why-we-interested-in-shellsort)
+- [Sort Application](#sort-application)
+  - [Shuffle sort](#shuffle-sort)
+    - [Shuffle without cost of sort - Knuth Shuffle](#shuffle-without-cost-of-sort---knuth-shuffle)
+    - [Shuffle bad example](#shuffle-bad-example)
+- [Sort Application - Convex hull](#sort-application---convex-hull)
+  - [Human Method to find convex hull](#human-method-to-find-convex-hull)
+  - [Convex hull applications](#convex-hull-applications)
+    - [Robot motion planning](#robot-motion-planning)
+    - [Farthest pair](#farthest-pair)
+  - [Convex hull geometric properties](#convex-hull-geometric-properties)
+    - [Graham scan 葛立恒扫描法](#graham-scan-葛立恒扫描法)
+      - [Implementing ccw](#implementing-ccw)
+    - [Graham scan implementation](#graham-scan-implementation)
 
 ## Overview
 
@@ -688,3 +725,610 @@ public interface List<Item> implements Iterable<Item>{
 * Right parenthesis: pop operator and two values; push the result of applying that operator to those values onto the operand stack
 
 ![](Stacks%20and%20QUeues/res/arithmetic.png)
+
+## Elementary Sorts
+
+### Rules of the game
+
+**Sort** Rearrange array of $N$ items into ascending order.
+
+Ex: Student records in a university
+
+#### Sort any type of data - Example
+
+**Sample sort client 1**
+* Sort random real numbers in ascending order.
+
+```java
+public class Experiment{
+    public static void main(String[] args){
+        int N = Integer.parseInt(args[0]);
+        Double[] a = new Double[N];
+        for(int i=0;i<N;i++){
+            a[i] = StdRandom.uniform();
+        }
+        Insertion.sort(a);
+        for(int i=0;i<N;i++){
+            StdOut.println(a[i]);
+        }
+    }
+}
+```
+
+**Sample sort client 2**
+* Sort strings from file in alphabetical order.
+
+```java
+public class StringSorter{
+    public static void main(String[] args){
+        String[] a = In.readStrings(args[0]);
+        Insertion.sort(a);
+        for(int i=0;i<a.length;i++){
+            StdOut.println(a[i]);
+        }
+    }
+}
+```
+
+**Sample sort client 3**
+* Sort the file in a given directory by filename
+
+```java
+import java.io.File;
+public class FileSorter{
+    public static void main(String[] args){
+        File directory = new File(args[0]);
+        File[] files = directory.listFiles();
+        Insertion.sort(files);
+        for(int i=0;i<files.length;i++){
+            StdOut.println(files[i].getName());
+        }
+    }
+}
+```
+
+#### Sort any type of data - Callback
+
+How can ```sort()``` know how to compare data of type ```Double```, ```String```, and ```java.io.FIle``` without any information about the type of an item's key?
+
+**Callback = reference to executable code**
+* Client passes array of objects to ```sort()``` function
+* The ```sort()``` function calls back object's ```compareTo()``` method as needed.
+
+**Implementation callback**
+* Java: interface
+* C: function pointers
+* C++: class-type functors
+
+**Take this client as example**
+```java
+import java.io.File;
+public class FileSorter{
+    public static void main(String[] args){
+        File directory = new File(args[0]);
+        File[] files = directory.listFiles();
+        Insertion.sort(files); // here it use the sort algorithm we implemented.
+        for(int i=0;i<files.length;i++){
+            StdOut.println(files[i].getName());
+        }
+    }
+}
+```
+
+Then we can use ```Comparable interface```
+
+```java
+public interface Comparable<Item>{
+    public int compareTo(Item that);
+}
+```
+
+**Object Implementation**
+```java
+public class File implements Comparable<File>{
+    ...
+    public int compareTo(File b){
+        ...
+        return -1; // <
+        ...
+        return 1; // >
+        ...
+        return 0; // =
+    }
+}
+```
+
+Then in our sort implementation
+```java
+public static void sort(Comparable[] a){
+    int N = a.length;
+    for(int i=0;i<N;i++){
+        for(int j=i;j<N;j++){
+            if(a[j].compareTo(a[j-1])<0){
+                exch(a,j,j-1);
+            }
+            else{
+                break;
+            }
+        }
+    }
+}
+```
+
+#### Total order 全序关系
+
+A total order is a binary relation $\leq$ that satisfies
+* Antisymmetry: if $v \leq w$ and $w \leq v$, then $v = w$
+* Transitivity: if $v \leq w$ and $w \leq x$, then $v \leq x$
+* Totality: either $v\leq w$ or $w \leq v$ or both
+
+**Ex**
+* Standard order for natural and real number
+* Alphabetical order for strings
+* Chronological order for dates.
+
+#### Comparable API
+
+**Implement ```compareTo()``` so that v.compareTo(w)**
+* Is a total order
+* Returns a negative integer, zero, or positive integer if v is less than, equal to, or greater than w, respectively
+* Throws an exception if incompatible types(or either is null)
+
+**Built-in comparable types**: Integer, Double, String, Date, File, ...
+
+**User-defined comparable types**: Implement the ```Comparable``` interface.
+
+![](Elementary%20Sorts/res/comparable%20date.png)
+
+#### Two Sorting abstraction
+
+**Helper functions** Refer to data throught compares and exchanges
+
+**Less** is item v less thant w?
+
+```java
+private static boolean less(Comparable v, Comparable w){
+    return v.compareTo(w) <0;
+}
+```
+
+**Exchange** Swap item in array ```a[]``` at index ```i``` with the one at index ```j```
+
+```java
+private static void exch(Comparable[] a,int i,int j){
+    Comparable swap = a[i];
+    a[i] = a[j];
+    a[j] = swap;
+}
+```
+
+**Question**
+
+Consider the data type Temperature defined below. Which of the following required properties of the Comparable interface does the compareTo() method violate?
+```java
+
+public class Temperature implements Comparable<Temperature> {
+    private final double degrees;
+    
+    public Temperature(double degrees) {
+        if (Double.isNaN(degrees))
+            throw new IllegalArgumentException();
+        this.degrees = degrees;
+    }
+
+    public int compareTo(Temperature that) {
+        double EPSILON = 0.1;
+        if (this.degrees < that.degrees - EPSILON) return -1;
+        if (this.degrees > that.degrees + EPSILON) return +1;
+        return 0;
+    }
+    ...
+}
+```
+Correct 
+Transitivity is violated. Suppose that a, b, and c refer to objects corresponding to temperatures of 10.16∘, 10.08∘, and 10.00 ∘, respectively. Then, a.compareTo(b) <= 0 a.compareTo(b) <= 0 and b.compareTo(c) <= 0 b.compareTo(c) <= 0, but a.compareTo(c) > 0 a.compareTo(c) > 0. For this reason, you must not introduce a fudge factor when comparing two floating-point numbers if you want to implement the Comparable interface.
+
+
+#### Sort Testing
+
+```java
+private static boolean isSorted(Comparable[] a){
+    for(int i=1;i<a.length;i++){
+        if(less(a[i],a[i-1])) return false;
+    }
+}
+```
+
+### Selection sort 选择排序
+
+**Main**
+* In iteration ```i```, find index ```min``` of smallest remaining entry
+* Swap ```a[i]``` and ```a[mim]```
+
+**Algorithm** pointer scans from left to right
+
+**Invariants**
+* Entries the left of pointer (including pointer) fixed and in ascending order
+* No entry to right of pointer is smaller than any entry to the left of pointer
+
+![](Elementary%20Sorts/res/selectionSortInvariant.png)
+
+#### Selection sort inner loop
+
+![](Elementary%20Sorts/res/selectionSortInnerLoop.png)
+
+#### Selection sort Java implementation
+
+```java
+public class Selection{
+    public static void sort(Comparable[] a){
+        int N = a.length;
+        for(int i=0;i<N;i++){
+            int min = i;
+            for(int j=i;j<N;j++){
+                if(less(a[j],a[min])){
+                    min = j;
+                }
+            }
+            exch(a,i,min);
+        }
+    }
+
+    private static boolean less(Comparable v, Comparable w){/* as before*/}
+    
+    private static void exch(Comparable[] a,int i, int j){/* as before*/}
+}
+```
+
+#### Selection sort mathematical analysis
+
+**Proposition** Selection sort uses $(N-1)+(N-2)+...+1+0 \sim N^2/2$ compares and $N$ exchanges
+
+![](Elementary%20Sorts/res/selectionSortMathematicalAnalysis.png)
+
+**Running time insensitive to input** Quadratic time, even if input is sorted
+
+**Data movement is minimal** Linear number of exchanges.
+
+### Insertion sort
+
+**Algorithm** pointer scans from left to right
+
+**Invariants**
+* Entries to the left of pointer (including pointer) are in ascending order.
+* Entries to the right of pointer have not yet been seen.
+
+![](Elementary%20Sorts/res/insertionSort.png)
+
+#### Insertion sort inner loop
+
+![](Elementary%20Sorts/res/insertionSortInnerLoop.png)
+
+#### Insertion sort Java implementation
+
+```java
+public class Insertion{
+    public static void sort(Comparable[] a){
+        int N= a.length;
+        for(int i=0;i<N;i++){
+            for(int j=i;j>0;j--){
+                if (less(a[j],a[j-1])){
+                    exch(a[j],a[j-1]);
+                }
+                else{
+                    break;
+                }
+            }
+        }
+    }
+    private static boolean less(Comparable v, Comparable w){/* as before*/}
+    
+    private static void exch(Comparable[] a,int i, int j){/* as before*/}
+}
+```
+
+#### Insertion sort mathematical analysis
+
+**Proposition** To sort a randomly-ordered array with distinct keys, insertion sort uses $\sim 1/4 N^2$ compares and $\sim 1/4 N^2$ exchanges on average.
+
+**Pf** Expect each entry to move halfway back.
+
+![](Elementary%20Sorts/res/insertionSortMathematicalAnalysis.png)
+
+##### Insertion sort best and worst case
+
+**Best case** If the array is in ascending order, insertion sort makes $N-1$ compares and 0 exchanges
+
+**Worst case** If the array is in descending order ( and no duplicates), insertion sort makes $\sim1/2 N^2$ compares and $\sim1/2 N^2$ exchanges.
+
+#### Insertion sort in partially-sorted arrays (Has good performance!)
+
+**Def** An *inversion* is a pair of keys that are out of order.
+
+```
+
+A E E L M O T R X P S
+
+```
+
+T_R T_P T_S R_P X_P X_S are the inversions(6 inversions)
+
+**Def** An array is *partially sorted* if the number of inversion is $\leq cN$
+* Ex: A subarray of size 10 appended to a sorted subarray of size $N$
+* Ex: An array of size $N$ with only 10 entries out of place.
+
+**Proposition** For partially-sorted arrays, insertion sort runs in linear time
+
+**Pf** Number of exchanges equals the number of inversions.
+
+### Shell sort
+
+**Idea** Move entries more than one position at a time by *h-sorting* the array
+
+![](Elementary%20Sorts/res/shellSortOverview.png)
+
+**Shellsort** ```[Shell 1959]``` *h-sorting* array for decreasing sequence of values of $h$
+
+![](Elementary%20Sorts/res/shellSortExample.png)
+
+#### H-sorting
+
+**How to h-sort an array** Insertion sort, with stride length $h$
+
+![](Elementary%20Sorts/res/shellSortExample.png)
+
+在这里其实 h-sort很好理解，就是使用之前的insertion sort，但是不再是每次只从pointer往前回1步，现在是往前回 h 步
+
+![](Elementary%20Sorts/res/shellSortExample2.png)
+
+看这个例子，算法pointer从起始往后 h 步开始，第一次交换也就是在 M 和 E之间，后面的以此类推
+
+**Why insertion sort**
+* Big increments 会导致进行排序的子数组长度很小，这个时候任意的排序方式都可以获得较高的性能
+* Small increment 较小的增量，因为之前的排序，大部分都是有序的子数组，而且我们知道insertion sort 对于这种部分有序的数组排序是由性能优势的
+
+Complete shell sort example
+
+![](Elementary%20Sorts/res/shellSortCompleteExample.png)
+
+#### Which increment sequence to use?
+
+**Powers of two** 1,2,4,8
+* No. Because it will not compare even and odd before the 1-sort. This will result very bad performance
+
+**Powers of two minus one** 1, 3, 7
+* Maybe. This is Shell's idea in 1960
+
+**Knuth $3x + 1$** 1,4,13,40
+* Ok. Esasy to compute.
+
+**Professor provide a good sequence** 1,5,19,41,109,209,505,929,2161...3905
+* Good. Tough to beat in empirical studies.
+
+#### Shell sort Java implementation
+
+```java
+public class Shell{
+    public static void sort(Comparable[] a){
+        int N = a.length;
+
+        int h = 1;
+
+        while( h< n/3) h = 3*h +1 // 3x+1 increment sequence
+
+        while(h>=1){
+            // h-sort the array
+            for(int i=h;i<N;i++){
+                for(int j=i;j>=h && less(a[j],a[j-h]);j-=h) {// insertion sort
+                    exch(a,j,j-h)
+                }
+            }
+
+            h = h/3 // move to next increment
+        }
+    }
+    private static boolean less(Comparable v, Comparable w){/* as before*/}
+    
+    private static void exch(Comparable[] a,int i, int j){/* as before*/}
+}
+```
+
+![](Elementary%20Sorts/res/shellSortTrace.png)
+
+#### Shell sort mathematical analysis
+
+**Proposition** The worst-case number of compares used by shellsort with the 3x+1 increments is $O(N^{3/2})$
+
+**Property** Number of compares used by shellsort with the 3x+1 increments is at most by a small multiple of $N$ times the # of increments used.
+
+![](Elementary%20Sorts/res/shellSortMathematicalAnalysis.png)
+
+**Remark** Accurate model has not yet been discovered
+
+#### Why we interested in shellsort?
+
+**Example of simple idea leading to substantial performance gains**
+
+**Useful in practice**
+* Fast unless array size is huge
+* Tiny, fixes footprint for code (used in embedded systems)
+* Hardware sort prototype
+
+**Simple algorithm, nontrivial performance, interesting questions**
+* Asymptotic growth rate?
+* Best sequence of increments
+* Average-case performance
+
+## Sort Application
+
+### Shuffle sort
+
+**Idea** 
+* Generate a random real number for each array entry
+* Sort the array
+
+**Proposition** Shuffle sort produces a uniformly random permutation of the input array, provided no duplicate values.
+
+**Drawback** Need to pay cost of sort?
+
+#### Shuffle without cost of sort - Knuth Shuffle
+
+**Goal** Rearrange array so that result is a uniformly random permutation in linear time
+
+* In iteration ```i```, pick integer ```r``` between 0 and ```i``` uniformly at random
+* Swap ```a[i]``` and ```a[r]```
+
+```java
+public class StdRandom{
+    ...
+    public static void shuffle(Object[] a){
+        int N = a.length;
+        for(int i=0;i<N;i++){
+            int r = StdRandom.uniform(i+1);
+            // int r = StdRandom.uniform(N); this won't work
+            exch(a,i,r);
+        }
+    }
+}
+```
+
+Here the uniformly random number should picked between 0 and i , this is very important. If you only choose a random place for every entry in your array. That will not give you a uniformly distribute shuffle array.
+
+#### Shuffle bad example
+
+```
+for i := 1 to 52 do begin
+    r := random(51) + 1;
+    swap := card[r];
+    card[r] := card[i];
+    card[i] := swap;
+end;
+```
+
+* Bug1: Random number r never 52
+* Bug2: Shuffle not uniform
+* Bug3: random() use 32-bit seed. Less than all possible shuffles result($2^32 << 52!$)
+* Bug4: Seed = milliseconds since midnight => 86.4 million shuffles.
+
+**Exploit** After seeing 5 cards and synchronizing with server clock, can determine all future card in real time.
+
+## Sort Application - Convex hull
+
+The *convex hull* of a set of $N$ points is the smallest perimeter fence enclosing the points
+
+![](Elementary%20Sorts/res/convexHull.png)
+
+**Equivalent definitions**
+* Smallest convex set containing all the points.
+* Smallest area convex polygon enclosing the poitns.
+* Convex polygon enclosing the points, whose vertices are points in set.
+
+![](Elementary%20Sorts/res/convexHullOutput.png)
+
+**Convex hull output** Sequence of vertices in counterclockwise order.
+
+### Human Method to find convex hull
+
+Hammer nails perpendicular to plane; stretch elastic rubber band around points.
+
+![](Elementary%20Sorts/res/convexHullHuman.png)
+
+### Convex hull applications
+
+#### Robot motion planning
+
+Find shortest path in the plane from s to t that avoids a polygonal obstacle
+
+![](Elementary%20Sorts/res/robotMotionPlanning.png)
+
+**Fact** Shortest path is either straight line from s to t or it is one of two  polygonal chins of convex hull
+
+#### Farthest pair
+
+Give $N$ points in the plane, find a pair of points with the largest Euclidean distance between them.
+
+![](Elementary%20Sorts/res/farthestPair.png)
+
+Farthest pair of points are extreme points on convex hull. 
+
+### Convex hull geometric properties
+
+We can start from these two properties if we want to program it.
+
+* Can traverse the convex hull by making only conterclockwise turns
+* The vertices of convex hull appear in increasing order of polar angle with respect to point p with lowest y-coordinate
+
+![](Elementary%20Sorts/res/convexHullProperties.png)
+
+#### Graham scan 葛立恒扫描法
+
+* Choose point p with smallest y-coordinate
+* Sort points by polar angle with p
+* consider points in order; discard unless it create a ccw turn
+
+**How to find point p with smallest y-coordinate?**
+* Define a total order, comparing by y-coordinate
+
+**How to sort points by polar angle with respect to p?**
+* Define a total order for each point p
+
+**How to determine whether $p_1 \rightarrow p_2 \rightarrow p_3$ is a conterclockwise trun?**
+* Computational geometry
+
+**How to sort efficiently**
+* Mergesort sorts in $N \lg N$ time
+
+##### Implementing ccw
+
+**How to determine whether $p_1 \rightarrow p_2 \rightarrow p_3$ is a conterclockwise trun?**
+* Computational geometry
+
+![](Elementary%20Sorts/res/ccw.png)
+
+![](Elementary%20Sorts/res/ccwImplementation.png)
+
+```java
+public class Point2D{
+    private final double x;
+    private final double y;
+
+    public Point2D(double x,double y){
+        this.x = x;
+        this.y = y;
+    }
+    ...
+
+    public static int ccw(Point2D a,Point2D b, Point2D c){
+        double area2 = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+        if(area2 < 0) return -1; // clockwise
+        else if (area2 > 0) return 1; //counter-clockwise
+        else return 0; //collinear
+    }
+}
+```
+
+#### Graham scan implementation
+
+**Simplifying assumptions** No three points on a line; at least 3 points.
+
+```java
+Stack<Point2D> hull = new Stack<Point>();
+
+Arrays.sort(p,Point2D.Y_ORDER); // this will make p[0] to be the point with lowest y-coordinate
+Arrays.sort(p,p[0].BY_POLAR_ORDER); // sort by polar angle with respect to p[0]
+
+hull.push(p[0]);
+hull.push(p[1]);
+
+for(int i=2;i<n;i++){
+    Point2D top = hull.pop();
+    while(Point2D.ccw(hull.peek(),top,p[i]) <= 0)
+        top = hull.pop();
+    hull.push(top);
+    hull.push(p[i]); // add p[i] to putative hull
+}
+```
+
+**Running time** $N \lg N$ for sorting and linear for rest.
+
+**Pf** $N\lg N$ for sorting; each point pushed and popped at most once.
