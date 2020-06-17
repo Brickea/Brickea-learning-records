@@ -163,26 +163,42 @@ public class Deque<Item> implements Iterable<Item> {
 
     // unit testing (required)
     public static void main(String[] args){
-//        Deque<Integer> test = new Deque<>();
-//
-//        test.addLast(1);
+        Deque<Integer> test = new Deque<>();
 
-//        for(int i=0;i<10;i++){
-//            test.addFirst(i);
-//        }
-//
-//        for(int i=0;i<10;i++){
-//            test.addLast(i);
-//        }
+        StdOut.println("Is the deque empty? "+test.isEmpty());
 
-//        for(int i=0;i<10;i++){
-//            StdOut.println(test.removeLast());
-//            StdOut.printf("size %d \n",test.size());
-//        }
-//
-//        for(int i : test){
-//            StdOut.print(i);
-//        }
+        StdOut.println("Current Deque size: "+test.size());
+
+        test.addLast(1);
+
+        for(int i=0;i<10;i++){
+            test.addFirst(i);
+        }
+
+        for(int i=0;i<10;i++){
+            test.addLast(i);
+        }
+
+        StdOut.println("Current deque: ");
+        for(int i : test){
+            StdOut.print(i);
+        }
+
+        StdOut.println();
+        for(int i=0;i<5;i++){
+            StdOut.println(test.removeLast());
+            StdOut.printf("size %d \n",test.size());
+        }
+
+        for(int i=0;i<5;i++){
+            StdOut.println(test.removeFirst());
+            StdOut.printf("size %d \n",test.size());
+        }
+
+        StdOut.println("\nForeach");
+        for(int i : test){
+            StdOut.print(i);
+        }
     }
 
 }
