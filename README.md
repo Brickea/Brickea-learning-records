@@ -66,6 +66,7 @@
 * [```Practice 1 percolation```](Data_structure_algorithm/Algorithm/Assignments/Union-find/README.md)
 * [Week 2 - Stack and Queues Elementary Sort](Data_structure_algorithm/Algorithm/Lectures/Week%202/Week%202.md)
   * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%202.md)
+* [```Practice 2 queue```](Data_structure_algorithm/Algorithm/Assignments/Queues/README.md)
 
 
 ### Introduction to Statistical Learning - Gareth James, ...
