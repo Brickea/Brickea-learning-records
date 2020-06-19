@@ -1,0 +1,18 @@
+.login-container{
+    margin: auto;
+}
+.login-title{
+    text-align: center;
+}
+
+@media (min-width: 700px){
+    .login-container{
+        width: 50%;
+    }
+}
+
+@media (max-width: 699px){
+    .login-container{
+        width: 90%;
+    }
+}

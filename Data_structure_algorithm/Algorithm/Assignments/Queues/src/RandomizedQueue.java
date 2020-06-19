@@ -78,6 +78,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             this.resize(this.capacity);
         }
         this.shuffle();
+        // Here the random uniform can actually use only once.
         return this.items[--this.current];
     }
 
