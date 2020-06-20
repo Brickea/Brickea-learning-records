@@ -1,0 +1,36 @@
+{% extends 'layout/content_page_layout.html' %}
+
+{% block body %}
+<div style="text-align: center;">
+    <h1>
+        Search Book
+    </h1>
+</div>
+<div>
+    <div class="search-body">
+        <form action="">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col md-8 sm-12">
+                        <input class="input-block" type="text" placeholder="Check this out" id="user_input">
+
+                    </div>
+                    <div class="col md-4 sm-12">
+                        <select class="input-block" id="search_option">
+                            <option value="1">ISBN</option>
+                            <option value="2">Title</option>
+                            <option value="3">Author</option>
+                            <select>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <button class="btn-warning btn-block btn-large">Check!</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+{% endblock body %}

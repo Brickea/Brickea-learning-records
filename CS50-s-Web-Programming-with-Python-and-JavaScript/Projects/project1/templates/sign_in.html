@@ -1,19 +1,29 @@
 {% extends './layout/main_page_layout.html' %}
 
+{% block title %}
+
+Sign in
+    
+{% endblock title %}
+
+{% block header %}
+    Checkmate Books!
+{% endblock header %}
+
 {% block body %}
 
 <h3 style="text-align: center;">Login to your account</h3>
 
-<form action="{{ url_for('login') }}">
+<form action="{{ url_for('login') }}" method="POST">
     <div class="row">
         <div class="col md-12 sm-12">
             <div class="form-group">
-                <input class="input-block" type="text" placeholder="User name" id="user_name">
+                <input name="username" class="input-block" type="text" placeholder="User name" id="user_name">
             </div>
         </div>
         <div class="col md-12 sm-12">
             <div class="form-group">
-                <input class="input-block" type="password" placeholder="Password" id="password">
+                <input name="password" class="input-block" type="password" placeholder="Password" id="password">
             </div>
         </div>
 
@@ -23,7 +33,7 @@
             <button class="btn-block btn-success">Sign in</button>
         </div>
         <div class="col sm-12 md-6">
-            <a href="{{ url_for('sign_up') }}"><button type="button"  class="btn-block btn-secondary">Sign up</button></a>
+            <a href="{{ url_for('registration') }}"><button type="button"  class="btn-block btn-secondary">Sign up</button></a>
         </div>
     </div>
 </form>

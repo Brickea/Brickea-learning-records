@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/books.css') }}">
-    <title>Login</title>
+    <title>{% block title %}{% endblock title %}</title>
 </head>
 
 <body>
@@ -14,7 +14,9 @@
         <div class="login-container">
             <div class="login-title">
                 <h1>
-                    Checkmate Books!
+                    {% block header %}
+                        
+                    {% endblock header %}
                 </h1>
             </div>
             <div>
@@ -27,5 +29,8 @@
 
 
 </body>
+{% block js %}
+    
+{% endblock js %}
 
 </html>

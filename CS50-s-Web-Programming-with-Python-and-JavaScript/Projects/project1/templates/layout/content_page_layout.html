@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/books.css') }}">
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <div class="content-body">
+        <div>
+            <nav class="border split-nav">
+                <div class="nav-brand">
+                    <h3>Checkmate Books!</h3>
+                </div>
+                <div class="collapsible">
+                    <input id="collapsible1" type="checkbox" name="collapsible1">
+                    <button>
+                        <label for="collapsible1">
+                            <div class="bar1"></div>
+                            <div class="bar2"></div>
+                            <div class="bar3"></div>
+                        </label>
+                    </button>
+                    <div class="collapsible-body">
+                        <ul class="inline">
+                            <li><a href="{{ url_for('index') }}">Search</a></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div>
+            {% block body %}
+                
+            {% endblock body %}
+        </div>
+    </div>
+
+</body>
+
+</html>
