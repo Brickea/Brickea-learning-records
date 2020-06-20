@@ -1,0 +1,29 @@
+<!-- 
+    Parameters:
+    message: The message that need to display
+ -->
+{% extends 'layout/main_page_layout.html' %}
+
+{% block title %}
+
+Message
+
+{% endblock title %}
+
+{% block header %}
+{{message}}
+{% endblock header %}
+
+{% block body %}
+<div style="text-align: center;">
+    After 2 Second the page will redirect to the sign in page
+</div>
+
+
+{% endblock body %}
+
+{% block js %}
+<script lang="javascript">
+    setTimeout("window.location='{{ url_for('index') }}'", 2000)
+</script>
+{% endblock js %}

@@ -6,15 +6,30 @@
   text-align: center;
 }
 
+.content-body {
+  margin: auto;
+}
+
+.search-body {
+  margin: auto;
+  width: 80%;
+}
+
 @media (min-width: 700px) {
   .login-container {
     width: 50%;
+  }
+  .content-body {
+    width: 70%;
   }
 }
 
 @media (max-width: 699px) {
   .login-container {
     width: 90%;
+  }
+  .content-body {
+    width: 95%;
   }
 }
 /*# sourceMappingURL=books.css.map */
