@@ -445,7 +445,7 @@ public class Student{
     ...
 
     private static class ByName implements Comparator<Stduent>{
-        public int compareTo(Student v, Student w){
+        public int compare(Student v, Student w){
             return v.name.compareTo(w.name)
         }
     }
