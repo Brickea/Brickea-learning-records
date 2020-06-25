@@ -15,6 +15,12 @@
   width: 80%;
 }
 
+.search-table {
+  font-size: xx-large;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
 @media (min-width: 700px) {
   .login-container {
     width: 50%;
