@@ -1,0 +1,32 @@
+<!-- 
+    Parameters:
+    message: The message that need to display
+    para: The page you want to go
+    * sign_in
+    * search
+ -->
+{% extends 'layout/main_page_layout.html' %}
+
+{% block title %} Message {% endblock title %} 
+
+{% block header %} {{message}} {% endblock header %} 
+
+{% block body %}
+<div style="text-align: center;">
+    After 2 Second the page will redirect to the sign in page
+</div>
+{% endblock body %} 
+
+{% block js %}
+<script lang="javascript">
+    var para = "{{goto_page}}"
+    
+    if(para=="sign_in"){
+        console.log("si")
+        setTimeout("window.location='{{ url_for('index') }}'", 2000)
+    }else if(para=="search"){
+        console.log("se")
+        setTimeout("window.location='{{ url_for('search') }}'", 2000)
+    }
+</script>
+{% endblock js %}

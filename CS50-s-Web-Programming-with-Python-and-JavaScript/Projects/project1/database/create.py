@@ -17,7 +17,7 @@ def user_init():
     db.execute(text('drop table if exists users'))
     sql = text('''create table users(
             id serial primary key,
-            username varchar not null,
+            username varchar not null unique,
             password varchar not null
         );''')
     db.execute(sql)
@@ -27,7 +27,7 @@ def book_init():
     db.execute(text('drop table if exists books'))
     sql = text('''create table books(
             id serial primary key,
-            isbn varchar not null,
+            isbn varchar not null unique,
             title varchar not null,
             author varchar not null,
             year varchar not null
@@ -35,9 +35,20 @@ def book_init():
     db.execute(sql)
     db.commit()
 
+def review_init():
+    db.execute(text('drop table if exists reviews'))
+    sql = text('''create table reviews(
+            id serial primary key,
+            username varchar references users(username) not null,
+            isbn varchar references books(isbn) not null,
+            comment varchar not null,
+            star varchar not null
+        );''')
+    db.execute(sql)
+    db.commit()
+
 def main():
-    user_init()
-    # book_init()
+    review_init()
     
 
 if __name__ == "__main__":

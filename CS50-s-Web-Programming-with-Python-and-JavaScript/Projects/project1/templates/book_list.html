@@ -1,0 +1,41 @@
+<!-- 
+    Parameters:
+    para: The display books list
+    * res: book details in isbn, title, author, year
+ -->
+
+{% extends 'layout/content_page_layout.html' %}
+
+{% block body %}
+<div style="text-align: center; ">
+    <h1>
+        Search Result
+    </h1>
+</div>
+
+<div>
+    <table class="table-hover">
+        <thead>
+            <tr style="color: rgb(117, 117, 117);">
+                <th>ISBN</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in res %}
+            
+            <tr onclick="window.location='{{ url_for('review',review_isbn=book.isbn)}}'">
+                <td>{{book.isbn}}</td>
+                <td>{{book.title}}</td>
+                <td>{{book.author}}</td>
+                <td>{{book.year}}</td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+{% endblock body %}

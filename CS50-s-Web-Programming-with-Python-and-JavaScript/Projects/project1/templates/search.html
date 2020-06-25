@@ -1,4 +1,4 @@
-{% extends 'layout/content_page_layout.html' %}
+{% extends 'layout/content_page_layout.html' %} 
 
 {% block body %}
 <div style="text-align: center;">
@@ -8,15 +8,14 @@
 </div>
 <div>
     <div class="search-body">
-        <form action="">
+        <form action="{{ url_for('search_for_book') }}" method="POST">
             <div class="form-group">
                 <div class="row">
                     <div class="col md-8 sm-12">
-                        <input class="input-block" type="text" placeholder="Check this out" id="user_input">
-
+                        <input class="input-block" type="text" placeholder="Check this out" id="user_input" name="user_input">
                     </div>
                     <div class="col md-4 sm-12">
-                        <select class="input-block" id="search_option">
+                        <select class="input-block" id="search_option" name="search_option">
                             <option value="1">ISBN</option>
                             <option value="2">Title</option>
                             <option value="3">Author</option>

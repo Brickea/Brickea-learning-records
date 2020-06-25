@@ -1,0 +1,43 @@
+<!-- 
+    Parameters:
+    message: The message that need to display
+    para: The page you want to go
+ -->
+{% extends 'layout/content_page_layout.html' %}
+
+{% block body %}
+
+<div style="text-align: center; ">
+    <h1>
+        Review this book! {{review_isbn}}
+    </h1>
+</div>
+
+<div>
+    <div class="search-body">
+        <form action="{{ url_for('submit_review',review_isbn=review_isbn) }}" method="POST">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col md-8 sm-12">
+                        <textarea placeholder="Review Comment" name="comment"></textarea>
+                    </div>
+                    <div class="col md-4 sm-12">
+                        <select class="input-block" id="review_rate" name="review_rate">
+                            <option value="1">Star 1</option>
+                            <option value="2">Star 2</option>
+                            <option value="3">Star 3</option>
+                            <option value="4">Star 4</option>
+                            <option value="5">Star 5</option>
+                            <select>
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn-warning btn-block btn-large">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+    
+{% endblock body %}
