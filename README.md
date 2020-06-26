@@ -17,6 +17,7 @@
   - [Introduction to Statistical Learning - Gareth James, ...](#introduction-to-statistical-learning---gareth-james-)
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
 - [Leetcode 练习](#leetcode-练习)
+- [职业杂谈](#职业杂谈)
 
 ---
 
@@ -88,3 +89,8 @@
 ![](https://img.shields.io/badge/Hard-2-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
+
+## 职业杂谈
+
+* [自我驱动职业规划](Career%20Design/Career%20Design.md)
+* [关于入职靠谱IT公司 B站up ```技术胖```](Career%20Design/关于入职靠谱IT公司.md)
