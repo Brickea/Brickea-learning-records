@@ -7,26 +7,39 @@
  -->
 {% extends 'layout/main_page_layout.html' %}
 
-{% block title %} Message {% endblock title %} 
+{% block title %} Message {% endblock title %}
 
-{% block header %} {{message}} {% endblock header %} 
+{% block header %} {{message}} {% endblock header %}
 
 {% block body %}
 <div style="text-align: center;">
-    After 2 Second the page will redirect to the sign in page
+    After 2 Second the page will redirect to the
+    {% if goto_page == "sign_in" %}
+    sign in
+    {% endif %}
+    {% if goto_page == "search" %}
+    search
+    {% endif %}
+    {% if goto_page == "search_for_book" %}
+    search result
+    {% endif %}
+    page
 </div>
-{% endblock body %} 
+{% endblock body %}
 
 {% block js %}
 <script lang="javascript">
     var para = "{{goto_page}}"
-    
-    if(para=="sign_in"){
+
+    if (para == "sign_in") {
         console.log("si")
         setTimeout("window.location='{{ url_for('index') }}'", 2000)
-    }else if(para=="search"){
+    } else if (para == "search") {
         console.log("se")
         setTimeout("window.location='{{ url_for('search') }}'", 2000)
+    } else if (para == "search_for_book") {
+        console.log("se")
+        setTimeout("window.location='{{ url_for('search_for_book') }}'", 2000)
     }
 </script>
 {% endblock js %}

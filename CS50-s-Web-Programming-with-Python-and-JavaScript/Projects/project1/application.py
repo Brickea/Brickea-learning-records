@@ -19,6 +19,7 @@ app.config["SESSION_PERMANENT"] = False
 # The default is 31 days. If set to False (which is the default) the session will be deleted when the user closes the browser.
 app.config["SESSION_TYPE"] = "filesystem"
 # This will store the session information into the local file
+app.config['SECRET_KEY'] = "brickeawang"  # 设置session加密的密钥
 Session(app)
 
 # Set up database
@@ -106,7 +107,7 @@ def search():
     return 'Bad request', 400
 
 
-@app.route("/search_for_book", methods=["POST"])
+@app.route("/search_for_book", methods=["POST","GET"])
 def search_for_book():
     # search_option
     # 1: isbn
@@ -115,7 +116,6 @@ def search_for_book():
     if request.method == "POST":
         user_input = request.form.get("user_input")
         search_class = request.form.get("search_option")
-        convert_json = {}
         res = []
         if(search_class == "1"):
             # isbn search
@@ -125,8 +125,7 @@ def search_for_book():
             if len(res) == 0:
                 # No such book!
                 return render_template("message_redirect.html", message="No such book found!", goto_page="search")
-            for i in res:
-                print(i)
+            
         elif(search_class == "2"):
             # title search
             sql = text(
@@ -136,8 +135,7 @@ def search_for_book():
             if len(res) == 0:
                 # No such book!
                 return render_template("message_redirect.html", message="No such book found!", goto_page="search")
-            for i in res:
-                print(i)
+            
         elif(search_class == "3"):
             # author search
             sql = text(
@@ -147,14 +145,24 @@ def search_for_book():
             if len(res) == 0:
                 # No such book!
                 return render_template("message_redirect.html", message="No such book found!", goto_page="search")
-            for i in res:
-                print(i)
+        
+    elif request.method == "GET":
+        print("get session")
+        print(session)
+        if "search_result" not in session:
+            return render_template("message_redirect.html", message="No book search result found!", goto_page="search")
+        res = session["search_result"]
+    
+    session['test'] = 'test'
+    print("session")
+    print(session)
     return render_template("book_list.html", res=res)
 
 
 # Book review
-@app.route("/review/<review_isbn>", methods=["GET", "POST"])
+@app.route("/review/<review_isbn>", methods=["GET"])
 def review(review_isbn):
+    print(session)
     if request.method == "GET": 
         if "username" in session:
             # The user already login
