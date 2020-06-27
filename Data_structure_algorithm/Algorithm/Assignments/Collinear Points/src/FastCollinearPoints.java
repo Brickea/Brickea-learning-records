@@ -1,4 +1,5 @@
 import edu.princeton.cs.algs4.StdOut;
+
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -39,43 +40,36 @@ public class FastCollinearPoints {
         this.lineSegment = new LineSegment[points.length / 4];
 
         // find collinear points.
-        for (int p = 0; p < points.length; p++) {
-            // Think of p as the origin.
-            Point[] pointQs = new Point[points.length - p - 1];
-            final int currentP = p;
-            int tempIndex = 0;
-            for (int q = p + 1; q < points.length; q++) {
-                // For each other point q, determine the slope it makes with p.
-                pointQs[tempIndex++] = points[q];
-            }
-
-            // Sort the points according to the slopes they makes with p.
-            Arrays.sort(pointQs, new Comparator<Point>() {
+        // sort the points first
+        Arrays.sort(points, Point.slopeOrder());
+        for (int i = 0; i < points.length; i++) {
+            Point[] tempPoints = new Point[points.length - i - 1];
+            tempPoints = Arrays.copyOfRange(points, i+1, points.length);
+            final int currentP = i;
+            Arrays.sort(tempPoints, new Comparator<Point>() {
                 @Override
                 public int compare(Point o1, Point o2) {
                     return Double.compare(points[currentP].slopeTo(o1), points[currentP].slopeTo(o2));
                 }
             });
-
-            // Check if any 3 (or more) adjacent points in the sorted order have equal slopes with respect to p.
-
-            int i = 0, j = 0;
-            Point[] currentSlopePoints = new Point[pointQs.length];
-            while (true) {
-                if (points[currentP].slopeTo(pointQs[i]) == points[currentP].slopeTo(pointQs[j])) {
-                    currentSlopePoints[j] = pointQs[j];
-                    j++;
-                }
-                else if(points[currentP].slopeTo(pointQs[i]) != points[currentP].slopeTo(pointQs[j])){
-                    if(j-i+1 >= 4){
-                        // If so, these points, together with p, are collinear.
-                        Point[] temp = Arrays.copyOfRange(currentSlopePoints,i,j);
-                        Arrays.sort(temp,Point.slopeOrder());
-                        this.lineSegment[this.lineSegmentNumber++] = new LineSegment(temp[i],temp[j-1]);
+            int collinearNumber = 0;
+            int hi = 0;
+            int lo = 0;
+            while (hi < tempPoints.length) {
+                if (points[i].slopeTo(tempPoints[hi]) == points[i].slopeTo(tempPoints[lo])) {
+                    if (hi + 1 == tempPoints.length) {
+                        if (hi - lo + 1 >= 4) {
+                            this.lineSegment[this.lineSegmentNumber++] = new LineSegment(points[i], points[hi - 1]);
+                        }
                     }
-                    i = j++;
+                    hi++;
+                } else {
+                    if (hi - lo + 1 >= 4) {
+                        this.lineSegment[this.lineSegmentNumber++] = new LineSegment(points[i], points[hi - 1]);
+                    }
+                    lo = hi;
+                    hi++;
                 }
-                if(j==pointQs.length) break;
             }
         }
     }
@@ -85,7 +79,7 @@ public class FastCollinearPoints {
      *
      * @return the number of line segments
      */
-    public int numberOfSegments(){
+    public int numberOfSegments() {
         return this.lineSegmentNumber;
     }
 
@@ -94,19 +88,19 @@ public class FastCollinearPoints {
      *
      * @return LineSegment[]
      */
-    public LineSegment[] segments(){
-        return Arrays.copyOfRange(this.lineSegment,0,this.lineSegmentNumber);
+    public LineSegment[] segments() {
+        return Arrays.copyOfRange(this.lineSegment, 0, this.lineSegmentNumber);
     }
 
     public static void main(String[] args) {
         StdOut.println("test");
         Point[] testP = new Point[10];
-        for(int i=0;i<10;i++){
-            testP[i] = new Point(i,i);
+        for (int i = 0; i < 10; i++) {
+            testP[i] = new Point(i, i);
         }
 
         FastCollinearPoints testF = new FastCollinearPoints(testP);
-        for(LineSegment i :testF.segments()){
+        for (LineSegment i : testF.segments()) {
             StdOut.println(i);
         }
     }
