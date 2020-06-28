@@ -1,7 +1,7 @@
 # Introduction <!-- omit in toc -->
 
-- [asdf](#asdf)
+- [Overview of this course](#overview-of-this-course)
 
 ## Overview of this course
 
-## Rule
+![](../Learning%20Map.png)
