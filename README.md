@@ -58,6 +58,7 @@
 * [SQL and SQLAlchemy](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%204%20-%20SQL/SQL.md)
 * [FlaskSQL JSON ORM](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%205%20-%20ORM%20Flask-sql/ORM%20and%20Flask-SQL.md)
 * [```Project 1```](CS50-s-Web-Programming-with-Python-and-JavaScript/Projects/project1/README.md)
+* [JavaScript Websocket](CS50-s-Web-Programming-with-Python-and-JavaScript/Lectures%20and%20Notes/Lecture%206%20-%20JavaScript/JavaScript.md)
 
 ### Algorithms Robert Sedgewick and Kevin Wayne
 
