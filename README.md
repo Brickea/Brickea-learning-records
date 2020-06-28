@@ -82,7 +82,7 @@
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
-![](Machine-Learning-Hung-yi%20Lee/Learning%20Map.png)
+* [Introduction](Machine-Learning-Hung-yi%20Lee/Part%201%20Introduction/Introduction.md)
 
 ## Leetcode 练习
 
