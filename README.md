@@ -72,6 +72,8 @@
 * [Week 3 - Mergesort and Quicksort](Data_structure_algorithm/Algorithm/Lectures/Week%203/Week%203.md)
   * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%203.md)
 * [```Practice 3 collinear```](Data_structure_algorithm/Algorithm/Assignments/Collinear%20Points/README.md)
+* [Week 4 - Priority queue and Elementary symbol tables](Data_structure_algorithm/Algorithm/Job%20Interview/Week%204.md)
+  * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%204.md)
 
 
 ### Introduction to Statistical Learning - Gareth James, ...
@@ -86,7 +88,7 @@
 
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-36-brightgreen)
+![](https://img.shields.io/badge/Easy-42-brightgreen)
 ![](https://img.shields.io/badge/Medium-16-orange)
 ![](https://img.shields.io/badge/Hard-2-red)
 

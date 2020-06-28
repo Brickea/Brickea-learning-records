@@ -73,21 +73,60 @@
     Runtime: 0 ms, faster than 100.00% of Java online submissions for Search in Rotated Sorted Array.
     Memory Usage: 39.3 MB, less than 37.54% of Java online submissions for Search in Rotated Sorted Array.
     ```
-* Search in Rotated Sorted Array II m
+* 81 Search in Rotated Sorted Array II m
   * 可以用二分查找，但是有点复杂，试着直接一遍遍历，结果还挺好
     ```
     Runtime: 0 ms, faster than 100.00% of Java online submissions for Search in Rotated Sorted Array II.
     Memory Usage: 39.4 MB, less than 35.34% of Java online submissions for Search in Rotated Sorted Array II.
     ```
-* Find Minimum in Rotated Sorted Array m
+* 153 Find Minimum in Rotated Sorted Array m
   * 直接一遍遍历，结果很好
     ```
     Runtime: 0 ms, faster than 100.00% of Java online submissions for Find Minimum in Rotated Sorted Array.
     Memory Usage: 38.7 MB, less than 95.30% of Java online submissions for Find Minimum in Rotated Sorted Array.
     ```
-* Find Minimum in Rotated Sorted Array II
+* 154 Find Minimum in Rotated Sorted Array II h
   * 我裂开了，还是一遍遍历就行了。我怀疑他的测试用例是随机找的pivat点，所以点的分布更接近中心，平均下来可能是$N/2$，比起复杂条件的二分，直接一边遍历的开销甚至更小。
-```
-Runtime: 0 ms, faster than 100.00% of Java online submissions for Find Minimum in Rotated Sorted Array II.
-Memory Usage: 39.5 MB, less than 36.19% of Java online submissions for Find Minimum in Rotated Sorted Array II.
-```
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Find Minimum in Rotated Sorted Array II.
+    Memory Usage: 39.5 MB, less than 36.19% of Java online submissions for Find Minimum in Rotated Sorted Array II.
+    ```
+
+## String
+
+* 28 Implement strStr() e
+  * What should we return when needle is an empty string? This is a great question to ask during an interview. For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
+    ```
+    Runtime: 1 ms, faster than 64.82% of Java online submissions for Implement strStr().
+    Memory Usage: 39.4 MB, less than 23.61% of Java online submissions for Implement strStr().
+    ```
+* 14 Longest Common Prefix e
+  * ```substring```
+      ```
+      Runtime: 3 ms, faster than 27.74% of Java online submissions for Longest Common Prefix.
+      Memory Usage: 39.8 MB, less than 6.60% of Java online submissions for Longest Common Prefix.
+      ```
+* 58 Length of Last Word e
+  * ```trim```
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Length of Last Word.
+    Memory Usage: 37.5 MB, less than 74.80% of Java online submissions for Length of Last Word.
+    ```
+* 387 First Unique Character in a String e
+  * Can be optimized
+    ```
+    Runtime: 37 ms, faster than 10.01% of Java online submissions for First Unique Character in a String.
+    Memory Usage: 39.6 MB, less than 87.99% of Java online submissions for First Unique Character in a String.
+    ```
+* 383 Ransom Note e
+  * ```HashMap, toCharArray```
+    ```
+    Runtime: 9 ms, faster than 46.81% of Java online submissions for Ransom Note.
+    Memory Usage: 40.8 MB, less than 17.90% of Java online submissions for Ransom Note.
+    ```
+* 344 Reverse String
+  * Nothing to optimized
+    ```
+    Runtime: 1 ms, faster than 56.87% of Java online submissions for Reverse String.
+    Memory Usage: 46.2 MB, less than 58.97% of Java online submissions for Reverse String.
+    ```
