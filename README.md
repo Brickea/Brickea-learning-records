@@ -11,6 +11,7 @@
 
 目录
 - [课程](#课程)
+  - [留学的课程](#留学的课程)
   - [数据结构与算法快速入门](#数据结构与算法快速入门)
   - [CS50-s-Web-Programming](#cs50-s-web-programming)
   - [Algorithms Robert Sedgewick and Kevin Wayne](#algorithms-robert-sedgewick-and-kevin-wayne)
@@ -22,6 +23,25 @@
 ---
 
 ## 课程
+
+### [留学的课程](https://github.com/Brickea/NEUCourse)
+
+目前GPA 3.7 (4)
+
+INFO 7390 Advance in Data Science Architecture
+Professor: Nik Bear Brown
+
+INFO 6210 Data Management and Database Design
+Professor: Chaiyaporn Mutsalklisana
+
+MGEN Communication for Engineers
+Professor: COE
+
+INFO 6105 Data Science Engineering Methods and Tools
+Professor: Konstantopoulos, Dino
+
+INFO 5100 Application Engineering and Development
+Professor: Kal Bugrara
 
 ### 数据结构与算法快速入门
 
