@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>to do list</title>
+        <script>
+            document.addEventListener("DOMContentLoaded",()=>{
+                // Set submit button as disable
+                document.querySelector('#note').onkeyup = () =>{
+                    if(document.querySelector('#note').value.length > 0)
+                        document.querySelector('#submit_button').disabled = false;
+                    else
+                        document.querySelector('#submit_button').disabled = true;
+                }
+                document.querySelector('#input_form').onsubmit = ()=>{   
+
+                    // Create li
+                    let note = document.querySelector('#note').value;
+                    note_li = document.createElement('li');
+                    note_li.innerHTML = note;
+                    
+                    // Add new item to list
+                    document.querySelector('#list').append(note_li);
+
+                    // Clear input area
+                    document.querySelector('#note').value = '';
+                    document.querySelector('#submit_button').disabled = true;
+
+                    // Stop form from submmiting
+                    return false;
+
+                }
+            })
+
+        </script>
+    </head>
+    <body>
+        <ul id="list">
+            
+        </ul>
+
+        <form id="input_form">
+            <input type="text" name="note" autofocus id="note">
+            <input type="submit" id="submit_button" disabled="true">
+        </form>
+    </body>
+</html>

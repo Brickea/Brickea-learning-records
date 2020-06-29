@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script>
+        if (!localStorage.getItem('number')) localStorage.setItem('number', 0);
+        
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('#number').innerHTML = localStorage.getItem('number');
+            document.querySelector('#number_plus_one').onclick = () => {
+                let number = localStorage.getItem('number');
+                ++number;
+                document.querySelector('#number').innerHTML = number;
+                localStorage.setItem('number',number);
+            }
+        })
+    </script>
+    <title>LocalStorage</title>
+</head>
+
+<body>
+    <h1 id="number">0</h1>
+    <button id="number_plus_one">Click</button>
+</body>
+
+</html>
