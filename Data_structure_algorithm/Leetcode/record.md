@@ -1,4 +1,10 @@
-# Leetcode 练习记录
+# Leetcode 练习记录<!-- omit in toc -->
+
+- [Linked list practice](#linked-list-practice)
+- [Tree](#tree)
+- [Binary search](#binary-search)
+- [String](#string)
+- [Math](#math)
 
 ## Linked list practice
 
@@ -124,9 +130,48 @@
     Runtime: 9 ms, faster than 46.81% of Java online submissions for Ransom Note.
     Memory Usage: 40.8 MB, less than 17.90% of Java online submissions for Ransom Note.
     ```
-* 344 Reverse String
+* 344 Reverse String e
   * Nothing to optimized
     ```
     Runtime: 1 ms, faster than 56.87% of Java online submissions for Reverse String.
     Memory Usage: 46.2 MB, less than 58.97% of Java online submissions for Reverse String.
+    ```
+
+## Math
+
+* 7 Reverse Integer e
+  * ```Math.pow```, ```Integer.MAX_VALUE```
+    ```
+    Runtime: 1 ms, faster than 100.00% of Java online submissions for Reverse Integer.
+    Memory Usage: 36.6 MB, less than 76.60% of Java online submissions for Reverse Integer.
+    ```
+* 165 Compare Version Numbers m
+  * ```str.split()```, ```\\.```, ```Integer.parseInt()```,```()? : ```
+    ```
+    Runtime: 1 ms, faster than 90.04% of Java online submissions for Compare Version Numbers.
+    Memory Usage: 37.6 MB, less than 39.17% of Java online submissions for Compare Version Numbers.
+    ```
+* 66 Plus One e
+  * Nothing to say
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Plus One.
+    Memory Usage: 38.3 MB, less than 19.00% of Java online submissions for Plus One.
+    ```
+* 8 String to Integer (atoi) m
+  * ```StringBuilder```
+    ```
+    Runtime: 4 ms, faster than 25.51% of Java online submissions for String to Integer (atoi).
+    Memory Usage: 40.5 MB, less than 6.15% of Java online submissions for String to Integer (atoi).
+    ```
+* 258 Add Digits
+  * Nothing to say
+    ```
+    Runtime: 1 ms, faster than 100.00% of Java online submissions for Add Digits.
+    Memory Usage: 36.9 MB, less than 47.08% of Java online submissions for Add Digits.
+    ```
+* 67 Add Binary
+  * ```Integer.toBinaryString```, ```Integer.parseInt(str,radix)```, ```StringBuilder```, ```StringBuilder.reverse().toString()```
+    ```
+    Runtime: 2 ms, faster than 76.96% of Java online submissions for Add Binary.
+    Memory Usage: 37.9 MB, less than 90.16% of Java online submissions for Add Binary.
     ```

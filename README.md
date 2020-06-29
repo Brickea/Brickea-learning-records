@@ -26,21 +26,21 @@
 
 ### [留学的课程](https://github.com/Brickea/NEUCourse)
 
-目前GPA 3.7 (4)
+目前 GPA 3.7 (4)
 
-INFO 7390 Advance in Data Science Architecture
+* INFO 7390 Advance in Data Science Architecture
 Professor: Nik Bear Brown
 
-INFO 6210 Data Management and Database Design
+* INFO 6210 Data Management and Database Design
 Professor: Chaiyaporn Mutsalklisana
 
-MGEN Communication for Engineers
+* MGEN Communication for Engineers
 Professor: COE
 
-INFO 6105 Data Science Engineering Methods and Tools
+* INFO 6105 Data Science Engineering Methods and Tools
 Professor: Konstantopoulos, Dino
 
-INFO 5100 Application Engineering and Development
+* INFO 5100 Application Engineering and Development
 Professor: Kal Bugrara
 
 ### 数据结构与算法快速入门
@@ -106,6 +106,8 @@ Professor: Kal Bugrara
 ![](https://img.shields.io/badge/Status-Updating-red)
 
 * [Introduction](Machine-Learning-Hung-yi%20Lee/Part%201%20Introduction/Introduction.md)
+* [Regression](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/)
+* [Bias & Variance](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/)
 
 ## Leetcode 练习
 
