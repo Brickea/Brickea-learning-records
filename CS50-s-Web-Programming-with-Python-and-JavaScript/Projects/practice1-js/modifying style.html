@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <script>
+        document.addEventListener('DOMContentLoaded',  () => {
+            // Change font color to red
+            document.querySelector('#red').onclick = () => {
+                document.querySelector('#hello').style.color = 'red';
+            };
+
+            // Change font color to blue
+            document.querySelector('#blue').onclick = () => {
+                document.querySelector('#hello').style.color = 'blue';
+            };
+
+            // Change font color to green
+            document.querySelector('#green').onclick = () => {
+                document.querySelector('#hello').style.color = 'green';
+            };
+
+            // Foreach
+            document.querySelectorAll('.color-change').forEach(button => {
+                button.onclick = () => {
+                    document.querySelector('#goodbye').style.color = button.dataset.color;
+                }
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <h1 id="hello">Hello!</h1>
+    <button id="red">Red</button>
+    <button id="blue">Blue</button>
+    <button id="green">Green</button>
+
+    <h1 id="goodbye">Goodbye</h1>
+    <button class="color-change" data-color="red">Red</button>
+    <button class="color-change" data-color="green">Green</button>
+    <button class="color-change" data-color="Yellow">Yellow</button>
+</body>
+
+</html>

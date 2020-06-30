@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        var number = 0;
+        function hello() {
+            alert('hello world!');
+        }
+        function goodbye() {
+            document.querySelector('h1').innerHTML = "GoodBye!"
+        }
+        function count_number(){
+            document.querySelector('#countNumber').innerHTML = number++;
+        }
+    </script>
+    <title>JS hello world</title>
+</head>
+
+<body onload="hello()">
+    <h1>Welcome</h1>
+    <button onclick="hello()">Click here!</button>
+    <button onclick="goodbye()">GoodBye</button>
+    <h2 id="countNumber">0</h2>
+    <button onclick="count_number()">count</button>
+</body>
+
+</html>
