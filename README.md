@@ -121,3 +121,4 @@ Professor: Kal Bugrara
 
 * [自我驱动职业规划](Career%20Design/Career%20Design.md)
 * [关于入职靠谱IT公司 B站up ```技术胖```](Career%20Design/关于入职靠谱IT公司.md)
+* [Java开发高频面试题全解析](Career%20Design/Java开发高频面试题全解析)

@@ -5,6 +5,7 @@
 - [Binary search](#binary-search)
 - [String](#string)
 - [Math](#math)
+- [Array](#array)
 
 ## Linked list practice
 
@@ -174,4 +175,42 @@
     ```
     Runtime: 2 ms, faster than 76.96% of Java online submissions for Add Binary.
     Memory Usage: 37.9 MB, less than 90.16% of Java online submissions for Add Binary.
+    ```
+## Array
+
+* 27 Remove Element e
+  * Nothing to say
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Element.
+    Memory Usage: 40 MB, less than 5.06% of Java online submissions for Remove Element.
+    ```
+* 26 Remove Duplicates from Sorted Array e
+  * Nothing to say
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Duplicates from Sorted Array.
+    Memory Usage: 41.3 MB, less than 55.16% of Java online submissions for Remove Duplicates from Sorted Array.
+    ```
+* 80 Remove Duplicates from Sorted Array II m
+  * Double pointers, pay attention to the condition
+    ```
+    Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Duplicates from Sorted Array II.
+    Memory Usage: 39.6 MB, less than 59.90% of Java online submissions for Remove Duplicates from Sorted Array II.
+    ```
+* 189 Rotate Array e
+  * Nothing to say
+    ```
+    Runtime: 248 ms, faster than 5.63% of Java online submissions for Rotate Array.
+    Memory Usage: 39.5 MB, less than 98.82% of Java online submissions for Rotate Array.
+    ```
+* 41 First Missing Positive h (need to be improved)
+  * Put the number into the position that the index is same as number. Then interate from the begining. Find the first one that not match the index.
+    ```
+    Runtime: 24 ms, faster than 5.26% of Java online submissions for First Missing Positive.
+    Memory Usage: 40 MB, less than 5.07% of Java online submissions for First Missing Positive.
+    ```
+* 134 Gas Station m (need to be improved)
+  * Nothing to say
+    ```
+    Runtime: 57 ms, faster than 15.64% of Java online submissions for Gas Station.
+    Memory Usage: 39.6 MB, less than 79.80% of Java online submissions for Gas Station.
     ```
