@@ -7,6 +7,8 @@
 
 三十而立，四十而不惑，五十而知天命，六十而耳顺，七十而从心所欲，不逾矩
 
+It is because the Github only support the raw markdown. So all the formula I wrote cannot be rendered. So I highly recommend you install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima) for your chrome.
+
 ---
 
 目录
