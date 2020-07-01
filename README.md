@@ -105,9 +105,18 @@ Professor: Kal Bugrara
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
+Here will include two parts. **Notes** are the note during self-learning. 🔥 Warning of Math 🔥 is the mathematical Pf about some theories, which is the thing I like most.
+
+**Notes**
 * [Introduction](Machine-Learning-Hung-yi%20Lee/Part%201%20Introduction/Introduction.md)
 * [Regression](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/)
+  * [Regression Case Study](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/res/Part1%20Mindmap/RegressionCaseStudy.png)
+  * [Gradient Descent Note](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/res/Part1%20Mindmap/GradientDescent.png)
 * [Bias & Variance](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/)
+  * [Bias VS. Variance Note](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/res/Part1%20Mindmap/BiasVSVariance.png)
+
+**🔥 Warning of Math 🔥**
+* [Why Gradient Descent Work](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/Why%20Gradient%20Descent%20Work.md)
 
 ## Leetcode 练习
 
