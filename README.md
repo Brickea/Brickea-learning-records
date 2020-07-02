@@ -107,8 +107,7 @@ Professor: Kal Bugrara
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
-Here will include two parts. **Notes** are the note during self-learning. 🔥 Warning of Math 🔥 is the mathematical Pf about some theories, which is the thing I like most.
-
+Here will include two parts. **Notes** are the note during self-learning. 🔥 Warning of Math 🔥 is the mathematical Pf about some theories.
 **Notes**
 * [Introduction](Machine-Learning-Hung-yi%20Lee/Part%201%20Introduction/Introduction.md)
 * [Regression](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/)
