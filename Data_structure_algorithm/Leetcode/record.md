@@ -3,7 +3,11 @@
 - [July Challange](#july-challange)
   - [Week 1](#week-1)
     - [Binary Tree Level Order Traversal II](#binary-tree-level-order-traversal-ii)
+    - [Prison Cells After N Days](#prison-cells-after-n-days)
 - [Linked list practice](#linked-list-practice)
+  - [206. Reverse Linked List E](#206-reverse-linked-list-e)
+  - [141. Linked List Cycle E](#141-linked-list-cycle-e)
+  - [876. Middle of the Linked List](#876-middle-of-the-linked-list)
 - [Tree](#tree)
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
 - [Binary search](#binary-search)
@@ -16,6 +20,10 @@
   - [189. Rotate Array](#189-rotate-array)
   - [41. First Missing Positive H](#41-first-missing-positive-h)
   - [134. Gas Station M](#134-gas-station-m)
+- [Bit Manipulation](#bit-manipulation)
+  - [389. Find the Difference E](#389-find-the-difference-e)
+  - [136. Single Number E](#136-single-number-e)
+  - [137. Single Number II M](#137-single-number-ii-m)
 
 ## July Challange
 
@@ -81,23 +89,246 @@ class Solution {
 }
 ```
 
+#### Prison Cells After N Days
+
+There are 8 prison cells in a row, and each cell is either occupied or vacant.
+
+Each day, whether the cell is occupied or vacant changes according to the following rules:
+
+If a cell has two adjacent neighbors that are both occupied or both vacant, then the cell becomes occupied.
+Otherwise, it becomes vacant.
+(Note that because the prison is a row, the first and the last cells in the row can't have two adjacent neighbors.)
+
+We describe the current state of the prison in the following way: cells[i] == 1 if the i-th cell is occupied, else cells[i] == 0.
+
+Given the initial state of the prison, return the state of the prison after N days (and N such changes described above.)
+
+Example 1:
+```
+Input: cells = [0,1,0,1,1,0,0,1], N = 7
+Output: [0,0,1,1,0,0,0,0]
+Explanation: 
+The following table summarizes the state of the prison on each day:
+Day 0: [0, 1, 0, 1, 1, 0, 0, 1]
+Day 1: [0, 1, 1, 0, 0, 0, 0, 0]
+Day 2: [0, 0, 0, 0, 1, 1, 1, 0]
+Day 3: [0, 1, 1, 0, 0, 1, 0, 0]
+Day 4: [0, 0, 0, 0, 0, 1, 0, 0]
+Day 5: [0, 1, 1, 1, 0, 1, 0, 0]
+Day 6: [0, 0, 1, 0, 1, 1, 0, 0]
+Day 7: [0, 0, 1, 1, 0, 0, 0, 0]
+```
+
+Example 2:
+```
+Input: cells = [1,0,0,1,0,0,1,0], N = 1000000000
+Output: [0,0,1,1,1,1,1,0]
+```
+
+Note:
+```
+cells.length == 8
+cells[i] is in {0, 1}
+1 <= N <= 10^9
+```
+
+Solution1 每次得到新的cells就存在set里面，然后如果新的cells出现了重复，则说明找到了循环节，将N对这个set取模，最后即可得到对应的cells结果
+
+Solution2 用数学方法证明循环 为14
+
+[Reference](https://math.stackexchange.com/questions/3311568/why-does-this-pattern-repeat-after-14-cycles-instead-of-256-can-you-give-a-proo/3311963#3311963)
+
+```java
+class Solution {
+    public int[] prisonAfterNDays(int[] cells, int N) {
+        int[] result = new int[cells.length];
+        N= N%14 == 0?14:N%14;
+        int i, length = cells.length-1;
+        while(N > 0)
+        {
+            for(i=1; i<length; i++)
+            {
+                if(cells[i-1]==cells[i+1])
+                    result[i]=1;
+                else
+                    result[i]=0;
+            }
+            N--;
+            cells=Arrays.copyOf(result, length+1);
+        }
+        return result;
+    }
+}
+```
+
+```
+Runtime: 2 ms, faster than 83.39% of Java online submissions for Prison Cells After N Days.
+Memory Usage: 40.5 MB, less than 8.64% of Java online submissions for Prison Cells After N Days.
+```
+
+
 ## Linked list practice
 
-* 206 Reverse Linked List
-  * iteratively
-    * 40 ms 15.3 MB python3
-  * recursively
-    * 28 ms	18.5 MB	python3
-* 141 Linked List Cycle
-  * 列表存储走过的节点
-    * 1172 ms 5.4% faster 17 MB	100% memory less python3
-  * 快慢指针
-    * 52 ms	47% faster 16.9 MB 100% memory less python3
-* 876 Middle of the Linked List
-  * 列表存储走过的节点
-    * 32 ms 40% faster	13.7 MB	7% memory less python3
-  * 快慢指针
-    * 32 ms	40% faster 14 MB 7% memory less	python3
+### 206. Reverse Linked List E 
+
+Reverse a singly linked list.
+
+Example:
+```
+Input: 1->2->3->4->5->NULL
+Output: 5->4->3->2->1->NULL
+```
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head == null){
+            return null;
+        }
+        ListNode current = head;
+        ListNode last = null;
+        while(current!=null){
+            ListNode temp = current.next;
+            current.next = last;
+            last = current;
+            current = temp;
+        }
+        head = last;
+        return head;
+    }
+    
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Reverse Linked List.
+Memory Usage: 40.5 MB, less than 5.05% of Java online submissions for Reverse Linked List.
+```
+
+### 141. Linked List Cycle E
+
+Given a linked list, determine if it has a cycle in it.
+
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Example 1:
+```
+Input: head = [3,2,0,-4], pos = 1
+Output: true
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+```
+![](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist.png)
+
+Example 2:
+```
+Input: head = [1,2], pos = 0
+Output: true
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+```
+![](https://assets.leetcode.com/uploads/2018/12/07/circularlinkedlist_test2.png)
+
+用快慢指针，一个跨两步遍历，一个一步一步遍历，在有环的情况下，两个指针会碰在一起
+
+```java
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null) return false;
+        ListNode fast = head;
+        ListNode slow = head;
+        while(fast!=null&&fast.next != null && slow != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Linked List Cycle.
+Memory Usage: 39.7 MB, less than 45.18% of Java online submissions for Linked List Cycle.
+```
+### 876. Middle of the Linked List
+
+Given a non-empty, singly linked list with head node head, return a middle node of linked list.
+
+If there are two middle nodes, return the second middle node.
+
+Example 1:
+```
+Input: [1,2,3,4,5]
+Output: Node 3 from this list (Serialization: [3,4,5])
+The returned node has value 3.  (The judge's serialization of this node is [3,4,5]).
+Note that we returned a ListNode object ans, such that:
+ans.val = 3, ans.next.val = 4, ans.next.next.val = 5, and ans.next.next.next = NULL.
+```
+
+Example 2:
+```
+Input: [1,2,3,4,5,6]
+Output: Node 4 from this list (Serialization: [4,5,6])
+Since the list has two middle nodes with values 3 and 4, we return the second one.
+```
+
+Note:
+
+The number of nodes in the given list will be between 1 and 100.
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        if(head==null) return null;
+        
+        ListNode fast = head;
+        ListNode slow = head;
+        
+        while(fast!=null&&fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+        
+        return slow;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Middle of the Linked List.
+Memory Usage: 38.5 MB, less than 9.96% of Java online submissions for Middle of the Linked List.
+```
+
 * 24 Swap Nodes in Pairs
   * recursively
     * 16 ms 99.75% faster	13.8 MB	6.6% memory less python3
@@ -812,4 +1043,168 @@ class Solution {
 ```
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Gas Station.
 Memory Usage: 40.1 MB, less than 24.14% of Java online submissions for Gas Station.
+```
+
+## Bit Manipulation
+
+### 389. Find the Difference E
+
+Given two strings s and t which consist of only lowercase letters.
+
+String t is generated by random shuffling string s and then add one more letter at a random position.
+
+Find the letter that was added in t.
+
+Example:
+```
+Input:
+s = "abcd"
+t = "abcde"
+
+Output:
+e
+
+Explanation:
+'e' is the letter that was added.
+```
+
+Solution 1:
+
+思路：先排序然后按位查询，因为Arrays.sort针对基本数据类型的实现是quicksort，所以时间复杂度是$O(N\log N)$
+
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+        char[] sS = s.toCharArray();
+        char[] tT = t.toCharArray();
+        
+        Arrays.sort(sS);
+        Arrays.sort(tT);
+        
+        for(int i=0;i<tT.length;i++){
+            if(i>sS.length-1){
+                return tT[i];
+            }
+            else if(tT[i]!=sS[i]){
+                return tT[i];
+            }
+        }
+        
+        return ' ';
+    }
+}
+```
+
+```
+Runtime: 6 ms, faster than 25.86% of Java online submissions for Find the Difference.
+Memory Usage: 39.8 MB, less than 5.03% of Java online submissions for Find the Difference.
+```
+
+Solution 2 位运算，利用异或的性质来得到新添加的字符
+
+```java
+class Solution {
+    public char findTheDifference(String s, String t) {
+        char[] sS = s.toCharArray();
+        char[] tT = t.toCharArray();
+        char res = 0;
+        for(int i=0;i<tT.length;i++){
+            if(i>sS.length-1){
+                res ^= tT[i];
+            }else{
+                res ^= tT[i];
+                res ^= sS[i];
+            }
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 2 ms, faster than 56.20% of Java online submissions for Find the Difference.
+Memory Usage: 40.1 MB, less than 5.03% of Java online submissions for Find the Difference.
+```
+
+### 136. Single Number E
+
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+```
+Input: [2,2,1]
+Output: 1
+```
+Example 2:
+```
+Input: [4,1,2,1,2]
+Output: 4
+```
+
+这个就非常明显了，直接用位运算异或即可
+
+```java
+class Solution {
+    public int singleNumber(int[] nums) {
+        int res=0;
+        for(int i=0;i<nums.length;i++){
+            res ^= nums[i];
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 63.74% of Java online submissions for Single Number.
+Memory Usage: 44.2 MB, less than 6.16% of Java online submissions for Single Number.
+```
+
+### 137. Single Number II M
+
+Given a non-empty array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Example 1:
+```
+Input: [2,2,3,2]
+Output: 3
+```
+Example 2:
+```
+Input: [0,1,0,1,0,1,99]
+Output: 99
+```
+
+遍历位数，如果所有数字在这位上的总和不是3的倍数，那么单次出现的数字在这一位一定有值，逐位拼凑出来这个数字 
+
+```java
+class Solution {
+    public int singleNumber(int[] nums) {
+        int res=0;
+        for(int i=0;i<32;i++){
+            int count = 0;
+            for(int j:nums){
+                if((j>>i & 1)==1){
+                    count++;
+                }
+            }
+            if(count%3!=0){
+                res |= 1 << i;
+            }
+        }
+        return res;
+    }
+}
+```
+```
+Runtime: 3 ms, faster than 57.22% of Java online submissions for Single Number II.
+Memory Usage: 39.3 MB, less than 50.72% of Java online submissions for Single Number II.
 ```

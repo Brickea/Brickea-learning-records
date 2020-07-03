@@ -19,6 +19,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [Algorithms Robert Sedgewick and Kevin Wayne](#algorithms-robert-sedgewick-and-kevin-wayne)
   - [Introduction to Statistical Learning - Gareth James, ...](#introduction-to-statistical-learning---gareth-james-)
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
+- [Java 每天一个知识点](#java-每天一个知识点)
 - [Leetcode 练习](#leetcode-练习)
 - [职业杂谈](#职业杂谈)
 
@@ -119,10 +120,14 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 **🔥 Warning of Math 🔥**
 * [Why Gradient Descent Work](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/Why%20Gradient%20Descent%20Work.md)
 
+## Java 每天一个知识点
+
+![](https://img.shields.io/badge/Status-Updating-red)
+
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-48-brightgreen)
-![](https://img.shields.io/badge/Medium-20-orange)
+![](https://img.shields.io/badge/Easy-49-brightgreen)
+![](https://img.shields.io/badge/Medium-22-orange)
 ![](https://img.shields.io/badge/Hard-3-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
