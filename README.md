@@ -124,6 +124,9 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
+* [浮点数的计算](Java%20Day%20Day%20Up/浮点数的计算.md)
+* [Java注解Annotation](Java%20Day%20Day%20Up/Java%20注解%20Annotation.md)
+
 ## Leetcode 练习
 
 ![](https://img.shields.io/badge/Easy-49-brightgreen)
