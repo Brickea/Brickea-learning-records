@@ -4,10 +4,17 @@
   - [Week 1](#week-1)
     - [Binary Tree Level Order Traversal II](#binary-tree-level-order-traversal-ii)
     - [Prison Cells After N Days](#prison-cells-after-n-days)
+  - [Ugly Number ||](#ugly-number-)
 - [Linked list practice](#linked-list-practice)
   - [206. Reverse Linked List E](#206-reverse-linked-list-e)
   - [141. Linked List Cycle E](#141-linked-list-cycle-e)
-  - [876. Middle of the Linked List](#876-middle-of-the-linked-list)
+  - [876. Middle of the Linked List E](#876-middle-of-the-linked-list-e)
+  - [237. Delete Node in a Linked List E](#237-delete-node-in-a-linked-list-e)
+  - [19. Remove Nth Node From End of List M](#19-remove-nth-node-from-end-of-list-m)
+  - [83. Remove Duplicates from Sorted List E](#83-remove-duplicates-from-sorted-list-e)
+  - [203. Remove Linked List Elements E](#203-remove-linked-list-elements-e)
+  - [82. Remove Duplicates from Sorted List II M](#82-remove-duplicates-from-sorted-list-ii-m)
+  - [369. Plus One Linked List](#369-plus-one-linked-list)
 - [Tree](#tree)
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
 - [Binary search](#binary-search)
@@ -166,6 +173,45 @@ Runtime: 2 ms, faster than 83.39% of Java online submissions for Prison Cells Af
 Memory Usage: 40.5 MB, less than 8.64% of Java online submissions for Prison Cells After N Days.
 ```
 
+### Ugly Number ||
+
+Write a program to find the n-th ugly number.
+
+Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. 
+
+Example:
+```
+Input: n = 10
+Output: 12
+Explanation: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.
+
+Note:  
+
+1 is typically treated as an ugly number.
+n does not exceed 1690.
+```
+思路就是按照顺序生成对应的ugly number
+```java
+class Solution {
+    public int nthUglyNumber(int n) {
+            int[] ugly = new int[n];
+            ugly[0] = 1;
+            int indexOf2 = 0, indexOf3 = 0, indexOf5 = 0;
+            int factorOf2 = 2, factorOf3 = 3, factorOf5 = 5;
+            for(int i=1;i<n;i++){
+                int min = Math.min(Math.min(factorOf2,factorOf3),factorOf5);
+                ugly[i] = min;
+                if(factorOf2 == min)
+                    factorOf2 = 2*ugly[++indexOf2];
+                if(factorOf3 == min)
+                    factorOf3 = 3*ugly[++indexOf3];
+                if(factorOf5 == min)
+                    factorOf5 = 5*ugly[++indexOf5];
+            }
+            return ugly[n-1];
+        }
+}
+```
 
 ## Linked list practice
 
@@ -270,7 +316,7 @@ public class Solution {
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Linked List Cycle.
 Memory Usage: 39.7 MB, less than 45.18% of Java online submissions for Linked List Cycle.
 ```
-### 876. Middle of the Linked List
+### 876. Middle of the Linked List E
 
 Given a non-empty, singly linked list with head node head, return a middle node of linked list.
 
@@ -328,6 +374,290 @@ class Solution {
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Middle of the Linked List.
 Memory Usage: 38.5 MB, less than 9.96% of Java online submissions for Middle of the Linked List.
 ```
+
+### 237. Delete Node in a Linked List E
+
+Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.
+
+Given linked list -- head = [4,5,1,9], which looks like following:
+
+Example 1:
+```
+Input: head = [4,5,1,9], node = 5
+Output: [4,1,9]
+Explanation: You are given the second node with value 5, the linked list should become 4 -> 1 -> 9 after calling your function.
+```
+Example 2:
+```
+Input: head = [4,5,1,9], node = 1
+Output: [4,5,9]
+Explanation: You are given the third node with value 1, the linked list should become 4 -> 5 -> 9 after calling your function.
+```
+
+Note:
+```
+The linked list will have at least two elements.
+All of the nodes' values will be unique.
+The given node will not be the tail and it will always be a valid node of the linked list.
+Do not return anything from your function.
+```
+
+直接赋值遍历即可
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) {
+        
+        while(node.next!=null){
+            node.val = node.next.val;
+            if(node.next.next==null){
+                node.next = null;
+                break;
+            }
+            node = node.next;
+        }
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Delete Node in a Linked List.
+Memory Usage: 41.5 MB, less than 5.02% of Java online submissions for Delete Node in a Linked List.
+```
+
+### 19. Remove Nth Node From End of List M
+
+Given a linked list, remove the n-th node from the end of list and return its head.
+
+Example:
+```
+Given linked list: 1->2->3->4->5, and n = 2.
+
+After removing the second node from the end, the linked list becomes 1->2->3->5.
+```
+
+Note:
+
+Given n will always be valid.
+
+Follow up:
+
+Could you do this in one pass?
+
+思路就是双指针，一个指向尾，另一个和尾巴保持n的距离，最后用链表删除结点的方法即可。这里有个情况就是删除的节点是头节点，这时候直接返回```head.next```
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode tail = head;
+        ListNode targetPre = head;
+        while(n>0&&tail.next!=null){
+            tail = tail.next;
+            n--;
+        }
+        if(n==0){
+            while(tail.next!=null){
+                tail=tail.next;
+                targetPre=targetPre.next;
+            }
+            targetPre.next = targetPre.next.next;
+        }else{
+            return head.next;
+        }
+        return head;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Remove Nth Node From End of List.
+Memory Usage: 39.4 MB, less than 11.40% of Java online submissions for Remove Nth Node From End of List.
+```
+
+### 83. Remove Duplicates from Sorted List E
+
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+```
+Input: 1->1->2
+Output: 1->2
+```
+Example 2:
+```
+Input: 1->1->2->3->3
+Output: 1->2->3
+```
+双指针，一个往后移动作为判断位，一个只有在遇到了不同数值的时候才会后移
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head==null || head.next==null){
+            return head;
+        }
+        ListNode judge = head.next;
+        ListNode current = head;
+        while(judge!=null){
+            if(judge.val!=current.val){
+                current.next.val = judge.val;
+                current=current.next;
+            }
+            judge=judge.next;
+        }
+        current.next = null;
+        return head;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 26.30% of Java online submissions for Remove Duplicates from Sorted List.
+Memory Usage: 41.4 MB, less than 10.33% of Java online submissions for Remove Duplicates from Sorted List.
+```
+
+### 203. Remove Linked List Elements E
+
+Remove all elements from a linked list of integers that have value val.
+
+Example:
+```
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+```
+
+思路很简单，链表删除，这里做个小处理就是加个空head头，这样比较方便删除元素
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode myHead = new ListNode();
+        myHead.next=head;
+        ListNode pre = myHead;
+        ListNode current = head;
+        
+        while(current!=null){
+            if(current.val==val){
+                pre.next=current.next;
+                current=pre.next;
+            }else{
+                current=current.next;
+                pre=pre.next;
+            }
+        }
+        return myHead.next;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 87.02% of Java online submissions for Remove Linked List Elements.
+Memory Usage: 47.1 MB, less than 5.01% of Java online submissions for Remove Linked List Elements.
+```
+
+### 82. Remove Duplicates from Sorted List II M
+
+Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+
+Return the linked list sorted as well.
+
+Example 1:
+```
+Input: 1->2->3->3->4->4->5
+Output: 1->2->5
+```
+Example 2:
+```
+Input: 1->1->1->2->3
+Output: 2->3
+```
+
+递归一波
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if( head != null && head.next != null) {            
+		    if(head.next.val != head.val) {
+			    head.next = deleteDuplicates(head.next);
+		    } else {
+			    while(head.next != null && head.val == head.next.val)
+				    head = head.next;
+			    return deleteDuplicates(head.next);
+		    }
+	    }
+	    return head;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 31.15% of Java online submissions for Remove Duplicates from Sorted List II.
+Memory Usage: 40.9 MB, less than 11.04% of Java online submissions for Remove Duplicates from Sorted List II.
+```
+
+### 369. Plus One Linked List
+
+Given a non-negative integer represented as non-empty a singly linked list of digits, plus one to the integer.
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example
+
+```
+Input: 1->2->3
+Output: 1->2->4
+```
+
+现将链表翻转然后找到第一位不为 9 的数字，加一再翻转回来，遍历过的为 9 的数字均置为 0 。
 
 * 24 Swap Nodes in Pairs
   * recursively
