@@ -126,6 +126,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 * [浮点数的计算](Java%20Day%20Day%20Up/浮点数的计算.md)
 * [Java注解Annotation](Java%20Day%20Day%20Up/Java%20注解%20Annotation.md)
+* [Java三大集合](Java%20Day%20Day%20Up/Java三大集合.md)
 
 ## Leetcode 练习
 
