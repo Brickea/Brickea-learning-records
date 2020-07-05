@@ -4,7 +4,8 @@
   - [Week 1](#week-1)
     - [Binary Tree Level Order Traversal II](#binary-tree-level-order-traversal-ii)
     - [Prison Cells After N Days](#prison-cells-after-n-days)
-  - [Ugly Number ||](#ugly-number-)
+    - [Ugly Number ||](#ugly-number-)
+    - [Hamming Distance](#hamming-distance)
 - [Linked list practice](#linked-list-practice)
   - [206. Reverse Linked List E](#206-reverse-linked-list-e)
   - [141. Linked List Cycle E](#141-linked-list-cycle-e)
@@ -173,7 +174,7 @@ Runtime: 2 ms, faster than 83.39% of Java online submissions for Prison Cells Af
 Memory Usage: 40.5 MB, less than 8.64% of Java online submissions for Prison Cells After N Days.
 ```
 
-### Ugly Number ||
+#### Ugly Number ||
 
 Write a program to find the n-th ugly number.
 
@@ -194,22 +195,64 @@ n does not exceed 1690.
 ```java
 class Solution {
     public int nthUglyNumber(int n) {
-            int[] ugly = new int[n];
-            ugly[0] = 1;
-            int indexOf2 = 0, indexOf3 = 0, indexOf5 = 0;
-            int factorOf2 = 2, factorOf3 = 3, factorOf5 = 5;
-            for(int i=1;i<n;i++){
-                int min = Math.min(Math.min(factorOf2,factorOf3),factorOf5);
-                ugly[i] = min;
-                if(factorOf2 == min)
-                    factorOf2 = 2*ugly[++indexOf2];
-                if(factorOf3 == min)
-                    factorOf3 = 3*ugly[++indexOf3];
-                if(factorOf5 == min)
-                    factorOf5 = 5*ugly[++indexOf5];
-            }
-            return ugly[n-1];
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        int indexOf2 = 0, indexOf3 = 0, indexOf5 = 0;
+        int factorOf2 = 2, factorOf3 = 3, factorOf5 = 5;
+        for(int i=1;i<n;i++){
+            int min = Math.min(Math.min(factorOf2,factorOf3),factorOf5);
+            ugly[i] = min;
+            if(factorOf2 == min)
+                factorOf2 = 2*ugly[++indexOf2];
+            if(factorOf3 == min)
+                factorOf3 = 3*ugly[++indexOf3];
+            if(factorOf5 == min)
+                factorOf5 = 5*ugly[++indexOf5];
         }
+        return ugly[n-1];
+    }
+}
+```
+
+#### Hamming Distance
+
+
+The [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) between two integers is the number of positions at which the corresponding bits are different.
+
+Given two integers x and y, calculate the Hamming distance.
+```
+Note:
+0 ≤ x, y < 231.
+
+Example:
+
+Input: x = 1, y = 4
+
+Output: 2
+
+Explanation:
+1   (0 0 0 1)
+4   (0 1 0 0)
+       ↑   ↑
+```
+The above arrows point to positions where the corresponding bits are different.
+
+思路就是位运算
+
+```java
+class Solution {
+    public int hammingDistance(int x, int y) {
+        int hammingCount = 0;
+        int maxJudgementNum = Math.max(Integer.toBinaryString(x).length(),Integer.toBinaryString(y).length());
+        for(int i=0;i<maxJudgementNum;i++){
+            if((x&1)!=(y&1)){
+                hammingCount++;
+            }
+            x >>=1;
+            y >>=1;
+        }
+        return hammingCount;
+    }
 }
 ```
 
@@ -668,8 +711,6 @@ Output: 1->2->4
 * 92 Reverse Linked List II
   * iteratively
     * 28 ms	82% faster 14 MB 7.4% memory less python3
-
-待整理
 
 ---
 
