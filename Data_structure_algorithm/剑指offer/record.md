@@ -5,6 +5,11 @@
   - [Solution 2](#solution-2)
 - [04 二维数组中的查找](#04-二维数组中的查找)
   - [Solution 1](#solution-1-1)
+- [05替换空格](#05替换空格)
+  - [Solution 1](#solution-1-2)
+  - [Solution 2](#solution-2-1)
+- [06从尾到头打印链表](#06从尾到头打印链表)
+  - [Solution 1](#solution-1-3)
 
 ## 03 数组中重复的数字
 
@@ -120,4 +125,153 @@ public class Solution {
         
     }
 }
+```
+
+## 05替换空格
+
+请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
+
+```
+运行时间：11ms
+
+占用内存：9488k
+```
+
+### Solution 1
+
+这个思路这个没什么好说的
+
+```java
+public class Solution {
+    public String replaceSpace(StringBuffer str) {
+    	for(int i=0;i<str.length();i++){
+            if(str.charAt(i)==' '){
+                str.replace(i,i+1,"%20");
+            }
+        }
+        return str.toString();
+    }
+}
+```
+
+但是这里有个问题就是时间复杂度比较高，看一下```replace```函数的源码。每一次```replace```的时候，都需要复制字符串后面的字符，这样的话会造成时间复杂度为$o(n^2)$
+
+```java
+    /**
+     * Replaces the characters in a substring of this sequence
+     * with characters in the specified {@code String}. The substring
+     * begins at the specified {@code start} and extends to the character
+     * at index {@code end - 1} or to the end of the
+     * sequence if no such character exists. First the
+     * characters in the substring are removed and then the specified
+     * {@code String} is inserted at {@code start}. (This
+     * sequence will be lengthened to accommodate the
+     * specified String if necessary.)
+     *
+     * @param      start    The beginning index, inclusive.
+     * @param      end      The ending index, exclusive.
+     * @param      str   String that will replace previous contents.
+     * @return     This object.
+     * @throws     StringIndexOutOfBoundsException  if {@code start}
+     *             is negative, greater than {@code length()}, or
+     *             greater than {@code end}.
+     */
+    public AbstractStringBuilder replace(int start, int end, String str) {
+        if (start < 0)
+            throw new StringIndexOutOfBoundsException(start);
+        if (start > count)
+            throw new StringIndexOutOfBoundsException("start > length()");
+        if (start > end)
+            throw new StringIndexOutOfBoundsException("start > end");
+
+        if (end > count)
+            end = count;
+        int len = str.length();
+        int newCount = count + len - (end - start);
+        ensureCapacityInternal(newCount);
+
+        System.arraycopy(value, end, value, start + len, count - end);
+        str.getChars(value, start);
+        count = newCount;
+        return this;
+    }
+```
+
+### Solution 2
+
+改进思路是，先遍历一遍原字符串，获取空格的数量，然后创建新的字符串，长度为空格替换后的数量。之后从尾部开始遍历原字符串，这样可以避免因为长度增加而导致的遍历复制的问题。这样相当于便利了两边字符串，时间复杂度为$O(n)$
+
+```java
+public class Solution {
+    public String replaceSpace(StringBuffer str) {
+        int spaceNumber = 0;
+        // 统计空格的个数
+    	for(int i=0;i<str.length();i++){
+            if(str.charAt(i)==' '){
+                spaceNumber++;
+            }
+        }
+        // 创建增长了的字符数组
+        int resIndex = str.length()+spaceNumber*2;
+        char[] res = new char[resIndex];
+        resIndex--;
+        // 从尾部开始遍历
+        for(int i=str.length()-1;i>-1;i--){
+            if(str.charAt(i)==' '){
+                res[resIndex--]='0';
+                res[resIndex--]='2';
+                res[resIndex--]='%';
+            }else{
+                res[resIndex--]=str.charAt(i);
+            }
+        }
+        return new String(res);
+    }
+}
+```
+
+```
+运行时间：14ms
+
+占用内存：9520k
+```
+
+## 06从尾到头打印链表
+
+输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
+
+### Solution 1
+
+思路就是一遍遍历，然后把链表的元素插入到```ArrayList```的首位
+
+```java
+/**
+*    public class ListNode {
+*        int val;
+*        ListNode next = null;
+*
+*        ListNode(int val) {
+*            this.val = val;
+*        }
+*    }
+*
+*/
+import java.util.ArrayList;
+public class Solution {
+    public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+        ListNode currentNode = listNode;
+        ArrayList<Integer> res = new ArrayList<>();
+        while(currentNode!=null){
+            res.add(0,currentNode.val);
+            currentNode=currentNode.next;
+        }
+        return res;
+    }
+}
+```
+
+```
+运行时间：13ms
+
+占用内存：9604k
 ```
