@@ -25,6 +25,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
 - [Java 每天一个知识点](#java-每天一个知识点)
 - [Leetcode 练习](#leetcode-练习)
+- [剑指offer 练习](#剑指offer-练习)
 - [职业杂谈](#职业杂谈)
 
 ---
@@ -139,6 +140,12 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ![](https://img.shields.io/badge/Hard-3-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
+
+## 剑指offer 练习
+
+![](https://img.shields.io/badge/Status-2/66-red)
+
+[练习记录](Data_structure_algorithm/剑指offer/record.md)
 
 ## 职业杂谈
 
