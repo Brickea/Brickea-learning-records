@@ -16,6 +16,7 @@
   - [203. Remove Linked List Elements E](#203-remove-linked-list-elements-e)
   - [82. Remove Duplicates from Sorted List II M](#82-remove-duplicates-from-sorted-list-ii-m)
   - [369. Plus One Linked List](#369-plus-one-linked-list)
+  - [25 Reverse Nodes in k-Group H](#25-reverse-nodes-in-k-group-h)
 - [Tree](#tree)
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
 - [Binary search](#binary-search)
@@ -711,6 +712,99 @@ Output: 1->2->4
 * 92 Reverse Linked List II
   * iteratively
     * 28 ms	82% faster 14 MB 7.4% memory less python3
+
+
+### 25 Reverse Nodes in k-Group H
+
+Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+
+k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+
+```
+
+Example:
+
+Given this linked list: 1->2->3->4->5
+
+For k = 2, you should return: 2->1->4->3->5
+
+For k = 3, you should return: 3->2->1->4->5
+```
+
+Note:
+
+Only constant extra memory is allowed.
+You may not alter the values in the list's nodes, only nodes itself may be changed.
+
+
+Solution 1
+
+思路就是一遍遍历，然后每当计数等于k的时候就将这一串翻转
+
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head == null){
+            return null;
+        }
+        if(k<2){
+            return head;
+        }
+        ListNode fakeHead = new ListNode(0,head); // 创建虚假head
+        
+        ListNode currentBeforeReverseNode = fakeHead;
+        ListNode currentNavigateNode = head;
+        
+        
+        int count = 0;
+        while(currentNavigateNode!=null){
+            count++;
+            if(count>=k){
+                ListNode temp = currentNavigateNode.next; // 因为反转过后currentNavigateNode的next会发生变化，先保存一下
+                ListNode tempB = currentBeforeReverseNode.next; // 反转后翻转链的前置节点的next会变成后面串的前置节点
+                this.reverseSubLinkedList(currentBeforeReverseNode,currentNavigateNode.next);
+                currentNavigateNode = temp;
+                currentBeforeReverseNode = tempB;
+                count=0;
+            }else{
+                currentNavigateNode = currentNavigateNode.next;
+            }
+        }
+        return fakeHead.next;
+    }
+    public void reverseSubLinkedList(ListNode beforeNode,ListNode afterNode){
+        // beforeNode 是需要反转的链表的前一个节点
+        // afterNode 是需要反转的链表的后一个节点
+        ListNode currentNode = beforeNode.next;
+        ListNode nextNode = currentNode.next;
+        
+        currentNode.next = afterNode;
+        while(nextNode!=afterNode){
+            ListNode temp = nextNode.next; // 保存一下next指向
+            nextNode.next = currentNode; // 将currentNode 和 nextNode翻转
+            currentNode = nextNode;
+            nextNode = temp;
+        }
+        // 将befroeNode指向反转后的尾巴
+        beforeNode.next = currentNode;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Reverse Nodes in k-Group.
+Memory Usage: 39.9 MB, less than 33.82% of Java online submissions for Reverse Nodes in k-Group.
+```
 
 ---
 

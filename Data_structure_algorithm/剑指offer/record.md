@@ -10,6 +10,10 @@
   - [Solution 2](#solution-2-1)
 - [06从尾到头打印链表](#06从尾到头打印链表)
   - [Solution 1](#solution-1-3)
+- [07 重建二叉树](#07-重建二叉树)
+  - [Solution 1](#solution-1-4)
+- [08 二叉树的下一个节点](#08-二叉树的下一个节点)
+  - [Solution 1](#solution-1-5)
 
 ## 03 数组中重复的数字
 
@@ -274,4 +278,143 @@ public class Solution {
 运行时间：13ms
 
 占用内存：9604k
+```
+
+## 07 重建二叉树
+
+输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+
+### Solution 1
+
+通过先序遍历数组找到根节点，再通过中序遍历得到左右子树的长度，之后将左右子树递归即可
+
+```java
+/**
+ * Definition for binary tree
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    private int[] copyRangeOf(int[] array, int startIndex, int endIndex){
+        // 数组切片函数
+        if(array.length==0||array.length<endIndex){
+            return null;
+        }
+        int[] res = new int[endIndex - startIndex];
+        int j=0;
+        for(int i = startIndex;i<endIndex;i++){
+            res[j] = array[i];
+            j++;
+        }
+        return res;
+    }
+    
+    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
+        int rootValue = pre[0];
+        TreeNode root = new TreeNode(rootValue);
+        // 获取根节点在中序遍历中的下标，以此获取左右子树
+        int inRootIndex = 0;
+        for(int i=0;i<in.length;i++){
+            System.out.println(in[i]);
+            if(in[i]==rootValue){
+                inRootIndex=i;
+                break;
+            }
+        }
+        // 左右子树递归
+        
+        // 获取左子树长度
+        int leftLen = inRootIndex;
+        // 获取右子树长度
+        int rightLen = in.length - inRootIndex - 1;
+        if(leftLen==0){
+            // 没有左子树
+            root.left = null;
+        }else{
+            root.left = this.reConstructBinaryTree(this.copyRangeOf(pre,1,leftLen+1),this.copyRangeOf(in,0,inRootIndex));
+        }
+        if(rightLen==0){
+            // 没有右子树
+            root.right = null;
+        }else{
+            root.right = this.reConstructBinaryTree(this.copyRangeOf(pre,leftLen+1,pre.length),this.copyRangeOf(in,inRootIndex+1,in.length));
+        }
+        return root;
+    }
+}
+```
+
+```
+运行时间：224ms
+
+占用内存：24948k
+```
+
+## 08 二叉树的下一个节点
+
+给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+
+### Solution 1
+
+先查看有没有右节点，有右节点直接中序遍历右子树到最左子节点
+
+没有右节点，查看是否是父节点的左子树，是左子树，返回父节点
+
+没有右节点，且是父节点的右子树，向上地查找，是否存在一节点是父节点的左子节点，此时该节点的父节点为我们要找的点
+
+```java
+/*
+public class TreeLinkNode {
+    int val;
+    TreeLinkNode left = null;
+    TreeLinkNode right = null;
+    TreeLinkNode next = null;
+
+    TreeLinkNode(int val) {
+        this.val = val;
+    }
+}
+*/
+public class Solution {
+    public TreeLinkNode GetNext(TreeLinkNode pNode)
+    {
+        // 先查看是否有右节点，有右节点直接中序遍历右子树得到最左节点
+        if(pNode.right != null){
+            return this.inNavigation(pNode.right);
+        }
+        // 没有右节点，查看是否是父节点的左子树
+        if(pNode.next!=null&&pNode.next.left == pNode){
+            // 是左子树，返回父节点
+            return pNode.next;
+        }
+        // 没有右节点，且不是父节点的左子树，则查找一个节点是其父节点的左节点，若有，则该节点的父节点是我们要找的
+        TreeLinkNode target = pNode.next;
+        while(target!=null&&target.next!=null){
+            if(target.next.left==target){
+                return target.next;
+            }
+            target = target.next;
+        }
+        return null;
+    }
+    
+    public TreeLinkNode inNavigation(TreeLinkNode pNode){
+        // 中序遍函数
+        if(pNode.left == null){
+            return pNode;
+        }
+        TreeLinkNode nextNode = this.inNavigation(pNode.left);
+        return nextNode;
+    }
+}
+```
+
+```
+运行时间：14ms
+
+占用内存：9772k
 ```

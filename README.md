@@ -134,18 +134,23 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java三大集合](Java%20Day%20Day%20Up/Java三大集合.md)
 * [Java 反射机制](Java%20Day%20Day%20Up/Java反射.md)
 * [Java IO](Java%20Day%20Day%20Up/JavaIO.md)
+* [Java Lambda](Java%20Day%20Day%20Up/Java%20lambda.md)
 
 ## Leetcode 练习
 
 ![](https://img.shields.io/badge/Easy-51-brightgreen)
 ![](https://img.shields.io/badge/Medium-25-orange)
-![](https://img.shields.io/badge/Hard-3-red)
+![](https://img.shields.io/badge/Hard-4-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
+字节跳动分类
+
+* [Reverse Nodes in k-Group](Data_structure_algorithm/Leetcode/record.md#25-Reverse-Nodes-in-k-Group-H)
+
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-2/66-red)
+![](https://img.shields.io/badge/Status-6/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
