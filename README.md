@@ -139,13 +139,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ![](https://img.shields.io/badge/Easy-51-brightgreen)
 ![](https://img.shields.io/badge/Medium-25-orange)
-![](https://img.shields.io/badge/Hard-3-red)
+![](https://img.shields.io/badge/Hard-4-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-2/66-red)
+![](https://img.shields.io/badge/Status-6/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
