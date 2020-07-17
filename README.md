@@ -135,6 +135,9 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java 反射机制](Java%20Day%20Day%20Up/Java反射.md)
 * [Java IO](Java%20Day%20Day%20Up/JavaIO.md)
 * [Java Lambda](Java%20Day%20Day%20Up/Java%20lambda.md)
+* [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
+
+[Java基础面试题](Java%20Day%20Day%20Up/Java基础面试题.md)
 
 ## Leetcode 练习
 
