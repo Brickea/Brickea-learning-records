@@ -26,8 +26,11 @@ It is because the Github only support the raw markdown. So all the formula I wro
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
   - [J2EE](#j2ee)
+  - [面试类](#面试类)
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
+  - [解题思路类](#解题思路类)
+  - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
 - [职业杂谈](#职业杂谈)
 
@@ -143,12 +146,14 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
 * [Java 网络编程](Java%20Day%20Day%20Up/Java%20网络编程.md)
 
+### J2EE
+* [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
+
+### 面试类
+
 [Java基础面试题](Java%20Day%20Day%20Up/Java基础面试题.md)
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
-
-### J2EE
-* [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
 
 ## Java Redis
 
@@ -164,9 +169,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
+### 解题思路类
+
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
 
-字节跳动分类
+### 字节跳动分类
 
 * [Reverse Nodes in k-Group](Data_structure_algorithm/Leetcode/record.md#25-Reverse-Nodes-in-k-Group-H)
 
