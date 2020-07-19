@@ -24,6 +24,9 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [Introduction to Statistical Learning - Gareth James, ...](#introduction-to-statistical-learning---gareth-james-)
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
 - [Java 每天一个知识点](#java-每天一个知识点)
+  - [基础类](#基础类)
+  - [J2EE](#j2ee)
+- [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
 - [剑指offer 练习](#剑指offer-练习)
 - [职业杂谈](#职业杂谈)
@@ -129,6 +132,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ![](https://img.shields.io/badge/Status-Updating-red)
 
+### 基础类
+
 * [浮点数的计算](Java%20Day%20Day%20Up/浮点数的计算.md)
 * [Java注解Annotation](Java%20Day%20Day%20Up/Java%20注解%20Annotation.md)
 * [Java三大集合](Java%20Day%20Day%20Up/Java三大集合.md)
@@ -136,8 +141,18 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java IO](Java%20Day%20Day%20Up/JavaIO.md)
 * [Java Lambda](Java%20Day%20Day%20Up/Java%20lambda.md)
 * [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
+* [Java 网络编程](Java%20Day%20Day%20Up/Java%20网络编程.md)
 
 [Java基础面试题](Java%20Day%20Day%20Up/Java基础面试题.md)
+
+### J2EE
+* [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
+
+## Java Redis
+
+* [Redis 基础](Java%20Day%20Day%20Up/数据库/Redis/Redis基础.md)
+* [Redis 配置](Java%20Day%20Day%20Up/数据库/Redis/Redis配置.md)
+* [Redis 连接Java](Java%20Day%20Day%20Up/数据库/Redis/Redis连接Java.md)
 
 ## Leetcode 练习
 
