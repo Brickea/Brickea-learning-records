@@ -33,6 +33,8 @@
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
   - [137. Single Number II M](#137-single-number-ii-m)
+- [Dynamic Programming](#dynamic-programming)
+  - [322. Coin Change](#322-coin-change)
 
 ## July Challange
 
@@ -1672,4 +1674,55 @@ class Solution {
 ```
 Runtime: 3 ms, faster than 57.22% of Java online submissions for Single Number II.
 Memory Usage: 39.3 MB, less than 50.72% of Java online submissions for Single Number II.
+```
+
+## Dynamic Programming 
+
+### 322. Coin Change
+
+You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.
+
+Example 1:
+```
+Input: coins = [1, 2, 5], amount = 11
+Output: 3 
+Explanation: 11 = 5 + 5 + 1
+```
+Example 2:
+```
+Input: coins = [2], amount = 3
+Output: -1
+```
+
+Note:
+You may assume that you have an infinite number of each kind of coin.
+
+Solution 1
+
+使用动态规划的思想，自底向上，添加一个记忆空间用来记忆已计算的结果，加速计算
+
+```java
+class Solution {
+    public int coinChange(int[] coins, int amount) {
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp,amount+1);
+        
+        // base case
+        dp[0] = 0;
+        for (int i = 0; i < dp.length; i++) {
+            // 内层 for 在求所有子问题 + 1 的最小值
+            for (int coin : coins) {
+                // 子问题无解，跳过
+                if (i - coin < 0) continue;
+                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);
+            }
+        }
+        return (dp[amount] == amount + 1) ? -1 : dp[amount];
+    }
+}
+```
+
+```
+Runtime: 10 ms, faster than 95.20% of Java online submissions for Coin Change.
+Memory Usage: 39 MB, less than 72.68% of Java online submissions for Coin Change.
 ```
