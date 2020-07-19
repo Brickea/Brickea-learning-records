@@ -145,6 +145,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [Java基础面试题](Java%20Day%20Day%20Up/Java基础面试题.md)
 
+[Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
+
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
 
@@ -157,10 +159,12 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ## Leetcode 练习
 
 ![](https://img.shields.io/badge/Easy-51-brightgreen)
-![](https://img.shields.io/badge/Medium-25-orange)
+![](https://img.shields.io/badge/Medium-26-orange)
 ![](https://img.shields.io/badge/Hard-4-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
+
+* [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
 
 字节跳动分类
 
