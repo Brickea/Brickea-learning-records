@@ -35,6 +35,10 @@
   - [137. Single Number II M](#137-single-number-ii-m)
 - [Dynamic Programming](#dynamic-programming)
   - [322. Coin Change](#322-coin-change)
+  - [300. Longest Increasing Subsequence M](#300-longest-increasing-subsequence-m)
+  - [53. Maximum Subarray E](#53-maximum-subarray-e)
+  - [518. Coin Change 2 M](#518-coin-change-2-m)
+  - [416. Partition Equal Subset Sum M](#416-partition-equal-subset-sum-m)
 
 ## July Challange
 
@@ -1725,4 +1729,347 @@ class Solution {
 ```
 Runtime: 10 ms, faster than 95.20% of Java online submissions for Coin Change.
 Memory Usage: 39 MB, less than 72.68% of Java online submissions for Coin Change.
+```
+
+### 300. Longest Increasing Subsequence M
+
+Given an unsorted array of integers, find the length of longest increasing subsequence.
+
+Example:
+```
+Input: [10,9,2,5,3,7,101,18]
+Output: 4 
+Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4. 
+```
+Note:
+
+There may be more than one LIS combination, it is only necessary for you to return the length.
+Your algorithm should run in O(n2) complexity.
+
+Solution 1
+
+思路就是动态规划，自顶向下求解问题
+
+```java
+class Solution {
+    private int[] dp;
+    public int lengthOfLIS(int[] nums) {
+        // 动态规划初始化
+        // dp[i]代表的是以nums第i个结尾的最长增长子序列的长度
+        dp = new int[nums.length];
+        Arrays.fill(dp,1); // dp每个的base case是自己
+        
+        // 自顶向下求解问题
+        for(int i=0;i<nums.length;i++){
+            for(int j=0;j<i;j++){
+                // 状态转移
+                if(nums[i]>nums[j]){
+                    dp[i] = Math.max(dp[i],dp[j]+1);
+                }
+            }
+        }
+        
+        // 遍历子状态集返回最大的长度
+        int res = 0;
+        for(int temp : dp){
+            res = Math.max(res,temp);
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 19 ms, faster than 22.62% of Java online submissions for Longest Increasing Subsequence.
+Memory Usage: 39.1 MB, less than 15.50% of Java online submissions for Longest Increasing Subsequence.
+```
+
+### 53. Maximum Subarray E
+
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+Example:
+```
+Input: [-2,1,-3,4,-1,2,1,-5,4],
+Output: 6
+Explanation: [4,-1,2,1] has the largest sum = 6.
+```
+
+Follow up:
+
+If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+
+Solution 1
+
+自顶向下动态规划
+
+
+```java
+class Solution {
+    private int[] dp;
+    public int maxSubArray(int[] nums) {
+        // 动态规划初始化
+        // 状态为： dp[i] 是以 nums[i] 结尾的数组中，最大的和，
+        dp = new int[nums.length];
+        // 最前面的dp没有更前的字数组
+        dp[0] = nums[0];
+        
+        // 自顶向下解决问题
+        for(int i=1;i<nums.length;i++){
+            dp[i] = Math.max(nums[i],nums[i]+dp[i-1]); 
+        }
+        
+        // 遍历状态集，寻找最大
+        int res = Integer.MIN_VALUE;
+        for(int item:dp){
+            res = Math.max(res,item);
+        }
+        return res;
+        
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 75.96% of Java online submissions for Maximum Subarray.
+Memory Usage: 41.5 MB, less than 9.09% of Java online submissions for Maximum Subarray.
+```
+
+### 518. Coin Change 2 M
+
+You are given coins of different denominations and a total amount of money. Write a function to compute the number of combinations that make up that amount. You may assume that you have infinite number of each kind of coin.
+
+ 
+
+Example 1:
+```
+Input: amount = 5, coins = [1, 2, 5]
+Output: 4
+Explanation: there are four ways to make up the amount:
+5=5
+5=2+2+1
+5=2+1+1+1
+5=1+1+1+1+1
+```
+
+Example 2:
+```
+Input: amount = 3, coins = [2]
+Output: 0
+Explanation: the amount of 3 cannot be made up just with coins of 2.
+```
+
+Example 3:
+```
+Input: amount = 10, coins = [10] 
+Output: 1
+```
+
+Note:
+
+You can assume that
+```
+0 <= amount <= 5000
+1 <= coin <= 5000
+the number of coins is less than 500
+the answer is guaranteed to fit into signed 32-bit integer
+```
+
+Solution 1
+
+完全背包问题，自顶向下动态规划。不压缩状态
+
+```java
+class Solution {
+    private int[][] dp;
+    public int change(int amount, int[] coins) {
+        // 处理输入边界条件
+        if(amount == 0){
+            return 1;
+        }
+        if(coins.length == 0){
+            return 0;
+        }
+        // 完全背包问题
+        // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
+        // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
+        dp = new int[coins.length+1][amount+1];
+        
+        // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
+        // j=0的时候，不论用那种面额，都只有一种结果，所以
+        for(int i=1;i<coins.length+1;i++){
+            dp[i][0] = 1;
+        }
+        
+        // 动态规划，自顶向下
+        // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
+        for(int i=1;i<coins.length+1;i++){
+            // 因为定义的i比coins实际对应面额的下标小1，所以减1
+            for(int j=1;j<amount+1;j++){
+                // 防止越界
+                if(j - coins[i-1]>=0){
+                    dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
+                }else{
+                    dp[i][j] = dp[i-1][j];
+                }
+            }
+        }
+        
+        
+        // 返回结果
+        return dp[coins.length][amount];
+    }
+}
+```
+
+```
+Runtime: 23 ms, faster than 11.28% of Java online submissions for Coin Change 2.
+Memory Usage: 48.5 MB, less than 6.51% of Java online submissions for Coin Change 2.
+```
+
+Solution 2
+
+状态压缩，因为dp[i] 只和 dp[i-1] 有关，故可以压缩状态，减少空间复杂度
+
+
+```java
+class Solution {
+    // private int[][] dp;
+    private int[] dp;
+    
+    public int change(int amount, int[] coins) {
+        // 处理输入边界条件
+        if(amount == 0){
+            return 1;
+        }
+        if(coins.length == 0){
+            return 0;
+        }
+        // 完全背包问题
+        // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
+        // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
+        // dp = new int[coins.length+1][amount+1];
+        dp = new int[amount+1];
+        
+        // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
+        // j=0的时候，不论用那种面额，都只有一种结果，所以
+        // for(int i=1;i<coins.length+1;i++){
+        //     dp[i][0] = 1;
+        // }
+        dp[0]=1;
+        
+        // 动态规划，自顶向下
+        // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
+        // for(int i=1;i<coins.length+1;i++){
+        //     // 因为定义的i比coins实际对应面额的下标小1，所以减1
+        //     for(int j=1;j<amount+1;j++){
+        //         // 防止越界
+        //         if(j - coins[i-1]>=0){
+        //             dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
+        //         }else{
+        //             dp[i][j] = dp[i-1][j];
+        //         }
+        //     }
+        // }
+        for(int i=0;i<coins.length;i++){
+            // 因为定义的i比coins实际对应面额的下标小1，所以减1
+            for(int j=1;j<amount+1;j++){
+                // 防止越界
+                if(j - coins[i]>=0){
+                    dp[j] = dp[j]+dp[j-coins[i]];  
+                }
+            }
+        }
+        
+        
+        // 返回结果
+        return dp[amount];
+    }
+}
+```
+
+```
+Runtime: 4 ms, faster than 54.50% of Java online submissions for Coin Change 2.
+Memory Usage: 36.9 MB, less than 75.83% of Java online submissions for Coin Change 2.
+```
+
+### 416. Partition Equal Subset Sum M
+
+Given a non-empty array containing only positive integers, find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal.
+
+Note:
+```
+Each of the array element will not exceed 100.
+The array size will not exceed 200.
+```
+
+Example 1:
+```
+Input: [1, 5, 11, 5]
+
+Output: true
+
+Explanation: The array can be partitioned as [1, 5, 5] and [11].
+```
+ 
+
+Example 2:
+```
+Input: [1, 2, 3, 5]
+
+Output: false
+
+Explanation: The array cannot be partitioned into equal sum subsets.
+```
+
+Solution 
+
+```java
+class Solution {
+    private boolean[] dp;
+    public boolean canPartition(int[] nums) {
+        int sum = 0;
+        for(int item:nums){
+            sum+=item;
+        }
+        if(sum%2==1){
+            // 总和为奇数的时候，不可能划分成两个相等的子集合
+            return false;
+        }
+        if(nums.length==0){
+            // 没有数字给你凑
+            return false;
+        }
+        
+        sum = sum/2;
+        // 背包问题
+        // dp[i][j] 状态为，用nums前i个凑j能不能凑出来
+        // 初始化，凑0的话就是无为而治
+        dp = new boolean[sum+1];
+        dp[0]=true;
+        
+        
+        // 自顶向下
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = sum; j >= 0; j--) {
+                if (j - nums[i] < 0) {
+                   // 背包容量不足，不能装入第 i 个物品
+                    dp[j] = dp[j]; 
+                } else {
+                    // 装入或不装入背包
+                    dp[j] = dp[j] || dp[j-nums[i]];
+                }
+            }
+        }
+        
+        
+        return dp[sum];
+    }
+}
+
+```
+
+```
+Runtime: 26 ms, faster than 57.99% of Java online submissions for Partition Equal Subset Sum.
+Memory Usage: 37.5 MB, less than 92.20% of Java online submissions for Partition Equal Subset Sum.
 ```
