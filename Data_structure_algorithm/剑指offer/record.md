@@ -14,6 +14,10 @@
   - [Solution 1](#solution-1-4)
 - [08 二叉树的下一个节点](#08-二叉树的下一个节点)
   - [Solution 1](#solution-1-5)
+- [09 用两个栈实现队列](#09-用两个栈实现队列)
+  - [Solution 1](#solution-1-6)
+- [10 斐波那契数列](#10-斐波那契数列)
+- [Solution 1](#solution-1-7)
 
 ## 03 数组中重复的数字
 
@@ -417,4 +421,63 @@ public class Solution {
 运行时间：14ms
 
 占用内存：9772k
+```
+
+## 09 用两个栈实现队列
+
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+
+### Solution 1
+
+可以考虑一下队列pop的时候，在stack2中的影响，只要stack2不空就可以直接pop出去，如果stack1
+
+```java
+import java.util.Stack;
+
+public class Solution {
+    Stack<Integer> stack1 = new Stack<Integer>();
+    Stack<Integer> stack2 = new Stack<Integer>();
+    
+    public void push(int node) {
+        stack1.push(node);
+    }
+    
+    public int pop() {
+        if(stack2.size()==0){
+            while(stack1.size()!=0){
+                int temp = stack1.pop();
+                stack2.push(temp);
+            }
+        }
+        return stack2.pop();
+    }
+}
+```
+
+## 10 斐波那契数列
+
+## Solution 1
+
+经典问题
+
+```java
+public class Solution {
+    public int Fibonacci(int n) {
+        int temp1 = 0;
+        int temp2 = 1;
+        while(n!=0){
+            n--;
+            int temp3 = temp2;
+            temp2 = temp1+temp2;
+            temp1 = temp3;
+        }
+        return temp1;
+    }
+}
+```
+
+```
+运行时间：10ms
+
+占用内存：9448k
 ```
