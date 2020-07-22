@@ -176,7 +176,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [300. Longest Increasing Subsequence](Data_structure_algorithm/Leetcode/record.md#300.-Longest-Increasing-Subsequence-M)
   * [53. Maximum Subarray](Data_structure_algorithm/Leetcode/record.md#53.-Maximum-Subarray-E)
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
-  * [416. Partition Equal Subset Sum M](ata_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
+  * [416. Partition Equal Subset Sum M](Data_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
 
 ### 字节跳动分类
 
