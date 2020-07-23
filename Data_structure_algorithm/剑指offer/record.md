@@ -17,7 +17,7 @@
 - [09 用两个栈实现队列](#09-用两个栈实现队列)
   - [Solution 1](#solution-1-6)
 - [10 斐波那契数列](#10-斐波那契数列)
-- [Solution 1](#solution-1-7)
+  - [Solution 1](#solution-1-7)
 
 ## 03 数组中重复的数字
 
@@ -456,7 +456,7 @@ public class Solution {
 
 ## 10 斐波那契数列
 
-## Solution 1
+### Solution 1
 
 经典问题
 

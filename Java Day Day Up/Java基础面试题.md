@@ -5,6 +5,9 @@
 - [JDK 1.7 前接口和抽象类的特性](#jdk-17-前接口和抽象类的特性)
 - [线程安全的集合框架](#线程安全的集合框架)
 - [进程互斥 - 皮森特算法](#进程互斥---皮森特算法)
+- [```StringBuffer```和 ```StringBuilder```的区别](#stringbuffer和-stringbuilder的区别)
+- [范型的理解](#范型的理解)
+- [序列化和反序列化](#序列化和反序列化)
 
 ## JVM内存
 
@@ -103,3 +106,10 @@ flag[0]=flag[1]=false;
 考虑进程P0，一旦它设置flag[0]=true，则P1不能进入临界区。如果P1已经进入临界区，那么flag[1]=true，P0被阻塞不能进入临界区。
 
 另一方面，互相阻塞也避免了。假设P0在while里被阻塞了，表示flag[1]为true且turn＝1，则此时P1可以执行。
+
+## [```StringBuffer```和 ```StringBuilder```的区别](StringBuffer和StringBuilder.md)
+
+## [范型的理解](Java范型的理解.md)
+
+## [序列化和反序列化](序列化和反序列化.md)
+
