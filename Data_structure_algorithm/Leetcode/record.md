@@ -7,7 +7,7 @@
     - [Ugly Number ||](#ugly-number-)
     - [Hamming Distance](#hamming-distance)
 - [Linked list practice](#linked-list-practice)
-  - [206. Reverse Linked List E](#206-reverse-linked-list-e)
+  - [206 Reverse Linked List E](#206-reverse-linked-list-e)
   - [141. Linked List Cycle E](#141-linked-list-cycle-e)
   - [876. Middle of the Linked List E](#876-middle-of-the-linked-list-e)
   - [237. Delete Node in a Linked List E](#237-delete-node-in-a-linked-list-e)
@@ -18,10 +18,14 @@
   - [369. Plus One Linked List](#369-plus-one-linked-list)
   - [25 Reverse Nodes in k-Group H](#25-reverse-nodes-in-k-group-h)
 - [Tree](#tree)
+  - [102 Binary Tree Level Order Traversal M](#102-binary-tree-level-order-traversal-m)
+  - [124 Binary Tree Maximum Path Sum H](#124-binary-tree-maximum-path-sum-h)
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
 - [Binary search](#binary-search)
 - [String](#string)
+  - [3 Longest Substring Without Repeating Characters M](#3-longest-substring-without-repeating-characters-m)
 - [Math](#math)
+  - [15. 3Sum M](#15-3sum-m)
 - [Array](#array)
   - [27. Remove Element E](#27-remove-element-e)
   - [26. Remove Duplicates from Sorted Array E](#26-remove-duplicates-from-sorted-array-e)
@@ -29,6 +33,7 @@
   - [189. Rotate Array](#189-rotate-array)
   - [41. First Missing Positive H](#41-first-missing-positive-h)
   - [134. Gas Station M](#134-gas-station-m)
+  - [146. LRU Cache](#146-lru-cache)
 - [Bit Manipulation](#bit-manipulation)
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
@@ -261,7 +266,7 @@ class Solution {
 
 ## Linked list practice
 
-### 206. Reverse Linked List E 
+### 206 Reverse Linked List E
 
 Reverse a singly linked list.
 
@@ -821,8 +826,198 @@ Memory Usage: 39.9 MB, less than 33.82% of Java online submissions for Reverse N
 * 145 Binary Tree Postorder Traversal
   * recursively
     * 32 ms	44% faster 13.8 MB	57% memory less python3
-* 102 Binary Tree Level Order Traversal
-  * 32 ms 80% faster	14 MB	72% memory less python3
+
+### 102 Binary Tree Level Order Traversal M
+
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+```
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+```
+
+Solution 1
+
+思路是层次遍历，但是因为返回的结果需要注意如何单独存储每一层的信息，详情见代码.
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        // 初始化结果存储
+        List<List<Integer>> res = new ArrayList<>();
+        
+        if(root==null){
+            return res;
+        }
+        
+        // 初始化子节点队列
+        LinkedList<TreeNode> children = new LinkedList<>();
+        children.addLast(root);
+        
+        int currentLevelChildNum = 1; // 当前层节点数
+        int nextLevelChildNum = 0; // 下一层节点数
+        
+        List<Integer> currentLevelVal = new ArrayList<>(); // 当前层节点值存储
+        
+        while(children.size()!=0){
+            // 取出节点
+            TreeNode current = children.removeFirst();
+            // 将此节点值放入当前层次中
+            currentLevelVal.add(current.val);
+            // 当前层次计数减一
+            currentLevelChildNum--;
+            
+            
+            // 将子节点加入队列
+            if(current.left!=null){
+                children.addLast(current.left);
+                // 下一层节点数计数加一
+                nextLevelChildNum++;
+            }
+            if(current.right!=null){
+                children.addLast(current.right);
+                // 下一层节点数计数加一
+                nextLevelChildNum++;
+            }
+            
+            // 判断当前层是否结束遍历
+            if(currentLevelChildNum==0){
+                // 存储当前层的遍历结果
+                res.add(currentLevelVal);
+                // 注意不可以用clear来清空currentLevelVal存储，因为存到res中的是引用，结果就是res中的结果也都被清空了
+                // 清空当前层存储
+                currentLevelVal=new ArrayList<Integer>();
+                // 进入下一层
+                currentLevelChildNum = nextLevelChildNum;
+                // 下一层计数清零
+                nextLevelChildNum = 0;
+            }
+        }
+        
+        return res;
+        
+        
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Binary Tree Level Order Traversal.
+Memory Usage: 39.4 MB, less than 75.36% of Java online submissions for Binary Tree Level Order Traversal.
+```
+
+### 124 Binary Tree Maximum Path Sum H
+
+Given a non-empty binary tree, find the maximum path sum.
+
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+
+Example 1:
+```
+Input: [1,2,3]
+
+       1
+      / \
+     2   3
+
+Output: 6
+```
+Example 2:
+```
+Input: [-10,9,20,null,null,15,7]
+
+   -10
+   / \
+  9  20
+    /  \
+   15   7
+
+Output: 42
+```
+
+Solution 1
+
+深度优先搜索+剪枝
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private int res = Integer.MIN_VALUE;
+    
+    private int dfs(TreeNode root){
+            
+        if(root == null)
+            return 0;
+
+        int rootVal = root.val;
+        int left = Math.max(0,this.dfs(root.left)); // 深度优先搜索寻找左最大
+        int right = Math.max(0,this.dfs(root.right)); // 深度优先搜索找右最大
+        // 这里和0取更大是为了去掉子节点最大为负数的情况，这样相当于直接剪枝
+
+        int val = rootVal + left + right ; // 计算包含当前根的最大路径
+
+        res = Math.max(val,res); // 更新最大
+
+        return rootVal+Math.max(left,right); // 将其作为路径之一返回
+    }
+    
+    public int maxPathSum(TreeNode root) {
+        // 深度优先搜索，因为要找的是某一结点到某一结点的最大路径，可以考虑回溯的思路
+        
+        this.res = root.val;
+        
+        dfs(root);
+        
+        return res;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Binary Tree Maximum Path Sum.
+Memory Usage: 41.4 MB, less than 40.11% of Java online submissions for Binary Tree Maximum Path Sum.
+```
+
 ### 107. Binary Tree Level Order Traversal II
 
 Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
@@ -1044,6 +1239,78 @@ Memory Usage: 39.7 MB, less than 49.37% of Java online submissions for Binary Tr
 
 ## String
 
+### 3 Longest Substring Without Repeating Characters M
+
+Given a string, find the length of the longest substring without repeating characters.
+
+Example 1:
+```
+Input: "abcabcbb"
+Output: 3 
+Explanation: The answer is "abc", with the length of 3. 
+```
+Example 2:
+```
+Input: "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+```
+Example 3:
+```
+Input: "pwwkew"
+Output: 3
+```
+```
+Explanation: The answer is "wke", with the length of 3. 
+             Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+```
+
+Solution 1
+
+双指针思路，一个前置指针向后遍历字符，一个后置指针指向当前子串的开头。每当前置指针向后遍历一个新的字符的时候，就开始从后置指针开始遍历到前置指针-1的位置，判断是否有重复。有重复就将后指针指向子串中重复的位置，没有重复就继续遍历。
+
+```java
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        // 双指针
+        int i =0;
+        int j = 0;
+        int sLen = s.length();
+        int res = 0;
+        
+        while(i<sLen){
+            // 前置指针向后遍历
+            String c = s.substring(i,i+1);
+            
+            // 从后置指针判断是否和已有的重复
+            int m =j;
+            while(m<i){
+                if(s.substring(m,m+1).equals(c)){
+                    // 重复，重置计数并保存最大
+                    res = Math.max(res,i-j);
+                    // 将后置指针指向重复的位置
+                    j= m+1;
+                    break;
+                }
+                m++;
+            }
+            
+            // 无重复，更新最长长度
+            res = Math.max(res,i-j+1);
+            
+            i++;
+        }
+        
+        return res;
+    }
+}
+```
+
+```
+Runtime: 8 ms, faster than 48.91% of Java online submissions for Longest Substring Without Repeating Characters.
+Memory Usage: 39.8 MB, less than 34.62% of Java online submissions for Longest Substring Without Repeating Characters.
+```
+
 * 28 Implement strStr() e
   * What should we return when needle is an empty string? This is a great question to ask during an interview. For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
     ```
@@ -1119,6 +1386,92 @@ Memory Usage: 39.7 MB, less than 49.37% of Java online submissions for Binary Tr
     Runtime: 2 ms, faster than 76.96% of Java online submissions for Add Binary.
     Memory Usage: 37.9 MB, less than 90.16% of Java online submissions for Add Binary.
     ```
+
+### 15. 3Sum M
+
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+The solution set must not contain duplicate triplets.
+
+Example:
+```
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+```
+
+Solution 1
+
+整体思路就是先排序，然后对于每一对计算其相反数，然后用二分查找寻找解，需要注意避免重复的条件
+
+```java
+
+class Solution {
+    static public int binarySearch(int[] nums,int lo,int hi,int target){
+        while(lo<=hi){
+            int mid = lo+(hi-lo)/2;
+            if(nums[mid]==target){
+                System.out.println(mid);
+                return mid;
+            }
+            if(target>nums[mid]){
+                lo = mid+1;
+            }else if(target<nums[mid]){
+                hi = mid-1;
+            }
+        }
+        return -1;
+    }
+    static public List<List<Integer>> threeSum(int[] nums) {
+        if(nums==null){
+            return null;
+        }
+        // 初始化结果
+        List<List<Integer>> res = new ArrayList<>();
+        // 先将原数组排序
+        Arrays.sort(nums);
+
+        // 对于每一对 nums[i] 和 nums[j] 二分查找 对应的 nums[m] = -(nums[i]+nums[j])
+        for(int i =0;i<nums.length-2;i++){
+                if(i>0&&nums[i]==nums[i-1]){
+                    continue;
+                }
+            for(int j=nums.length-1;j>i+1;j--){
+
+                
+                if(j<nums.length-1&&nums[j+1]==nums[j]){
+                    continue;
+                }
+                // 二分查找
+                int lo = i+1;
+                int hi =j-1;
+                int target = 0-nums[i]-nums[j];
+                int m = binarySearch(nums,lo,hi,target);
+
+                if(m!=-1){
+                    // 存在一个解
+                    res.add(Arrays.asList(nums[i],nums[j],nums[m]));
+                }
+
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+```
+Runtime: 358 ms, faster than 20.77% of Java online submissions for 3Sum.
+Memory Usage: 43.4 MB, less than 63.13% of Java online submissions for 3Sum.
+```
+
 ## Array
 
 ### 27. Remove Element E
@@ -1511,6 +1864,85 @@ class Solution {
 Runtime: 0 ms, faster than 100.00% of Java online submissions for Gas Station.
 Memory Usage: 40.1 MB, less than 24.14% of Java online submissions for Gas Station.
 ```
+
+### 146. LRU Cache
+
+Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+
+get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+
+The cache is initialized with a positive capacity.
+
+Follow up:
+Could you do both operations in O(1) time complexity?
+
+Example:
+```
+LRUCache cache = new LRUCache( 2 /* capacity */ );
+
+cache.put(1, 1);
+cache.put(2, 2);
+cache.get(1);       // returns 1
+cache.put(3, 3);    // evicts key 2
+cache.get(2);       // returns -1 (not found)
+cache.put(4, 4);    // evicts key 1
+cache.get(1);       // returns -1 (not found)
+cache.get(3);       // returns 3
+cache.get(4);       // returns 4
+```
+
+Solution 1 HashMap 和 LinkedList
+
+```java
+class LRUCache {
+    
+    private int capacity;
+    private HashMap cache;
+    private LinkedList order;
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.cache = new HashMap();
+        this.order = new LinkedList();
+    }
+    
+    public int get(int key) {
+        if(this.cache.containsKey(key)){
+            this.order.remove(new Integer(key));
+            this.order.addFirst(new Integer(key));
+            return (int)this.cache.get(key);
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        Object k = this.cache.get(key);
+        if(k!=null){
+            // 存在
+            this.order.remove(new Integer(key));
+            this.order.addFirst(new Integer(key));
+            this.cache.put(key,value); // 覆盖更新
+        }else{
+            this.order.addFirst(new Integer(key));
+            this.cache.put(key,value);
+        }
+        if(this.cache.size()>this.capacity){
+            // 超出容量限制
+            this.cache.remove((int)this.order.removeLast());
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+[引申 - 三种方法手撕LRU算法](https://leetcode-cn.com/problems/lru-cache/solution/san-chong-fang-fa-dai-ni-shou-si-lrusuan-fa-javaba/)
 
 ## Bit Manipulation
 
