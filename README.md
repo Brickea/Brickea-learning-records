@@ -181,6 +181,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ### 字节跳动分类
 
 * [Reverse Nodes in k-Group](Data_structure_algorithm/Leetcode/record.md#25-Reverse-Nodes-in-k-Group-H)
+* [Longest Substring Without Repeating Characters](Data_structure_algorithm/Leetcode/record.md#3-Longest-Substring-Without-Repeating-Characters-M)
+* [Binary Tree Level Order Traversal M](Data_structure_algorithm/Leetcode/record.md#102-Binary-Tree-Level-Order-Traversal-M)
+* [Binary Tree Maximum Path Sum H](Data_structure_algorithm/Leetcode/record.md#124-Binary-Tree-Maximum-Path-Sum-H)
+* [Reverse Linked List E](Data_structure_algorithm/Leetcode/record.md#206-Reverse-Linked-List-E)
+* [LRU Cache](Data_structure_algorithm/Leetcode/record.md#146.-LRU-Cache)
 
 ## 剑指offer 练习
 
