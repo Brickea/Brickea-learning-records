@@ -145,6 +145,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java Lambda](Java%20Day%20Day%20Up/Java%20lambda.md)
 * [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
 * [Java 网络编程](Java%20Day%20Day%20Up/Java%20网络编程.md)
+* [Hash冲突的解决](Java%20Day%20Day%20Up/Hash冲突的处理方式.md)
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
@@ -173,8 +174,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ### 解题思路强化
 
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
-  * [300. Longest Increasing Subsequence](Data_structure_algorithm/Leetcode/record.md#300.-Longest-Increasing-Subsequence-M)
-  * [53. Maximum Subarray](Data_structure_algorithm/Leetcode/record.md#53.-Maximum-Subarray-E)
+  * [300. Longest Increasing Subsequence M](Data_structure_algorithm/Leetcode/record.md#300.-Longest-Increasing-Subsequence-M)
+  * [53. Maximum Subarray E](Data_structure_algorithm/Leetcode/record.md#53.-Maximum-Subarray-E)
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
   * [416. Partition Equal Subset Sum M](Data_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
 
@@ -185,7 +186,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Binary Tree Level Order Traversal M](Data_structure_algorithm/Leetcode/record.md#102-Binary-Tree-Level-Order-Traversal-M)
 * [Binary Tree Maximum Path Sum H](Data_structure_algorithm/Leetcode/record.md#124-Binary-Tree-Maximum-Path-Sum-H)
 * [Reverse Linked List E](Data_structure_algorithm/Leetcode/record.md#206-Reverse-Linked-List-E)
-* [LRU Cache](Data_structure_algorithm/Leetcode/record.md#146.-LRU-Cache)
+* [LRU Cache](Data_structure_algorithm/Leetcode/record.md#146-LRU-Cache)
 
 ## 剑指offer 练习
 

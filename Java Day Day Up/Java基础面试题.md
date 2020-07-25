@@ -8,6 +8,8 @@
 - [```StringBuffer```和 ```StringBuilder```的区别](#stringbuffer和-stringbuilder的区别)
 - [范型的理解](#范型的理解)
 - [序列化和反序列化](#序列化和反序列化)
+- [Java 中 == equals hashcode的关系与区别](#java-中--equals-hashcode的关系与区别)
+- [Comparator 和 Comparable 的区别](#comparator-和-comparable-的区别)
 
 ## JVM内存
 
@@ -113,3 +115,6 @@ flag[0]=flag[1]=false;
 
 ## [序列化和反序列化](序列化和反序列化.md)
 
+## [Java 中 == equals hashcode的关系与区别](Java%20中的%20==%20equals%20hashCode的区别和关系.md)
+
+## [Comparator 和 Comparable 的区别](Comparable和Comparator的区别.md)
