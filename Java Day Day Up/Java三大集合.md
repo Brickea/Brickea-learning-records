@@ -503,3 +503,4 @@ Map 和 Set 集合的关系
 
 * [Java-集合框架完全解析](https://www.jianshu.com/p/63e76826e852)
 * [How 2 java](https://how2j.cn/k/collection/collection-arraylist-list/686.html#nowhere)
+* [Java 集合详解](https://www.cnblogs.com/ysocean/p/6555373.html)
