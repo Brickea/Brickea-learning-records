@@ -149,7 +149,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
-* [Servlet (not done)](Java%20Day%20Day%20Up/J2EE/Servlet.md)
+* [Servlet](Java%20Day%20Day%20Up/J2EE/Servlet.md)
 
 ### 面试类
 
