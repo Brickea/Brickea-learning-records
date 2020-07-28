@@ -26,6 +26,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
   - [J2EE](#j2ee)
+  - [框架类](#框架类)
   - [面试类](#面试类)
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
@@ -113,11 +114,11 @@ Professor: Kal Bugrara
 
 ### Introduction to Statistical Learning - Gareth James, ...
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 ### Machine Learning - Hung-yi Lee
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 Here will include two parts. **Notes** are the note during self-learning. 🔥 Warning of Math 🔥 is the mathematical Pf about some theories.
 **Notes**
@@ -149,7 +150,10 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
-* [Servlet (not done)](Java%20Day%20Day%20Up/J2EE/Servlet.md)
+* [Servlet](Java%20Day%20Day%20Up/J2EE/Servlet.md)
+
+### 框架类
+* [Spring](https://github.com/Brickea/Spring-learning)
 
 ### 面试类
 

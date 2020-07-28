@@ -18,6 +18,10 @@
   - [Solution 1](#solution-1-6)
 - [10 斐波那契数列](#10-斐波那契数列)
   - [Solution 1](#solution-1-7)
+- [11 旋转数组的最小数字](#11-旋转数组的最小数字)
+  - [Solution 1](#solution-1-8)
+- [12 矩阵中的路径](#12-矩阵中的路径)
+  - [Solution 1](#solution-1-9)
 
 ## 03 数组中重复的数字
 
@@ -480,4 +484,117 @@ public class Solution {
 运行时间：10ms
 
 占用内存：9448k
+```
+
+## 11 旋转数组的最小数字
+
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。  
+输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。  
+例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。  
+NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
+### Solution 1
+
+因为旋转的特性，左边递增序列的第一个元素一定大于等于第二个递增序列的最后一个元素。如果没有出现这样的情况则说明数组本身没有旋转，可以直接返回第一个元素，即为最小的元素
+
+使用二分法的思路，两个指针分别指向第一个和最后一个，如果中间元素比第一个指向的元素大，说明中间元素在前面的递增序列，将index1移动到中间元素的位置；如果中间元素比最后一个元素小，说明中间元素在第二个递增序列，将index2移动到中间元素的位置。最后得到的情况应该是，index2和index1之间差1，index2指向最小元素。
+
+```java
+import java.util.ArrayList;
+public class Solution {
+    public int minNumberInRotateArray(int [] array) {
+        if(array.length==0){
+            return 0;
+        }
+        int index1 = 0;
+        int index2 = array.length-1;
+        int midIndex = 0;
+        
+        while(array[index1]>=array[index2]){
+            if(index2-index1==1){
+                midIndex = index2;
+                break;
+            }
+            // 数组确实旋转了
+            midIndex = (index1+index2)/2;
+            if(array[midIndex]>=array[index1]){
+                // 中间位置的数字在前面的递增序列
+                index1 = midIndex;
+            }
+            else if(array[midIndex]<=array[index2]){
+                // 中间位置的数字在后面的递增序列
+                index2 = midIndex;
+            }
+        }
+        
+        return array[midIndex];
+    }
+}
+```
+
+```
+运行时间：194ms
+
+占用内存：28708k
+```
+
+## 12 矩阵中的路径
+
+题目描述
+请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
+​
+### Solution 1
+
+回溯法
+
+```java
+import java.util.*;
+     
+public class Solution {
+     
+    public boolean hasPath(char[] matrix, int rows, int cols, char[] str) {
+        if(matrix==null || matrix.length==0 || str==null || str.length==0 || matrix.length!=rows*cols || rows<=0 || cols<=0 || rows*cols < str.length) {
+            return false ;
+        }
+ 
+        boolean[] visited = new boolean[rows*cols] ;
+        int[] pathLength = {0} ;
+ 
+        for(int i=0 ; i<=rows-1 ; i++) {
+            for(int j=0 ; j<=cols-1 ; j++) {
+                if(hasPathCore(matrix, rows, cols, str, i, j, visited, pathLength)) { return true ; }
+            }
+        }
+ 
+        return false ;
+    }
+     
+    public boolean hasPathCore(char[] matrix, int rows, int cols, char[] str, int row, int col, boolean[] visited, int[] pathLength) {
+        boolean flag = false ;
+ 
+        if(row>=0 && row<rows && col>=0 && col<cols && !visited[row*cols+col] && matrix[row*cols+col]==str[pathLength[0]]) {
+            pathLength[0]++ ;
+            visited[row*cols+col] = true ;
+            if(pathLength[0]==str.length) { return true ; }
+            flag = hasPathCore(matrix, rows, cols, str, row, col+1, visited, pathLength)  ||
+                   hasPathCore(matrix, rows, cols, str, row+1, col, visited, pathLength)  ||
+                   hasPathCore(matrix, rows, cols, str, row, col-1, visited, pathLength)  ||
+                   hasPathCore(matrix, rows, cols, str, row-1, col, visited, pathLength) ;
+ 
+            if(!flag) {
+                pathLength[0]-- ;
+                visited[row*cols+col] = false ;
+            }
+        }
+ 
+        return flag ;
+    }
+     
+}
+```
+
+```
+运行时间：12ms
+
+占用内存：9280k
 ```
