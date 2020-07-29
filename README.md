@@ -26,6 +26,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
   - [J2EE](#j2ee)
+  - [框架类](#框架类)
   - [面试类](#面试类)
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
@@ -113,11 +114,11 @@ Professor: Kal Bugrara
 
 ### Introduction to Statistical Learning - Gareth James, ...
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 ### Machine Learning - Hung-yi Lee
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 Here will include two parts. **Notes** are the note during self-learning. 🔥 Warning of Math 🔥 is the mathematical Pf about some theories.
 **Notes**
@@ -151,9 +152,22 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
 * [Servlet](Java%20Day%20Day%20Up/J2EE/Servlet.md)
 
+### 框架类
+* [Spring](https://github.com/Brickea/Spring-learning)
+
 ### 面试类
 
-[Java基础面试题](Java%20Day%20Day%20Up/Java基础面试题.md)
+* [哪些类用到了解决哈希冲突的开放定址法](Java%20Day%20Day%20Up/Java基础面试题.md#java8中下面哪个类用到了解决哈希冲突的开放定址法)
+* [JVM内存](Java%20Day%20Day%20Up/Java基础面试题.md#jvm内存)
+* [java8中，下面哪个类用到了解决哈希冲突的开放定址法](Java%20Day%20Day%20Up/Java基础面试题.md#java8中下面哪个类用到了解决哈希冲突的开放定址法)
+* [JDK 1.7 前接口和抽象类的特性](Java%20Day%20Day%20Up/Java基础面试题.md#jdk*17*前接口和抽象类的特性)
+* [线程安全的集合框架](Java%20Day%20Day%20Up/Java基础面试题.md#线程安全的集合框架)
+* [进程互斥 - 皮森特算法](Java%20Day%20Day%20Up/Java基础面试题.md#进程互斥---皮森特算法)
+* [```StringBuffer```和 ```StringBuilder```的区别](Java%20Day%20Day%20Up/StringBuffer和StringBuilder.md)
+* [范型的理解](Java%20Day%20Day%20Up/Java范型的理解.md)
+* [序列化和反序列化](Java%20Day%20Day%20Up/序列化和反序列化.md)
+* [Java 中 == equals hashcode的关系与区别](Java%20Day%20Day%20Up/Java%20中的%20==%20equals%20hashCode的区别和关系.md)
+* [Comparator 和 Comparable 的区别](Java%20Day%20Day%20Up/Comparable和Comparator的区别.md)
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
