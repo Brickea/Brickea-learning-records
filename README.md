@@ -168,6 +168,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [序列化和反序列化](Java%20Day%20Day%20Up/序列化和反序列化.md)
 * [Java 中 == equals hashcode的关系与区别](Java%20Day%20Day%20Up/Java%20中的%20==%20equals%20hashCode的区别和关系.md)
 * [Comparator 和 Comparable 的区别](Java%20Day%20Day%20Up/Comparable和Comparator的区别.md)
+* [单例模式]
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
@@ -195,12 +196,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### 字节跳动分类
 
-* [Reverse Nodes in k-Group](Data_structure_algorithm/Leetcode/record.md#25-Reverse-Nodes-in-k-Group-H)
+* [Reverse Nodes in k-Group 旋转数组的查找](Data_structure_algorithm/Leetcode/record.md#25-Reverse-Nodes-in-k-Group-H)
 * [Longest Substring Without Repeating Characters](Data_structure_algorithm/Leetcode/record.md#3-Longest-Substring-Without-Repeating-Characters-M)
 * [Binary Tree Level Order Traversal M](Data_structure_algorithm/Leetcode/record.md#102-Binary-Tree-Level-Order-Traversal-M)
 * [Binary Tree Maximum Path Sum H](Data_structure_algorithm/Leetcode/record.md#124-Binary-Tree-Maximum-Path-Sum-H)
 * [Reverse Linked List E](Data_structure_algorithm/Leetcode/record.md#206-Reverse-Linked-List-E)
 * [LRU Cache](Data_structure_algorithm/Leetcode/record.md#146-LRU-Cache)
+* [两个线程交替打印奇数偶数](Data_structure_algorithm/面试算法题/record.md#两个线程交替打印奇数偶数)
 
 ## 剑指offer 练习
 

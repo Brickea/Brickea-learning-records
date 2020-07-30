@@ -1,5 +1,6 @@
 # Java 多线程 <!-- omit in toc -->
 
+- [线程的不同状态](#线程的不同状态)
 - [线程创建的三种方式](#线程创建的三种方式)
   - [继承Thread实现多线程](#继承thread实现多线程)
   - [实现 ```Runnable```接口](#实现-runnable接口)
@@ -26,7 +27,10 @@
   - [注意 wait notify notifyAll 的位置](#注意-wait-notify-notifyall-的位置)
 - [线程池](#线程池)
   - [线程池的设计思路](#线程池的设计思路)
-  - [使用Java内置线程池](#使用java内置线程池)
+  - [使用Java内置线程池 - ThreadPoolExecutor](#使用java内置线程池---threadpoolexecutor)
+  - [使用Java内置线程池 - Executors 工厂类](#使用java内置线程池---executors-工厂类)
+    - [ExecutorService线程池接口](#executorservice线程池接口)
+    - [使用步骤](#使用步骤)
 - [锁 lock](#锁-lock)
   - [使用Lock对象实现同步效果](#使用lock对象实现同步效果)
   - [trylock 方法](#trylock-方法)
@@ -35,13 +39,17 @@
 - [原子操作](#原子操作)
   - [AtomicInteger](#atomicinteger)
 
+## 线程的不同状态
+
+![](res/线程状态.png)
+
 ## 线程创建的三种方式
 
 进程(Processor)和线程(Thread)是不一样的
 
-**进程**: 启动一个程序可以叫做一个进程，再启动一个程序就有了两个进程
+**进程**: 启动一个程序可以叫做一个进程，再启动一个程序就有了两个进程，进程是系统运行程序的基本单位；系统运行一个程序就是进程从创建、运行到消亡的过程
 
-**线程**：线程是在进程内部同事做的事情，比如在一个通讯软件，同时好几个人互相发私信就是一种多线程
+**线程**：线程是在进程内部同时做的事情，比如在一个通讯软件，同时好几个人互相发私信就是一种多线程；线程是进程中的一个执行单元，负责当前进程中程序的执行。
 
 此处展示不适多线程的转钱
 
@@ -970,7 +978,7 @@ public class ThreadPoolTest {
 
 ```
 
-### 使用Java内置线程池
+### 使用Java内置线程池 - ThreadPoolExecutor
 
 java提供自带的线程池，而不需要自己去开发一个自定义线程池了。
 
@@ -980,7 +988,6 @@ java提供自带的线程池，而不需要自己去开发一个自定义线程�
 ThreadPoolExecutor threadPool= new ThreadPoolExecutor(10, 15, 60, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
 ```
 
-
 * 第一个参数10 表示这个线程池初始化了10个线程在里面工作
 * 第二个参数15 表示如果10个线程不够用了，就会自动增加到最多15个线程
 * 第三个参数60 结合第四个参数TimeUnit.SECONDS，表示经过60秒，多出来的线程还没有接到活儿，就会回收，最后保持池子里就10个
@@ -988,6 +995,66 @@ ThreadPoolExecutor threadPool= new ThreadPoolExecutor(10, 15, 60, TimeUnit.SECON
 * 第五个参数 new LinkedBlockingQueue() 用来放任务的集合
 
 execute方法用于添加新的任务
+
+### 使用Java内置线程池 - Executors 工厂类
+
+静态方法 ```static ExecutorService newFixedThreadPool(int nThreads)``` 创建一个可重用固定线程数量的线程池
+
+返回 ```ExecutorService``` 接口的实现类对象，我们可以使用```ExecutorService```接口接收
+
+#### ExecutorService线程池接口
+
+该接口用来从线程池中获取线程，调用```start()```方法，执行线程任务
+
+```submit(Runnable task)``` 提交一个 ```Runnable```任务用于执行
+
+```shutdown()``` 用来关闭/销毁线程池
+
+#### 使用步骤
+
+1. 使用线程池的工厂类```Executors```里面提供的静态方法```newFixedThreadPool```生产一个指定线程数量的线程池
+2. 创建一个类，实现```Runnable```接口，重写```run```方法，设置线程任务
+3. 调用```ExecutorService```中的方法```submit```，传递线程任务（实现类），开启线程，执行```run()```方法
+4. 调用```ExecutorService```中的方法```shutdown```销毁线程池(一般不手动做)
+
+```java
+public static void main(String[] args) {
+        ExecutorService es = Executors.newFixedThreadPool(2);
+        for (int i = 0; i < 10; i++) {
+            final int temp = i;
+            es.submit(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("任务"+temp);
+                    System.out.println(Thread.currentThread().getName());
+                }
+            });
+        }
+    }
+```
+
+```
+任务0
+任务1
+pool-1-thread-2
+pool-1-thread-1
+任务2
+pool-1-thread-2
+任务3
+pool-1-thread-1
+任务4
+pool-1-thread-2
+任务5
+pool-1-thread-1
+任务6
+pool-1-thread-2
+任务7
+pool-1-thread-1
+任务8
+pool-1-thread-2
+任务9
+pool-1-thread-1
+```
 
 ## 锁 lock
 
