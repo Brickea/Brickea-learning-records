@@ -22,6 +22,16 @@
   - [Solution 1](#solution-1-8)
 - [12 矩阵中的路径](#12-矩阵中的路径)
   - [Solution 1](#solution-1-9)
+- [13 机器人运动范围](#13-机器人运动范围)
+  - [Solution 1](#solution-1-10)
+- [14 切绳子](#14-切绳子)
+  - [Solution 1 - 动态规划](#solution-1---动态规划)
+- [15 二进制中1的个数](#15-二进制中1的个数)
+  - [Solution 1](#solution-1-11)
+- [18 数值的整数次方](#18-数值的整数次方)
+  - [Solution 1](#solution-1-12)
+- [18 删除链表的节点](#18-删除链表的节点)
+  - [Solution 1](#solution-1-13)
 
 ## 03 数组中重复的数字
 
@@ -597,4 +607,236 @@ public class Solution {
 运行时间：12ms
 
 占用内存：9280k
+```
+
+## 13 机器人运动范围
+
+
+地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+
+### Solution 1
+
+回溯法解决
+
+```java
+public class Solution {
+    public int movingCount(int threshold, int rows, int cols){
+        int res = 0;
+        
+        // 初始化访问数组 visited
+        boolean[][] visited = new boolean[rows][cols];
+        
+        res = movingCore(threshold,0,0,visited,rows,cols);
+        
+        return res;
+    }
+    
+    private int movingCore(int threshold, int row, int col, boolean[][] visited,int rows,int cols){
+        int count = 0;
+        
+        if(unitCheck(threshold,row,col,visited,rows,cols)){
+            visited[row][col] = true;
+            
+            count = 1 + movingCore(threshold,row+1,col,visited,rows,cols)+
+                movingCore(threshold,row-1,col,visited,rows,cols)+
+                movingCore(threshold,row,col+1,visited,rows,cols)+
+                movingCore(threshold,row,col-1,visited,rows,cols);
+        }
+        
+        return count;
+    }
+    
+    private boolean unitCheck(int threshold, int row, int col, boolean[][] visited,int rows,int cols){
+        if((row<0||row>=rows)||(col<0||col>=cols))
+            return false;
+        
+        if(digitCheck(threshold,row,col)&&!visited[row][col]){
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private boolean digitCheck(int threshold,int row,int col){
+        int rowInt = 0;
+        int colInt = 0;
+        
+        while(row>0){
+            rowInt += row%10;
+            row /= 10;
+        }
+        while(col>0){
+            colInt += col%10;
+            col /= 10;
+        }
+        
+        return (rowInt+colInt)<=threshold;
+    }
+}
+```
+
+```
+运行时间：10ms 占用内存：9436KB
+```
+
+## 14 切绳子
+
+给你一根长度为n的绳子，请把绳子剪成整数长的m段（m、n都是整数，n>1并且m>1，m<=n），每段绳子的长度记为k[1],...,k[m]。请问k[1]x...xk[m]可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
+
+### Solution 1 - 动态规划
+
+```java
+public class Solution {
+    public int cutRope(int target) {
+        if(target==2)
+            return 1;
+        if(target==3)
+            return 2;
+        
+        // 定义 dp 装载为 长度为i的时候最大的切割乘积
+        // 因为一定会切一刀，所以自顶向下将切一刀的时候各个部分的最大乘积相乘
+        int[] dp = new int[target+1];
+        
+        // 1,2,3长度是特殊的basecase，因为这三种长度自己本身作为子部分要比切割后最大的可能乘积大，所以这里特别设置。
+        dp[0] = 0;
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 3;
+        
+        for(int i=4;i<=target;i++){
+            int tempMax = 0;
+            for(int j = 1;j<=i/2;j++){
+                // 因为超过 i/2之后结果是相同的
+                tempMax = Math.max(tempMax,dp[i-j]*dp[j]);
+            }
+            dp[i] = tempMax;
+        }
+    
+        return dp[target];
+    }
+}
+```
+
+## 15 二进制中1的个数
+
+输入一个整数，输出该数32位二进制表示中1的个数。其中负数用补码表示。
+
+### Solution 1
+
+这里要注意负数的二进制表示是其相反数的补码，所以使用以下这种方式会比较妥当
+
+```java
+public class Solution {
+    public int NumberOf1(int n) {
+        // 将输入与1做与运算，之后将1左移动一位再做与运算
+        int count = 0;
+        int compare = 1;
+        
+        for(int i=0;i<32;i++){
+            count = (n&compare)!=0?count+1:count;
+            compare<<=1;
+        }
+        
+        return count;
+    }
+}
+```
+
+## 18 数值的整数次方
+
+### Solution 1
+
+给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+
+保证base和exponent不同时为0
+
+```java
+public class Solution {
+    public double Power(double base, int exponent) {
+        // basecase
+        if(base==0)
+            return base;
+        if(exponent==0)
+            return 1;
+        
+        double res = 1;
+        int tempEx = exponent;
+        if(exponent<0){
+            tempEx = exponent*-1;
+        }
+        
+        
+        for(int i=0;i<tempEx;i++)
+            res *= base;
+         
+        return (exponent<0)?1/res:res;
+  }
+}
+```
+
+```
+运行时间：29ms 占用内存：10524KB
+```
+
+
+## 18 删除链表的节点
+
+在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+
+### Solution 1
+
+删除就完事了
+
+```java
+/*
+ public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+*/
+public class Solution {
+    public ListNode deleteDuplication(ListNode pHead)
+    {
+        if(pHead==null){
+            return null;
+        }
+        ListNode fakeHead = new ListNode(0);
+        fakeHead.next = pHead;
+        
+        ListNode pre = fakeHead;
+        ListNode current = pHead;
+        
+        int count = 1;
+        
+        while(current.next!=null){
+            if(current.val==current.next.val){
+                count++;
+                current = current.next;
+            }else{
+                if(count>=2){
+                    pre.next = current.next;
+                    current = current.next;
+                    count = 1;
+                }else{
+                    pre = current;
+                    current = current.next;
+                }
+            }
+            
+        }
+        if(count!=1){
+            pre.next = current.next;
+        }
+        
+        return fakeHead.next;
+    }
+}
+```
+
+```
+运行时间：14ms 占用内存：9848KB
 ```

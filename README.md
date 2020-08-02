@@ -194,6 +194,10 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [53. Maximum Subarray E](Data_structure_algorithm/Leetcode/record.md#53.-Maximum-Subarray-E)
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
   * [416. Partition Equal Subset Sum M](Data_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
+  * [剑指offer 14 切绳子](Data_structure_algorithm/剑指offer/record.md#14-切绳子)
+* [回溯方法]
+  * [剑指offer 12 矩阵中的路径](Data_structure_algorithm/剑指offer/record.md#12-矩阵中的路径)
+  * [剑指offer 13 机器人运动范围](Data_structure_algorithm/剑指offer/record.md#13-机器人运动范围)
 
 ### 字节跳动分类
 
@@ -208,7 +212,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-6/66-red)
+![](https://img.shields.io/badge/Status-18`/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
