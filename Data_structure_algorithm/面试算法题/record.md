@@ -2,6 +2,7 @@
 
 - [字节跳动](#字节跳动)
   - [两个线程交替打印奇数偶数](#两个线程交替打印奇数偶数)
+- [域名反转(www.toutiao.com->com.toutiao.www)](#域名反转wwwtoutiaocom-comtoutiaowww)
 
 ## 字节跳动
 
@@ -101,4 +102,20 @@ public class OddAndEven {
 8
 奇数线程Thread-1
 9
+```
+
+## 域名反转(www.toutiao.com->com.toutiao.www)
+
+```java
+public class Solution1 {
+    public static void main(String[] args) {
+        Scanner inputT = new Scanner(System.in);
+        String url = inputT.nextLine();
+
+        String res = url.substring(url.length()-3,url.length())+url.substring(3,url.length()-3)+url.substring(0,3);
+
+        System.out.println(res);
+
+    }
+}
 ```

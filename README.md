@@ -204,6 +204,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Reverse Linked List E](Data_structure_algorithm/Leetcode/record.md#206-Reverse-Linked-List-E)
 * [LRU Cache](Data_structure_algorithm/Leetcode/record.md#146-LRU-Cache)
 * [两个线程交替打印奇数偶数](Data_structure_algorithm/面试算法题/record.md#两个线程交替打印奇数偶数)
+* [域名反转(www.toutiao.com->com.toutiao.www)](Data_structure_algorithm/面试算法题/record.md#域名反转(www.toutiao.com->com.toutiao.www))
 
 ## 剑指offer 练习
 
