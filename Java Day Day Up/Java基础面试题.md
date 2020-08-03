@@ -36,70 +36,56 @@ HashMap,TreeMap是线程不安全的。 HashTable 和 ConcurrentHashMap 都是�
 
 ## 进程互斥 - 皮森特算法
 
-```java
-
-boolean flag[2];
- 
-int turn;
- 
-void P0()
- 
-{
- 
-   while(true)
- 
-{
- 
-    flag[0]=true;
- 
-    turn=1;
- 
-    while(flag[1]&&turn==1)
- 
-       /* donothing*/ ;
- 
-    /*critical section*/ ;
- 
-    flag[0]=false;
- 
-}
- 
-}
- 
-void P1()
- 
-{
- 
-   while(true)
- 
-{
- 
-    flag[1]=true;
- 
-    turn=0;
- 
-    while(flag[0]&&turn==0)
- 
-       /* donothing*/ ;
- 
-    /*critical section*/ ;
- 
-    flag[1]=false;
- 
-}
- 
-}
- 
-void main()
- 
-{
- 
-flag[0]=flag[1]=false;
- 
-/*start p0 and p1*/ ;
- 
+```c++
+#define N 2 //进程数为2  
+int turn;  //现在轮到哪个进程？  
+int interested  
+; //初始化置为false，即没有在临界区等待读写共享数据的  
+  
+void enter_region(int process) //进入临界区  
+{  
+turn = process;  
+int other = 1 - turn; //另一个进程  
+interested[turn] = true;  
+while(turn == process && interested[other] == true)  
+; //一直循环，直到other进程退出临界区  
+}  
+  
+void leave_region(int process)  
+{  
+interested[process] = false;  
+}  
 ```
 
-考虑进程P0，一旦它设置flag[0]=true，则P1不能进入临界区。如果P1已经进入临界区，那么flag[1]=true，P0被阻塞不能进入临界区。
 
-另一方面，互相阻塞也避免了。假设P0在while里被阻塞了，表示flag[1]为true且turn＝1，则此时P1可以执行。
+进程通信时无非会产生下列的两种情况：
+
+1. 进程0通信，进程1不影响。（反之亦然）
+
+enter_region()中各参数的值：
+
+turn = 0;
+
+other = 1;
+
+interested[0] = true;
+
+interested[1] = false;
+
+while循环直接在interested[other]那一步就退出了，进程0成功进入临界区。
+
+2. 进程0通信，进程1也要通信。（反之亦然）
+
+进程0的状态如上。
+
+进程1在enter_region()后各参数的值：
+
+turn = 1;
+
+other = 0;
+
+interested[1] = true;
+
+interested[0] = true;
+
+while循环持续，直到进程0调用leave_region()退出临界区，使得interested[0] = false。
