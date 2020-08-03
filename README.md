@@ -97,7 +97,7 @@ Professor: Kal Bugrara
 
 ### Algorithms Robert Sedgewick and Kevin Wayne
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 * [Week 1 - Union-find & Algorithm Analysis](Data_structure_algorithm/Algorithm/Lectures/Week%201/Week%201.md)
   * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%201.md)
