@@ -136,7 +136,7 @@ Java 中所有内置的类的 equals 方法的实现步骤均是如此，特别�
 
 ### 来源
 
-ashCode 方法是基类Object中的 实例```native```方法，因此对所有继承于Object的类都会有该方法。
+hashCode 方法是基类Object中的 实例```native```方法，因此对所有继承于Object的类都会有该方法。
 　　
 在 Object类 中的声明（native方法暗示这些方法是有实现体的，但并不提供实现体，因为其实现体是由非java语言在外面实现的）：
 

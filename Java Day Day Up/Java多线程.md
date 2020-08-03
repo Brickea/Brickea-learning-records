@@ -38,6 +38,7 @@
   - [总结Lock和synchronized的区别总结](#总结lock和synchronized的区别总结)
 - [原子操作](#原子操作)
   - [AtomicInteger](#atomicinteger)
+- [volatile关键字解析](#volatile关键字解析)
 
 ## 线程的不同状态
 
@@ -1378,3 +1379,5 @@ i++ ，i--， i = i+1 这些都是非原子性操作。
 
 JDK6 以后，新增加了一个包java.util.concurrent.atomic，里面有各种原子类，比如AtomicInteger。  
 而AtomicInteger提供了各种自增，自减等方法，这些方法都是原子性的。 换句话说，自增方法 incrementAndGet 是线程安全的，同一个时间，只有一个线程可以调用这个方法。  
+
+## [volatile关键字解析](cnblogs.com/dolphin0520/p/3920373.html)

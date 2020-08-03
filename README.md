@@ -150,6 +150,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
+* [TCP-三次握手和四次挥手](Java%20Day%20Day%20Up/J2EE/HTTP协议.md#tcp-三次握手和四次挥手)
+* [SSL/TLS协议运行机制的概述](Java%20Day%20Day%20Up/J2EE/HTTP协议.md#ssltls-握手机制概述)
 * [Servlet](Java%20Day%20Day%20Up/J2EE/Servlet.md)
 
 ### 框架类
@@ -163,13 +165,20 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [JDK 1.7 前接口和抽象类的特性](Java%20Day%20Day%20Up/Java基础面试题.md#jdk*17*前接口和抽象类的特性)
 * [线程安全的集合框架](Java%20Day%20Day%20Up/Java基础面试题.md#线程安全的集合框架)
 * [进程互斥 - 皮森特算法](Java%20Day%20Day%20Up/Java基础面试题.md#进程互斥---皮森特算法)
+* [同步和锁](https://zhuanlan.zhihu.com/p/109971253)
+  * 自旋锁
+  * 睡眠与唤醒
+  * 信号量
+  * 互斥量
 * [```StringBuffer```和 ```StringBuilder```的区别](Java%20Day%20Day%20Up/StringBuffer和StringBuilder.md)
 * [范型的理解](Java%20Day%20Day%20Up/Java范型的理解.md)
 * [序列化和反序列化](Java%20Day%20Day%20Up/序列化和反序列化.md)
 * [Java 中 == equals hashcode的关系与区别](Java%20Day%20Day%20Up/Java%20中的%20==%20equals%20hashCode的区别和关系.md)
 * [Comparator 和 Comparable 的区别](Java%20Day%20Day%20Up/Comparable和Comparator的区别.md)
+* [双重检查锁单例模式为什么要用volatile关键字](Java%20Day%20Day%20Up/Java%20单例模式.md#双重检查锁单例模式为什么要用volatile关键字)
 * [怎么不使用synchronized和lock实现一个线程安全的单例](Java%20Day%20Day%20Up/Java%20单例模式.md#怎么不使用synchronized和lock实现一个线程安全的单例)
 * [破坏单例](Java%20Day%20Day%20Up/Java%20单例模式.md#破坏单例模式)
+* [Java 中 ClassLoader的作用](Java%20Day%20Day%20Up/JavaClassLoader的作用.md)
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
@@ -195,7 +204,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
   * [416. Partition Equal Subset Sum M](Data_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
   * [剑指offer 14 切绳子](Data_structure_algorithm/剑指offer/record.md#14-切绳子)
-* [回溯方法]
+* [回溯方法](https://labuladong.github.io/ebook/%E7%AE%97%E6%B3%95%E6%80%9D%E7%BB%B4%E7%B3%BB%E5%88%97/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%BF%AE%E8%AE%A2%E7%89%88.html)
   * [剑指offer 12 矩阵中的路径](Data_structure_algorithm/剑指offer/record.md#12-矩阵中的路径)
   * [剑指offer 13 机器人运动范围](Data_structure_algorithm/剑指offer/record.md#13-机器人运动范围)
 
