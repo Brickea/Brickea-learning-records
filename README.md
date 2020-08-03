@@ -25,6 +25,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
+  - [手撕代码](#手撕代码)
   - [J2EE](#j2ee)
   - [框架类](#框架类)
   - [面试类](#面试类)
@@ -97,7 +98,7 @@ Professor: Kal Bugrara
 
 ### Algorithms Robert Sedgewick and Kevin Wayne
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 * [Week 1 - Union-find & Algorithm Analysis](Data_structure_algorithm/Algorithm/Lectures/Week%201/Week%201.md)
   * [Interview Question](Data_structure_algorithm/Algorithm/Job%20Interview/Week%201.md)
@@ -147,6 +148,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
 * [Java 网络编程](Java%20Day%20Day%20Up/Java%20网络编程.md)
 * [Hash冲突的解决](Java%20Day%20Day%20Up/Hash冲突的处理方式.md)
+
+### 手撕代码
+
+* [基础并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/BasicUnionFind.java)
+* [树形结构存储并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/QuickUnionUnionFind.java)
+* [权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/WeightedUnionFind.java)
+* [路径压缩+权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/PathCompressionWeightedUnionFind.java)
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
