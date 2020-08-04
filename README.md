@@ -155,6 +155,12 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [树形结构存储并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/QuickUnionUnionFind.java)
 * [权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/WeightedUnionFind.java)
 * [路径压缩+权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/PathCompressionWeightedUnionFind.java)
+* [选择排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/SelectionSort.java)
+* [插入排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/InsertionSort.java)
+* [希尔排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/ShellSort.java)
+* [归并排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/MergeSort.java)
+* [快排](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/QuickSort.java)
+* [堆排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/HeapSort.java)
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
