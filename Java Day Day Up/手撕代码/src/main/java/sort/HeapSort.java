@@ -19,7 +19,6 @@ public class HeapSort {
      * @description: 用来判断两个实现了 Comparable 接口的对象是否是 v 小于 w
      **/
     private static boolean less(Comparable v, Comparable w) {
-        // 这样设计的时候排序是稳定的，因为在遇到相等的内容时，原本在后的不会跑到前面
         return v.compareTo(w) < 0;
     }
 
