@@ -209,8 +209,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ## Leetcode 练习
 
 ![](https://img.shields.io/badge/Easy-51-brightgreen)
-![](https://img.shields.io/badge/Medium-29-orange)
-![](https://img.shields.io/badge/Hard-4-red)
+![](https://img.shields.io/badge/Medium-31-orange)
+![](https://img.shields.io/badge/Hard-5-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
@@ -239,7 +239,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-18`/66-red)
+![](https://img.shields.io/badge/Status-19/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
@@ -248,3 +248,4 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [自我驱动职业规划](Career%20Design/Career%20Design.md)
 * [关于入职靠谱IT公司 B站up ```技术胖```](Career%20Design/关于入职靠谱IT公司.md)
 * [Java开发高频面试题全解析](Career%20Design/Java开发高频面试题全解析)
+* [面经](Career%20Design/2021/面经.md)
