@@ -23,9 +23,12 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [Algorithms Robert Sedgewick and Kevin Wayne](#algorithms-robert-sedgewick-and-kevin-wayne)
   - [Introduction to Statistical Learning - Gareth James, ...](#introduction-to-statistical-learning---gareth-james-)
   - [Machine Learning - Hung-yi Lee](#machine-learning---hung-yi-lee)
+- [手撕代码](#手撕代码)
+  - [并查集](#并查集)
+  - [排序](#排序)
+  - [链表](#链表)
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
-  - [手撕代码](#手撕代码)
   - [J2EE](#j2ee)
   - [框架类](#框架类)
   - [面试类](#面试类)
@@ -133,6 +136,33 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 **🔥 Warning of Math 🔥**
 * [Why Gradient Descent Work](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/Why%20Gradient%20Descent%20Work.md)
 
+## 手撕代码
+
+### 并查集
+
+* [基础并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/BasicUnionFind.java)
+* [树形结构存储并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/QuickUnionUnionFind.java)
+* [权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/WeightedUnionFind.java)
+* [路径压缩+权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/PathCompressionWeightedUnionFind.java)
+
+### 排序
+
+* [选择排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/SelectionSort.java)
+* [插入排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/InsertionSort.java)
+* [希尔排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/ShellSort.java)
+* [归并排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/MergeSort.java)
+* [快排](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/QuickSort.java)
+* [堆排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/HeapSort.java)
+
+### 链表
+
+* [反转链表](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/ReverseLinkedList.java)
+* [合并有序链表](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/MergerSortLinkedList.java)
+* [判断单链表是否成环](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/HasCircle.java)
+* [寻找单链表环的入口节点](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/FindEntryOfCircle.java)
+* [寻找两个单链表的交点](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/HasIntersection.java)
+
+
 ## Java 每天一个知识点
 
 ![](https://img.shields.io/badge/Status-Updating-red)
@@ -148,19 +178,6 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Java 多线程](Java%20Day%20Day%20Up/Java多线程.md)
 * [Java 网络编程](Java%20Day%20Day%20Up/Java%20网络编程.md)
 * [Hash冲突的解决](Java%20Day%20Day%20Up/Hash冲突的处理方式.md)
-
-### 手撕代码
-
-* [基础并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/BasicUnionFind.java)
-* [树形结构存储并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/QuickUnionUnionFind.java)
-* [权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/WeightedUnionFind.java)
-* [路径压缩+权重并查集](Java%20Day%20Day%20Up/手撕代码/src/main/java/unionfind/PathCompressionWeightedUnionFind.java)
-* [选择排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/SelectionSort.java)
-* [插入排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/InsertionSort.java)
-* [希尔排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/ShellSort.java)
-* [归并排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/MergeSort.java)
-* [快排](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/QuickSort.java)
-* [堆排序](Java%20Day%20Day%20Up/手撕代码/src/main/java/sort/HeapSort.java)
 
 ### J2EE
 * [HTTP协议](Java%20Day%20Day%20Up/J2EE/HTTP协议.md)
