@@ -82,7 +82,7 @@ Professor: Kal Bugrara
 
 ### CS50-s-Web-Programming
 
-![](https://img.shields.io/badge/Status-Updating-red)
+![](https://img.shields.io/badge/Status-Pause-grey)
 
 * Git and HTML
 * New Features in HTML5
@@ -137,6 +137,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [Why Gradient Descent Work](Machine-Learning-Hung-yi%20Lee/Part%202%20Regression/Why%20Gradient%20Descent%20Work.md)
 
 ## 手撕代码
+
+![](https://img.shields.io/badge/Status-Updating-red)
 
 ### 并查集
 
@@ -256,7 +258,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-19/66-red)
+![](https://img.shields.io/badge/Status-25/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
