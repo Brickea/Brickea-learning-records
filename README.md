@@ -258,7 +258,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-25/66-red)
+![](https://img.shields.io/badge/Status-30/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
