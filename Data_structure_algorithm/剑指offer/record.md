@@ -33,6 +33,17 @@
 - [18 删除链表的节点](#18-删除链表的节点)
   - [Solution 1](#solution-1-13)
 - [19 正则匹配](#19-正则匹配)
+  - [Solution 1](#solution-1-14)
+- [20 表示数值的字符串](#20-表示数值的字符串)
+  - [Solution 1](#solution-1-15)
+- [21 调整数组顺序](#21-调整数组顺序)
+  - [Solution 1](#solution-1-16)
+- [22 链表中倒数第k个节点](#22-链表中倒数第k个节点)
+  - [Solution 1](#solution-1-17)
+- [23 链表中环的入口节点](#23-链表中环的入口节点)
+  - [Solution 1](#solution-1-18)
+- [24 反转链表](#24-反转链表)
+  - [Solution 1](#solution-1-19)
 
 ## 03 数组中重复的数字
 
@@ -846,6 +857,8 @@ public class Solution {
 
 请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串"aaa"与模式"a.a"和"ab*ac*a"匹配，但是与"aa.a"和"ab*a"均不匹配
 
+### Solution 1
+
 ```java
 
 public class Solution {
@@ -893,4 +906,260 @@ private boolean matchTwo(char[] str, int i, int length1, char[] pattern,
 运行时间：11ms
 
 占用内存：9912k
+```
+
+## 20 表示数值的字符串
+
+请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串"+100","5e2","-123","3.1416"和"-1E-16"都表示数值。 但是"12e","1a3.14","1.2.3","+-5"和"12e+4.3"都不是。
+
+### Solution 1
+
+```java
+public class Solution {
+    private int i = 0;
+    public boolean isNumeric(char[] str) {
+        // 数值的表示分为三部分
+        // A 为整数部分，B为小数点部分，C为指数部分
+        // A [.[B]][e|EC] 此时有整数部分
+        // [.[B]][e|EC] 此时没有整数部分
+
+        if(str.length==0){
+            return false;
+        }
+
+        boolean res = this.scanSignedInteger(str); // 首先判断有没有整数部分
+
+        if(i<str.length&&str[this.i]=='.'){
+            // 遇到小数部分
+            // 使用||是因为整数部分和小数部分必须至少存在一个
+            this.i++;
+            res = this.scanUnsignedInteger(str)|| res;
+        }
+
+        if(i<str.length&&(str[this.i]=='e'||str[this.i]=='E')){
+            // 遇到指数部分
+            // 使用&& 是因为指数部分不能独立存在，整数和小数部分必须至少存在一个
+            this.i++;
+            res = this.scanSignedInteger(str) && res;
+        }
+
+        return res&&this.i==str.length; // 要保证判断到尾才可以
+    }
+
+    private boolean scanUnsignedInteger(char[] str){
+
+        // 判断是否存在0-9的数字
+        int temp = this.i;
+        while(i<str.length&&str[i]>='0'&&str[i]<='9'){
+            this.i++;
+        }
+        return i>temp;
+    }
+
+    private boolean scanSignedInteger(char[] str){
+        if(i<str.length&&(str[i]=='-'||str[i]=='+')){
+            // 先判断是否有符号
+            this.i++;
+        }
+        return this.scanUnsignedInteger(str);
+    }
+
+}
+
+```
+
+## 21 调整数组顺序
+
+### Solution 1
+
+输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+
+```java
+public class Solution {
+    private void exchangePosition(int [] array, int i , int j){
+        // 将数字从j按照位置交替交换到i
+        while(j!=i){
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+            j--;
+        }
+    }
+    public void reOrderArray(int [] array) {
+        int i=0;
+       while(i<array.length){
+           if(array[i]%2!=0){
+               // 如果是奇数则上浮
+               int j=i;
+               while(j-1>-1&&array[j-1]%2==0){
+                   int temp = array[j];
+                   array[j] = array[j-1];
+                   array[j-1] = temp;
+                   j--;
+               }
+           }
+           i++;
+       }
+    }
+}
+```
+
+## 22 链表中倒数第k个节点
+
+输入一个链表，输出该链表中倒数第k个结点。
+
+### Solution 1
+
+```java
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode FindKthToTail(ListNode head,int k) {
+        if(head==null||k==0){
+            return null;
+        }
+        
+        ListNode first = head;
+        ListNode last = head;
+        
+        int count = 1;
+        while(last.next!=null){
+            if(count==k){
+                first = first.next;
+            }else{
+                count++;
+            }
+            last = last.next;
+        }
+        return count<k?null:first;
+    }
+}
+```
+
+## 23 链表中环的入口节点
+
+给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。
+
+### Solution 1
+
+```java
+/*
+ public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+*/
+public class Solution {
+
+    private ListNode findCircleNode(ListNode pHead){
+        // 返回环中的某一个节点
+        ListNode walker = pHead;
+        ListNode runner = pHead;
+        
+        boolean flag = false; // 判断是否真正进入了环
+        
+        while(walker.next!=null&&runner.next!=null&&runner.next.next!=null){
+            flag = true;
+            walker = walker.next;
+            runner=runner.next.next;
+            if(walker==runner){
+                break;
+            }
+        }
+        
+        return walker==runner&&flag?walker:null;
+        
+    }
+    
+    private int circleLen(ListNode circleNode){
+        ListNode temp = circleNode;
+        int len = 0;
+        do{
+            temp = temp.next;
+            len++;
+        }while(temp!=circleNode);
+        
+        return len;
+    }
+    public ListNode EntryNodeOfLoop(ListNode pHead)
+    {
+        if(pHead==null){
+            return null;
+        }
+        ListNode circleNode = this.findCircleNode(pHead);
+        int len = 0;
+        if(circleNode!=null){
+            len = this.circleLen(circleNode);
+        }else{
+            return null;
+        }
+        
+        // 快指针先以环的长度进行移动，之后两指针以相同速度移动，最后碰撞的那个节点就是环的入口
+        ListNode walker = pHead;
+        ListNode runner = pHead;
+        for(int i=len;i>0;i--){
+            runner = runner.next;
+        }
+        while(walker!=runner){
+            runner = runner.next;
+            walker = walker.next;
+        }
+        
+        return walker;
+    }
+}
+```
+
+## 24 反转链表
+
+输入一个链表，反转链表后，输出新链表的表头。
+
+### Solution 1
+
+```java
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+        if(head == null){
+            return null;
+        }else if(head.next==null){
+            return head;
+        }
+        
+        ListNode pre = null;
+        ListNode current = head;
+        
+        while(current!=null){
+            ListNode temp = current.next; // temp = head.next.next
+            current.next = pre;  //head.next.next = head
+            pre = current; // head = head.next
+            current = temp; // head.next = head.next.next
+        }
+        
+        head.next = null;
+        
+        return pre;
+    }
+}
+
+
 ```
