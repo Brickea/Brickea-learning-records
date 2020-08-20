@@ -44,6 +44,19 @@
   - [Solution 1](#solution-1-18)
 - [24 反转链表](#24-反转链表)
   - [Solution 1](#solution-1-19)
+- [25 合并两个排序的链表](#25-合并两个排序的链表)
+  - [Solution 1](#solution-1-20)
+- [26 树的子结构](#26-树的子结构)
+  - [Solution 1](#solution-1-21)
+- [27 二叉树的镜像](#27-二叉树的镜像)
+  - [Solution 1](#solution-1-22)
+- [28 对称的二叉树](#28-对称的二叉树)
+  - [Solution 1](#solution-1-23)
+- [29 顺时针打印矩阵](#29-顺时针打印矩阵)
+  - [Solution 1](#solution-1-24)
+  - [Solution 2](#solution-2-2)
+- [30 包含min函数的栈](#30-包含min函数的栈)
+  - [Solution 1](#solution-1-25)
 
 ## 03 数组中重复的数字
 
@@ -1162,4 +1175,315 @@ public class Solution {
 }
 
 
+```
+
+## 25 合并两个排序的链表
+
+输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+
+### Solution 1
+
+```java
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode Merge(ListNode list1,ListNode list2) {
+        if(list1==null){
+            return list2;
+        }else if(list2==null){
+            return list1;
+        }
+        
+        ListNode resHead = null;
+        
+        if(list1.val<list2.val){
+            resHead = list1;
+            resHead.next = Merge(list1.next,list2);
+        }else{
+            resHead = list2;
+            resHead.next = Merge(list1,list2.next);
+        }
+        
+        return resHead;
+    }
+}
+```
+
+## 26 树的子结构
+
+输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+### Solution 1
+
+这里选择递归排查
+
+```java
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private boolean HasStructure(TreeNode root1,TreeNode root2){
+        boolean res = false;
+        
+        if(root2==null){
+            // 到达树2的叶子节点
+            return true;
+        }
+        if(root1==null){
+            // 没有到达树2 的叶子节点，但是到达了树1的叶子节点
+            return false;
+        }
+        
+        if(root1.val!=root2.val){
+            return false;
+        }
+        
+        return HasStructure(root1.left,root2.left)&&HasStructure(root1.right,root2.right);
+    }
+    public boolean HasSubtree(TreeNode root1,TreeNode root2) {
+        boolean res = false;
+        
+        if(root1!=null&&root2!=null){
+            if(root1.val==root2.val){
+                res = HasStructure(root1,root2);
+            }
+            if(!res){
+                res = HasSubtree(root1.left,root2);
+            }
+            if(!res){
+                res = HasSubtree(root1.right,root2);
+            }
+        }
+        
+        return res;
+    }
+}
+```
+
+## 27 二叉树的镜像
+
+操作给定的二叉树，将其变换为源二叉树的镜像。
+
+```
+二叉树的镜像定义：源二叉树 
+    	    8
+    	   /  \
+    	  6   10
+    	 / \  / \
+    	5  7 9 11
+    	镜像二叉树
+    	    8
+    	   /  \
+    	  10   6
+    	 / \  / \
+    	11 9 7  5
+```
+
+
+### Solution 1
+
+```java
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private void helper(TreeNode node){
+        if(node!=null){
+            TreeNode temp = node.left;
+            node.left = node.right;
+            node.right = temp;
+            helper(node.left);
+            helper(node.right);
+        }
+        
+    }
+    public void Mirror(TreeNode root) {
+        helper(root);
+    }
+}
+```
+
+## 28 对称的二叉树
+
+请实现一个函数，用来判断一棵二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+
+### Solution 1
+
+思路为使用先序遍历和对称先序遍历，即根左右和根右左，如果树是对称的则这两个遍历结果是相同的。
+
+```java
+/*
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private boolean helper(TreeNode root1,TreeNode root2){
+        if(root1==null&&root2==null){
+            return true;
+        }
+        if(root1==null||root2==null){
+            // 先序和对称先序遍历碰到了不对称的null情况
+            return false;
+        }
+        
+        if(root1.val!=root2.val){
+            return false;
+        }
+        
+        return helper(root1.left,root2.right)&&helper(root1.right,root2.left);
+    }
+    
+    boolean isSymmetrical(TreeNode pRoot)
+    {
+        if(pRoot==null){
+            return true;
+        }
+        return helper(pRoot.left,pRoot.right);
+    }
+}
+```
+
+## 29 顺时针打印矩阵
+
+输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+
+### Solution 1
+
+小心判断边界条件
+
+```java
+import java.util.ArrayList;
+public class Solution {
+    public ArrayList<Integer> printMatrix(int [][] matrix) {
+        int row = matrix.length;
+        if(row==0){
+            return null;
+        }
+        int col = matrix[0].length;
+        if(col==0){
+            return null;
+        }
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        int startRow = 0;
+        int endRow = row-1;
+        int startCol = 0;
+        int endCol = col-1;
+        while(startRow<=endRow&&startCol<=endCol){
+            //如果就剩下一行
+            if(startRow==endRow){
+                for(int i=startCol;i<=endCol;i++)
+                    list.add(matrix[startRow][i]);
+                return list;
+            }
+            //如果就剩下一列
+            if(startCol==endCol){
+                for(int i=startRow;i<=endRow;i++)
+                    list.add(matrix[i][startCol]);
+                return list;
+            }
+            //首行
+            for(int i=startCol;i<=endCol;i++)
+                list.add(matrix[startRow][i]);
+            //末列
+            for(int i=startRow+1;i<=endRow;i++)
+                list.add(matrix[i][endCol]);
+            //末行
+            for(int i=endCol-1;i>=startCol;i--)
+                list.add(matrix[endRow][i]);
+            //首列
+            for(int i=endRow-1;i>=startRow+1;i--)
+                list.add(matrix[i][startCol]);
+              
+            startRow = startRow + 1;
+            endRow = endRow - 1;
+            startCol = startCol + 1;
+            endCol = endCol - 1;
+        }
+        return list;
+    }
+}
+```
+
+### Solution 2
+
+可以用一个额外矩阵存储，判断是否已经遍历过了，然后从左上角开始依次重复右、下、左、上的操作，如果没有遍历过就遍历，如果遍历过了就执行下一种操作
+
+## 30 包含min函数的栈
+
+定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+
+### Solution 1
+
+使用一个辅助栈，每次压入元素都存当前最小的元素
+
+```java
+import java.util.LinkedList;
+
+public class Solution {
+
+    private LinkedList<Integer> stack = new LinkedList<>();
+    private LinkedList<Integer> minStack = new LinkedList<>();
+    
+    public void push(int node) {
+        if(stack.size()!=0){
+            if(minStack.peekFirst() < node){
+                minStack.addFirst(minStack.peekFirst());
+            }else{
+                minStack.addFirst(node);
+            }
+        }else{
+            minStack.addFirst(node);
+        }
+        stack.addFirst(node);
+    }
+    
+    public void pop() {
+        minStack.removeFirst();
+        stack.removeFirst();
+    }
+    
+    public int top() {
+        return stack.peekFirst();
+    }
+    
+    public int min() {
+        return minStack.peekFirst();
+    }
+}
 ```
