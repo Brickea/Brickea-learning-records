@@ -241,9 +241,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
   * [416. Partition Equal Subset Sum M](Data_structure_algorithm/Leetcode/record.md#416.-Partition-Equal-Subset-Sum-M)
   * [剑指offer 14 切绳子](Data_structure_algorithm/剑指offer/record.md#14-切绳子)
+  * [494 Target Sum M]
 * [回溯方法](https://labuladong.github.io/ebook/%E7%AE%97%E6%B3%95%E6%80%9D%E7%BB%B4%E7%B3%BB%E5%88%97/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%BF%AE%E8%AE%A2%E7%89%88.html)
   * [剑指offer 12 矩阵中的路径](Data_structure_algorithm/剑指offer/record.md#12-矩阵中的路径)
   * [剑指offer 13 机器人运动范围](Data_structure_algorithm/剑指offer/record.md#13-机器人运动范围)
+  * [494 Target Sum M](Data_structure_algorithm/Leetcode/record.md#solution-1-回溯)
 
 ### 字节跳动分类
 
@@ -258,7 +260,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-30/66-red)
+![](https://img.shields.io/badge/Status-35/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 

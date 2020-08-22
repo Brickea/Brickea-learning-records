@@ -21,6 +21,9 @@
   - [102 Binary Tree Level Order Traversal M](#102-binary-tree-level-order-traversal-m)
   - [124 Binary Tree Maximum Path Sum H](#124-binary-tree-maximum-path-sum-h)
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
+  - [494. Target Sum](#494-target-sum)
+    - [Solution 1 回溯](#solution-1-回溯)
+    - [Solution 2 动态规划](#solution-2-动态规划)
 - [Binary search](#binary-search)
 - [String](#string)
   - [3 Longest Substring Without Repeating Characters M](#3-longest-substring-without-repeating-characters-m)
@@ -34,6 +37,7 @@
   - [41. First Missing Positive H](#41-first-missing-positive-h)
   - [134. Gas Station M](#134-gas-station-m)
   - [146. LRU Cache](#146-lru-cache)
+  - [78. Subsets](#78-subsets)
 - [Bit Manipulation](#bit-manipulation)
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
@@ -1195,6 +1199,88 @@ Runtime: 1 ms, faster than 80.39% of Java online submissions for Binary Tree Lev
 Memory Usage: 39.7 MB, less than 49.37% of Java online submissions for Binary Tree Level Order Traversal II.
 ```
 
+### 494. Target Sum
+
+You are given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. For each integer, you should choose one from + and - as its new symbol.
+
+Find out how many ways to assign symbols to make sum of integers equal to target S.
+
+```
+Example 1:
+
+Input: nums is [1, 1, 1, 1, 1], S is 3. 
+Output: 5
+Explanation: 
+
+-1+1+1+1+1 = 3
++1-1+1+1+1 = 3
++1+1-1+1+1 = 3
++1+1+1-1+1 = 3
++1+1+1+1-1 = 3
+```
+
+There are 5 ways to assign symbols to make the sum of nums be target 3.
+ 
+Constraints:
+
+* The length of the given array is positive and will not exceed 20.
+* The sum of elements in the given array will not exceed 1000.
+* Your output answer is guaranteed to be fitted in a 32-bit integer.
+
+#### Solution 1 回溯
+
+```java
+class Solution {
+    private int result = 0;
+    
+    private void helper(int[] nums,int index, int rest){
+        // 回溯函数
+        // base case
+        if(index == nums.length){
+            if(rest==0){
+                result++;
+            }
+            return ;
+        }
+        
+        // 考虑 +
+        rest -= nums[index];
+        helper(nums,index+1,rest);
+        // 回溯
+        rest += nums[index];
+        
+        // 考虑 -
+        rest += nums[index];
+        helper(nums,index+1,rest);
+        // 回溯
+        rest -= nums[index];
+        
+        
+    }
+    
+    public int findTargetSumWays(int[] nums, int S) {
+        if(nums.length==0){
+            return 0;
+        }    
+        
+        helper(nums,0,S);
+        
+        return result;
+    }
+}
+```
+
+时间复杂度为$2^n$
+
+```
+Runtime: 561 ms, faster than 16.79% of Java online submissions for Target Sum.
+Memory Usage: 37.3 MB, less than 80.83% of Java online submissions for Target Sum.
+```
+
+#### Solution 2 动态规划
+
+
+
 * 103 Binary Tree Zigzag Level Order Traversal
   * 28 ms	88% faster 14.1 MB 13% memory less	python3
 
@@ -1947,6 +2033,29 @@ class LRUCache {
 ```
 
 [引申 - 三种方法手撕LRU算法](https://leetcode-cn.com/problems/lru-cache/solution/san-chong-fang-fa-dai-ni-shou-si-lrusuan-fa-javaba/)
+
+### 78. Subsets
+
+Given a set of distinct integers, nums, return all possible subsets (the power set).
+
+Note: The solution set must not contain duplicate subsets.
+
+```
+Example:
+
+Input: nums = [1,2,3]
+Output:
+[
+  [3],
+  [1],
+  [2],
+  [1,2,3],
+  [1,3],
+  [2,3],
+  [1,2],
+  []
+]
+```
 
 ## Bit Manipulation
 
