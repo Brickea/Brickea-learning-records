@@ -57,6 +57,16 @@
   - [Solution 2](#solution-2-2)
 - [30 包含min函数的栈](#30-包含min函数的栈)
   - [Solution 1](#solution-1-25)
+- [31 栈的压入，弹出顺序](#31-栈的压入弹出顺序)
+  - [Solution 1](#solution-1-26)
+- [32 从上到下打印二叉树](#32-从上到下打印二叉树)
+  - [Solution 1](#solution-1-27)
+- [33 按之字形顺序打印二叉树](#33-按之字形顺序打印二叉树)
+  - [Solution 1](#solution-1-28)
+- [34 二叉树中和为某一值的路径](#34-二叉树中和为某一值的路径)
+  - [Solution 1](#solution-1-29)
+- [35 复杂链表复制](#35-复杂链表复制)
+  - [Solution 1](#solution-1-30)
 
 ## 03 数组中重复的数字
 
@@ -1484,6 +1494,322 @@ public class Solution {
     
     public int min() {
         return minStack.peekFirst();
+    }
+}
+```
+
+## 31 栈的压入，弹出顺序
+
+输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+
+### Solution 1
+
+使用一个辅助栈，每当不相同的时候就压入压入序列的内容，如果相同则双指针后移，最终判断弹出指针是否到最后，如果没有则说明还有弹出操作要进行，此时就按照弹出序列一步一步弹出，如果都相同则说明true
+
+```java
+import java.util.ArrayList;
+
+public class Solution {
+    public boolean IsPopOrder(int [] pushA,int [] popA) {
+        if(popA.length==0){
+            return true;
+        }
+        int i=0,j=0;
+        
+        ArrayList<Integer> stack = new ArrayList<>();
+        
+        while(i<pushA.length&&j<popA.length){
+            if(pushA[i]!=popA[j]){
+                stack.add(0,pushA[i]);
+                i++;
+            }else if(pushA[i]==popA[j]){
+                i++;
+                j++;
+            }
+        }
+        if(j==popA.length){
+            return true;
+        }
+        while(j<popA.length){
+            if(stack.remove(0)!=popA[j]){
+                return false;
+            }
+            j++;
+        }
+        
+        return true;
+        
+    }
+}
+
+```
+
+## 32 从上到下打印二叉树
+
+从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+### Solution 1
+
+层次遍历使用队列装载每个父节点的子节点，最终只要队列不为空就不断遍历子节点，然后依次装入队列
+
+```java
+import java.util.ArrayList;
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        
+        TreeNode current = null;
+        
+        // 辅助队列
+        ArrayList<TreeNode> childQueue = new ArrayList<>();
+        ArrayList<Integer> res = new ArrayList<>();
+        
+        
+        childQueue.add(root);
+        while(childQueue.size()!=0){
+            current = childQueue.get(0);
+            if(current!=null){
+                res.add(current.val);
+                childQueue.add(current.left);
+                childQueue.add(current.right);
+            }
+            childQueue.remove(0);
+        }
+        
+        return res;
+    }
+    
+    
+}
+```
+
+## 33 按之字形顺序打印二叉树
+
+请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+### Solution 1
+
+使用两个栈去保存下一层的节点；当奇数层的时候，从当前oddLevel栈取出当前节点，并将left和right依次压入evenLevel栈中，偶数层同理
+
+```java
+import java.util.ArrayList;
+
+/*
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    public ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+        // 结果保存
+        ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+        
+        if(pRoot==null){
+            return res;
+        }
+        
+        // 辅助栈
+        ArrayList<TreeNode> oddLevel = new ArrayList<>();
+        ArrayList<TreeNode> evenLevel = new ArrayList<>();
+        ArrayList<Integer> level = new ArrayList<>();
+        
+        // 层次节点数量
+        int currentLevel = 1;
+        int nextLevel = 0;
+        
+        // 奇偶层判断
+        boolean flag = true; // 奇数层
+        
+        oddLevel.add(0,pRoot);
+        TreeNode current = null;
+        
+        while(oddLevel.size()!=0||evenLevel.size()!=0){
+            if(flag){
+                // 奇数层
+                current = oddLevel.get(0);
+                level.add(current.val);
+                
+                if(current.left!=null){
+                    evenLevel.add(0,current.left);
+                    nextLevel++;
+                }
+                if(current.right!=null){
+                    evenLevel.add(0,current.right);
+                    nextLevel++;
+                }
+                
+                currentLevel--;
+                oddLevel.remove(0);
+            }else{
+                // 偶数层
+                current = evenLevel.get(0);
+                level.add(current.val);
+                
+                if(current.right!=null){
+                    oddLevel.add(0,current.right);
+                    nextLevel++;
+                }
+                if(current.left!=null){
+                    oddLevel.add(0,current.left);
+                    nextLevel++;
+                }
+                
+                currentLevel--;
+                evenLevel.remove(0);
+            }
+            if(currentLevel==0){
+                currentLevel = nextLevel;
+                nextLevel = 0;
+                flag=!flag;
+                res.add(new ArrayList<>(level));
+                level.clear();
+            }
+        }
+        
+        return res;
+    }
+
+}
+```
+
+## 34 二叉树中和为某一值的路径
+
+输入一颗二叉树的根节点和一个整数，按字典序打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。
+
+### Solution 1
+
+先序遍历，如果计算出来的和等于target，返回当前路径
+
+```java
+import java.util.ArrayList;
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private ArrayList<Integer> path = new ArrayList<>();
+    private ArrayList<ArrayList<Integer>> res = new ArrayList<>();
+    
+    private void helper(TreeNode current,int target,int sumUp){
+        path.add(current.val);
+        
+        if(current.left==null&&current.right==null){
+            // 是叶子节点
+            if(sumUp+current.val==target){
+                res.add(new ArrayList<>(path));
+            }
+        }
+        
+        if(current.left!=null){
+            helper(current.left,target,sumUp+current.val);
+        }
+        if(current.right!=null){
+            helper(current.right,target,sumUp+current.val);
+        }
+        
+        path.remove(path.size()-1);
+     }
+    
+    public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
+        if(root!=null){
+            helper(root,target,0);
+        }
+        
+        return res;
+        
+    }
+}
+```
+
+## 35 复杂链表复制
+
+输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针random指向一个随机节点），请对此链表进行深拷贝，并返回拷贝后的头结点。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+
+### Solution 1
+
+思路就是先复制一遍，在这一遍复制中，存储一个原始节点和复制节点的映射。后面再复制一遍随即节点的位置
+
+```java
+/*
+public class RandomListNode {
+    int label;
+    RandomListNode next = null;
+    RandomListNode random = null;
+
+    RandomListNode(int label) {
+        this.label = label;
+    }
+}
+*/
+import java.util.*;
+public class Solution {
+    private RandomListNode copyHead = new RandomListNode(0);
+    private HashMap<RandomListNode,RandomListNode> mapping = new HashMap<>();
+    {
+        mapping.put(null,null);
+    }
+    
+    private void copyRandomNode(RandomListNode pHead){
+        RandomListNode currentCopy = copyHead.next;
+        RandomListNode current = pHead;
+        
+        while(current!=null){
+            currentCopy.random = mapping.get(current.random);
+
+            currentCopy = currentCopy.next;
+            current = current.next;
+        }
+    }
+    
+    private void copyNext(RandomListNode pHead){
+        // 不考虑随机指针的拷贝
+        RandomListNode currentCopy = copyHead;
+        RandomListNode current = pHead;
+        
+        while(current!=null){
+            currentCopy.next = new RandomListNode(current.label);
+            
+            mapping.put(current,currentCopy.next); // 存储节点映射
+
+            currentCopy = currentCopy.next;
+            current = current.next;
+        }
+    }
+    public RandomListNode Clone(RandomListNode pHead)
+    {
+        copyNext(pHead);
+        copyRandomNode(pHead);
+        
+        return copyHead.next;
     }
 }
 ```
