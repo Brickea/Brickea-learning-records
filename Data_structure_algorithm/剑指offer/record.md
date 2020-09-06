@@ -67,6 +67,14 @@
   - [Solution 1](#solution-1-29)
 - [35 复杂链表复制](#35-复杂链表复制)
   - [Solution 1](#solution-1-30)
+- [36 序列化二叉树](#36-序列化二叉树)
+- [37 字符串的排列](#37-字符串的排列)
+- [38 数组中出现次数超过一半的数字](#38-数组中出现次数超过一半的数字)
+  - [Solution 1 On](#solution-1-on)
+  - [Solution 2 On](#solution-2-on)
+- [39 最小的k个数字](#39-最小的k个数字)
+  - [Solution 1](#solution-1-31)
+  - [Solution 2](#solution-2-3)
 
 ## 03 数组中重复的数字
 
@@ -1813,3 +1821,186 @@ public class Solution {
     }
 }
 ```
+
+## 36 序列化二叉树
+
+请实现两个函数，分别用来序列化和反序列化二叉树
+
+二叉树的序列化是指：把一棵二叉树按照某种遍历方式的结果以某种格式保存为字符串，从而使得内存中建立起来的二叉树可以持久保存。序列化可以基于先序、中序、后序、层序的二叉树遍历方式来进行修改，序列化的结果是一个字符串，序列化时通过 某种符号表示空节点（#），以 ！ 表示一个结点值的结束（value!）。
+
+二叉树的反序列化是指：根据某种遍历顺序得到的序列化字符串结果str，重构二叉树。
+
+例如，我们可以把一个只有根节点为1的二叉树序列化为"1,"，然后通过自己的函数来解析回这个二叉树
+
+```java
+/*
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+ 
+    public TreeNode(int val) {
+        this.val = val;
+ 
+    }
+ 
+}
+*/
+public class Solution {
+    String Serialize(TreeNode root) {
+        if(root==null){
+            return "#!";
+        }
+        StringBuilder sb=new StringBuilder();
+        Serialize2(root,sb);
+        return sb.toString();
+  }
+    void Serialize2(TreeNode root,StringBuilder sb){//前序遍历
+        if(root==null){
+            sb.append("#!");
+            return;
+        }
+        sb.append(root.val);
+        sb.append("!");
+        Serialize2(root.left,sb);
+        Serialize2(root.right,sb);
+    }
+     
+     
+    TreeNode Deserialize(String str) {
+       if(str.length()==0)return null;
+       String[] strs=str.split("!");
+       return Deserialize2(strs);
+         
+  }
+    int index=-1;
+     
+    TreeNode Deserialize2(String[] strs){
+        index++;
+        if(!strs[index].equals("#")){
+            TreeNode root=new TreeNode(0);
+            root.val=Integer.parseInt(strs[index]);
+            root.left=Deserialize2(strs);
+            root.right=Deserialize2(strs);
+            return root;
+        }
+        return null;
+    }
+     
+}
+```
+
+## 37 字符串的排列
+
+```java
+import java.util.*;
+public class Solution {
+    private HashSet<String> res = new HashSet<>();
+    private void Permutation(char[] str, int index){
+        // 递归排列
+        if(index==str.length){
+            res.add(String.valueOf(str));
+            return;
+        }else{
+            for(int i=index;i<str.length;i++){
+                char temp = str[i];
+                str[i] = str[index];
+                str[index] = temp;
+                
+                Permutation(str,index+1);
+                
+                temp = str[i];
+                str[i] = str[index];
+                str[index] = temp;
+            }
+        }
+        return;
+    }
+    public ArrayList<String> Permutation(String str) {
+        if(str==null||str.length()==0){
+            return new ArrayList<String>(res);
+        }
+        Permutation(str.toCharArray(),0);
+        return new ArrayList<String>(res);
+    }
+}
+```
+
+## 38 数组中出现次数超过一半的数字
+
+数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
+
+### Solution 1 On
+
+使用快排的 Partition 函数处理数组，缺点是会改变原本数组的顺序
+
+### Solution 2 On
+
+利用数组特性，如果有一个数字出现次数超过了数组长度的一半，其他所有数字的出现次数的和一定小于它出现的次数
+
+```java
+public class Solution {
+    private boolean checkIfMoreThanHalp(int number,int[] array){
+        int times = 0;
+        for(int i=0;i<array.length;i++){
+            if(array[i]==number){
+                times++;
+            }
+        }
+        return times>(array.length/2);
+    }
+    public int MoreThanHalfNum_Solution(int [] array) {
+        int flag = 0;
+        int temp=0;
+        for(int i=0;i<array.length;i++){
+            if(flag==0){
+                temp = array[i];
+                flag=1;
+            }else{
+                if(temp==array[i]){
+                    flag++;
+                }else{
+                    flag--;
+                }
+            }
+        }
+        if(!checkIfMoreThanHalp(temp,array)){
+            return 0;
+        }
+        return temp;
+    }
+}
+```
+
+## 39 最小的k个数字
+
+输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4。
+
+### Solution 1
+
+先排序，再找前k
+
+```java
+import java.util.*;
+public class Solution {
+    public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+         
+        ArrayList list = new ArrayList<>();
+        if(input == null || input.length == 0 || input.length < k) return list;
+        Arrays.sort(input);
+        for(int i = 0; i < k; i++){
+            list.add(input[i]);
+        }
+        return list;
+    }
+}
+```
+
+### Solution 2
+
+堆排序
+
+先创建容量为 k+1 的最小堆，将最开始的 k 个元素建立最小堆，之后每次添加新元素的时候，最小堆进行 k+1 位置元素的上浮操作
+
+
+
