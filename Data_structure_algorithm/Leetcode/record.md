@@ -23,7 +23,16 @@
   - [107. Binary Tree Level Order Traversal II](#107-binary-tree-level-order-traversal-ii)
   - [494. Target Sum](#494-target-sum)
     - [Solution 1 回溯](#solution-1-回溯)
-    - [Solution 2 动态规划](#solution-2-动态规划)
+  - [103. Binary Tree Zigzag Level Order Traversal](#103-binary-tree-zigzag-level-order-traversal)
+    - [Solution 1 - 奇偶层次遍历](#solution-1---奇偶层次遍历)
+  - [100. Same Tree](#100-same-tree)
+    - [Solution 1 BFS or DFS](#solution-1-bfs-or-dfs)
+  - [101. Symmetric Tree](#101-symmetric-tree)
+    - [Solution 1 - BFS or DFS](#solution-1---bfs-or-dfs)
+  - [226. Invert Binary Tree](#226-invert-binary-tree)
+    - [Solution 1](#solution-1)
+  - [257. Binary Tree Paths](#257-binary-tree-paths)
+    - [Solution 1 - 回溯法](#solution-1---回溯法)
 - [Binary search](#binary-search)
 - [String](#string)
   - [3 Longest Substring Without Repeating Characters M](#3-longest-substring-without-repeating-characters-m)
@@ -1277,14 +1286,525 @@ Runtime: 561 ms, faster than 16.79% of Java online submissions for Target Sum.
 Memory Usage: 37.3 MB, less than 80.83% of Java online submissions for Target Sum.
 ```
 
-#### Solution 2 动态规划
+### 103. Binary Tree Zigzag Level Order Traversal
 
+Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
 
+```
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+```
 
-* 103 Binary Tree Zigzag Level Order Traversal
-  * 28 ms	88% faster 14.1 MB 13% memory less	python3
+#### Solution 1 - 奇偶层次遍历
 
-待整理
+基本思路为层次遍历。
+
+使用两个栈来保存奇偶层的遍历，奇数层存入奇数栈，取出的时候孩子先从左到右遍历存入偶数栈。偶数层存入偶数栈，取出的时候孩子先从右到左遍历存入奇数栈
+
+```java
+/**
+* Definition for a binary tree node.
+* public class TreeNode {
+*     int val;
+*     TreeNode left;
+*     TreeNode right;
+*     TreeNode() {}
+*     TreeNode(int val) { this.val = val; }
+*     TreeNode(int val, TreeNode left, TreeNode right) {
+*         this.val = val;
+*         this.left = left;
+*         this.right = right;
+*     }
+* }
+*/
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        
+        // 结果存放
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null) {
+            return res;
+        }
+
+        // 两个栈，分别遍历奇偶层次
+        LinkedList<TreeNode> leftStack = new LinkedList<>();
+        LinkedList<TreeNode> rightStack = new LinkedList<>();
+
+        // 起始为奇遍历
+        leftStack.addLast(root);
+        boolean flag = false; // 代表奇数层次遍历
+
+        // 开始奇偶层次遍历
+        while (leftStack.size() != 0 || rightStack.size() != 0) {
+
+            List<Integer> temp = new ArrayList<>(); // 临时存放每层遍历结果
+
+            if (!flag) {
+                // 奇数层
+                while (leftStack.size() != 0) {
+                    TreeNode leftItem = leftStack.removeLast();
+                    temp.add(leftItem.val);
+                    if (leftItem.left != null) {
+                        rightStack.addLast(leftItem.left);
+                    } 
+                    if (leftItem.right != null) {
+                        rightStack.addLast(leftItem.right);
+                    }
+
+                }
+
+                flag = true;
+            } else {
+                // 偶数层
+                while (rightStack.size() != 0) {
+                    TreeNode rightItem = rightStack.removeLast();
+                    temp.add(rightItem.val);
+                    if (rightItem.right != null) {
+                        leftStack.addLast(rightItem.right);
+                    } 
+                    if (rightItem.left != null) {
+                        leftStack.addLast(rightItem.left);
+                    }
+
+                }
+
+                flag = false;
+            }
+
+            res.add(temp);
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Binary Tree Zigzag Level Order Traversal.
+Memory Usage: 39.5 MB, less than 63.82% of Java online submissions for Binary Tree Zigzag Level Order Traversal.
+```
+
+### 100. Same Tree
+
+Given two binary trees, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
+
+```
+Example 1:
+
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+
+Output: true
+Example 2:
+
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+
+Output: false
+Example 3:
+
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+
+Output: false
+```
+
+#### Solution 1 BFS or DFS
+
+广度优先搜索和深度优先搜索均可，两种不同的遍历节点策略
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean BFS(TreeNode p, TreeNode q){
+        // 广度优先搜索
+        // 使用 queue 数据结构存储节点
+        LinkedList<TreeNode> queueP = new LinkedList<>();
+        LinkedList<TreeNode> queueQ = new LinkedList<>();
+        queueP.addLast(p);
+        queueQ.addLast(q);
+
+        while(queueP.size()!=0&&queueQ.size()!=0){
+            TreeNode pItem = queueP.removeLast();
+            TreeNode qItem = queueQ.removeLast();
+            if(pItem!=null&&qItem!=null&&pItem.val==qItem.val){
+                // 两者相同
+                queueP.addFirst(pItem.right);
+                queueQ.addFirst(qItem.right);
+                queueP.addFirst(pItem.left);
+                queueQ.addFirst(qItem.left);
+
+            }else if(pItem==qItem){
+                // 均为 null
+                continue;
+            }else{
+                // 既不为空也不相同
+                return false;
+            }
+        }
+
+        // 对比完所有节点
+        return true;
+    }
+    public boolean DFS(TreeNode p, TreeNode q) {
+        // 深度优先搜索
+        // 使用 stack 数据结构存储节点
+        LinkedList<TreeNode> stackP = new LinkedList<>();
+        LinkedList<TreeNode> stackQ = new LinkedList<>();
+        stackP.addLast(p);
+        stackQ.addLast(q);
+
+        while(stackP.size()!=0&&stackQ.size()!=0){
+            TreeNode pItem = stackP.removeLast();
+            TreeNode qItem = stackQ.removeLast();
+
+            if(pItem!=null&&qItem!=null&&pItem.val==qItem.val){
+                // 两者相同
+                stackP.addLast(pItem.right);
+                stackQ.addLast(qItem.right);
+                stackP.addLast(pItem.left);
+                stackQ.addLast(qItem.left);
+
+            }else if(pItem==qItem){
+                // 均为 null
+                continue;
+            }else{
+                // 既不为空也不相同
+                return false;
+            }
+        }
+
+        // DFS 对比完所有节点
+        return true;
+
+    }
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        return BFS(p,q);
+    }
+}
+```
+
+BFS
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Same Tree.
+Memory Usage: 36.5 MB, less than 98.21% of Java online submissions for Same Tree.
+```
+
+DFS
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Same Tree.
+Memory Usage: 37 MB, less than 56.72% of Java online submissions for Same Tree.
+```
+
+stack 的结构比 queue 占用空间更多，符合直觉
+
+### 101. Symmetric Tree
+
+Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+
+```
+For example, this binary tree [1,2,2,3,4,4,3] is symmetric:
+
+    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+ 
+
+But the following [1,2,2,null,3,null,3] is not:
+
+    1
+   / \
+  2   2
+   \   \
+   3    3
+```
+
+#### Solution 1 - BFS or DFS
+
+修改改一下 100中的方法 就可以直接用了，考虑对比根节点下两个子树是否对称一样，修改一下遍历的方向即可
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean BFS(TreeNode p, TreeNode q){
+        // 广度优先搜索
+        // 使用 queue 数据结构存储节点
+        LinkedList<TreeNode> queueP = new LinkedList<>();
+        LinkedList<TreeNode> queueQ = new LinkedList<>();
+        queueP.addLast(p);
+        queueQ.addLast(q);
+
+        while(queueP.size()!=0&&queueQ.size()!=0){
+            TreeNode pItem = queueP.removeLast();
+            TreeNode qItem = queueQ.removeLast();
+            if(pItem!=null&&qItem!=null&&pItem.val==qItem.val){
+                // 两者相同
+                queueP.addFirst(pItem.right);
+                queueQ.addFirst(qItem.left);
+                queueP.addFirst(pItem.left);
+                queueQ.addFirst(qItem.right);
+
+            }else if(pItem==qItem){
+                // 均为 null
+                continue;
+            }else{
+                // 既不为空也不相同
+                return false;
+            }
+        }
+
+        // 对比完所有节点
+        return true;
+    }
+    public boolean isSymmetric(TreeNode root) {
+        if(root==null||root.right==null&&root.left==null){
+            return true;
+        }
+        return BFS(root.left,root.right);
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 38.39% of Java online submissions for Symmetric Tree.
+Memory Usage: 39 MB, less than 36.49% of Java online submissions for Symmetric Tree.
+```
+
+### 226. Invert Binary Tree
+
+Invert a binary tree.
+```
+Example:
+
+Input:
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+Output:
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+```
+
+#### Solution 1 
+
+广度优先搜索并交换孩子
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void exchangeNode(TreeNode node){
+        // 交换两个节点
+        TreeNode temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+        
+        
+    }
+    public void BFS(TreeNode node){
+        if(node==null)
+            return ;
+        // 广度优先搜索
+        // 使用 queue 数据结构存储节点
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.addLast(node);
+
+        while(queue.size()!=0){
+            TreeNode item = queue.removeFirst();
+            exchangeNode(item);
+            if(item.left!=null){
+                queue.addLast(item.left);
+            }
+            if(item.right!=null){
+                queue.addLast(item.right);
+            }
+            
+            
+        }
+
+    }
+    public TreeNode invertTree(TreeNode root) {
+        BFS(root);
+        return root;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Invert Binary Tree.
+Memory Usage: 36.9 MB, less than 76.92% of Java online submissions for Invert Binary Tree.
+```
+
+### 257. Binary Tree Paths
+
+Given a binary tree, return all root-to-leaf paths.
+
+Note: A leaf is a node with no children.
+```
+Example:
+
+Input:
+
+   1
+ /   \
+2     3
+ \
+  5
+
+Output: ["1->2->5", "1->3"]
+
+Explanation: All root-to-leaf paths are: 1->2->5, 1->3
+```
+
+#### Solution 1 - 回溯法
+
+深度优先遍历，使用回溯
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+import java.lang.*;
+class Solution {
+    public void allPaths(TreeNode root, LinkedList<TreeNode> stack,List<String> res){
+        if(root.left==null&&root.right==null){
+            // 到达叶子节点，记录结果
+            // 默认 root 首先装入
+            Iterator it = stack.iterator();
+            StringBuilder tempRes = new StringBuilder();
+            
+            TreeNode tempRoot = stack.removeFirst();
+            tempRes.append(tempRoot.val);
+            for(TreeNode node : stack){
+                if(node!=null){
+                    tempRes.append("->"+node.val);
+                }
+            }
+            res.add(tempRes.toString());
+            stack.addFirst(tempRoot);
+            return;
+        }
+        
+        if(root.left!=null){
+            stack.addLast(root.left);
+            allPaths(root.left,stack,res);
+            stack.removeLast();
+        }
+        
+        if(root.right!=null){
+            stack.addLast(root.right);
+            allPaths(root.right,stack,res);
+            stack.removeLast();
+        }
+        
+        
+    }
+    public List<String> binaryTreePaths(TreeNode root) {
+        // 回溯法
+        List<String> res = new ArrayList<String>();
+        if(root==null){
+            return res;
+        }
+        
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        
+        stack.addLast(root);
+        allPaths(root,stack,res);
+        
+        return res;
+        
+    }
+}
+```
+
+```
+Runtime: 13 ms, faster than 15.37% of Java online submissions for Binary Tree Paths.
+Memory Usage: 40 MB, less than 31.43% of Java online submissions for Binary Tree Paths.
+```
 
 ---
 
