@@ -227,8 +227,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-51-brightgreen)
-![](https://img.shields.io/badge/Medium-31-orange)
+![](https://img.shields.io/badge/Easy-54-brightgreen)
+![](https://img.shields.io/badge/Medium-33-orange)
 ![](https://img.shields.io/badge/Hard-5-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
