@@ -9,9 +9,7 @@
 
 It is because the Github only support the raw markdown. So all the formula I wrote cannot be rendered. So I highly recommend you install [MathJax Plugin for Github](https://chrome.google.com/webstore/detail/mathjax-plugin-for-github/ioemnmodlmafdkllaclgeombjnmnbima) for your chrome.
 
-![](https://img.shields.io/badge/CurrentStatus-Intership-red)
-
-* 20200712 最近因为参加了 Analytics Consult, LLC的实习，而且还签了保密协议，第一周时间规划上没有规划好，很多内容不能及时脱敏放到学习记录里面，周末好好喘息一下，争取后面保持之前的更新进度
+![](https://img.shields.io/badge/CurrentStatus-HardWorking-red)
 
 ---
 
