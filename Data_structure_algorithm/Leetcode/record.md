@@ -33,6 +33,9 @@
     - [Solution 1](#solution-1)
   - [257. Binary Tree Paths](#257-binary-tree-paths)
     - [Solution 1 - 回溯法](#solution-1---回溯法)
+  - [112. Path Sum](#112-path-sum)
+  - [113. Path Sum II](#113-path-sum-ii)
+  - [129. Sum Root to Leaf Numbers](#129-sum-root-to-leaf-numbers)
 - [Binary search](#binary-search)
 - [String](#string)
   - [3 Longest Substring Without Repeating Characters M](#3-longest-substring-without-repeating-characters-m)
@@ -57,6 +60,12 @@
   - [53. Maximum Subarray E](#53-maximum-subarray-e)
   - [518. Coin Change 2 M](#518-coin-change-2-m)
   - [416. Partition Equal Subset Sum M](#416-partition-equal-subset-sum-m)
+  - [509. Fibonacci Number E](#509-fibonacci-number-e)
+  - [887. Super Egg Drop](#887-super-egg-drop)
+    - [Solution 1](#solution-1-1)
+    - [Solution 2 二分查找优化](#solution-2-二分查找优化)
+- [回溯法](#回溯法)
+  - [980. Unique Paths III](#980-unique-paths-iii)
 
 ## July Challange
 
@@ -1806,6 +1815,246 @@ Runtime: 13 ms, faster than 15.37% of Java online submissions for Binary Tree Pa
 Memory Usage: 40 MB, less than 31.43% of Java online submissions for Binary Tree Paths.
 ```
 
+### 112. Path Sum
+
+```
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \      \
+7    2      1
+return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.
+```
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    private boolean helper(TreeNode node,int sum){
+        if(node==null)
+            return false;
+        if(node.left==null&&node.right==null&&sum==node.val){
+            // 到达叶子
+            return true;
+        }
+        
+        return this.helper(node.left,sum-node.val)||this.helper(node.right,sum-node.val);
+        
+    }
+    public boolean hasPathSum(TreeNode root, int sum) {
+        // 回溯法
+        return this.helper(root,sum);
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Path Sum.
+Memory Usage: 39.1 MB, less than 89.35% of Java online submissions for Path Sum.
+```
+
+### 113. Path Sum II
+
+```
+Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Given the below binary tree and sum = 22,
+
+      5
+     / \
+    4   8
+   /   / \
+  11  13  4
+ /  \    / \
+7    2  5   1
+Return:
+
+[
+   [5,4,11,2],
+   [5,8,4,5]
+]
+```
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    
+    private List<List<Integer>> res;
+    private LinkedList<Integer> tempList;
+    private void helper(TreeNode node,int sum){
+        if(node!=null){
+            tempList.addLast(node.val);
+        }else{
+            return;
+        }
+        if(node.left==null&&node.right==null){
+            if(sum==node.val){
+                res.add(new ArrayList<Integer>(this.tempList));
+                tempList.removeLast();
+                return;
+            }else{
+                tempList.removeLast();
+                return;
+            }
+            
+        }
+        this.helper(node.left,sum-node.val);
+        this.helper(node.right,sum-node.val);
+        tempList.removeLast();
+    }
+    
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        // 回溯法
+        res = new ArrayList<>();
+        tempList = new LinkedList<>();
+        
+        
+        this.helper(root,sum);
+        
+        return res;
+        
+    }
+}
+```
+
+### 129. Sum Root to Leaf Numbers
+
+```
+Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+
+An example is the root-to-leaf path 1->2->3 which represents the number 123.
+
+Find the total sum of all root-to-leaf numbers.
+
+Note: A leaf is a node with no children.
+
+Example:
+
+Input: [1,2,3]
+    1
+   / \
+  2   3
+Output: 25
+Explanation:
+The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.
+Therefore, sum = 12 + 13 = 25.
+Example 2:
+
+Input: [4,9,0,5,1]
+    4
+   / \
+  9   0
+ / \
+5   1
+Output: 1026
+Explanation:
+The root-to-leaf path 4->9->5 represents the number 495.
+The root-to-leaf path 4->9->1 represents the number 491.
+The root-to-leaf path 4->0 represents the number 40.
+Therefore, sum = 495 + 491 + 40 = 1026.
+```
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    private List<List<Integer>> res;
+    private LinkedList<Integer> tempList;
+    private void helper(TreeNode node){
+        if(node!=null){
+            tempList.addLast(node.val);
+        }else{
+            return;
+        }
+        if(node.left==null&&node.right==null){
+            res.add(new ArrayList<Integer>(this.tempList));
+            tempList.removeLast();
+            return;
+            
+        }
+        this.helper(node.left);
+        this.helper(node.right);
+        tempList.removeLast();
+    }
+    public int sumNumbers(TreeNode root) {
+        // 回溯法
+        res = new ArrayList<>();
+        tempList = new LinkedList<>();
+        
+        
+        this.helper(root);
+        
+        int sumUp = 0;
+        
+        for(int i=0;i<this.res.size();i++){
+            int temp = 0;
+            for(int j:this.res.get(i)){
+                temp = temp*10+j;
+            }
+            sumUp+=temp;
+        }
+        
+        return sumUp;
+    }
+}
+```
+
 ---
 
 ## Binary search
@@ -3133,4 +3382,322 @@ class Solution {
 ```
 Runtime: 26 ms, faster than 57.99% of Java online submissions for Partition Equal Subset Sum.
 Memory Usage: 37.5 MB, less than 92.20% of Java online submissions for Partition Equal Subset Sum.
+```
+
+### 509. Fibonacci Number E
+
+The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1. That is,
+
+```
+F(0) = 0,   F(1) = 1
+F(N) = F(N - 1) + F(N - 2), for N > 1.
+Given N, calculate F(N).
+
+Example 1:
+
+Input: 2
+Output: 1
+Explanation: F(2) = F(1) + F(0) = 1 + 0 = 1.
+Example 2:
+
+Input: 3
+Output: 2
+Explanation: F(3) = F(2) + F(1) = 1 + 1 = 2.
+Example 3:
+
+Input: 4
+Output: 3
+Explanation: F(4) = F(3) + F(2) = 2 + 1 = 3.
+
+```
+
+```java
+class Solution {
+    public int fib(int N) {
+        int f0 = 0;
+        int f1 = 1;
+        if(N<1){
+            return 0;
+        }
+        
+        for(int i=1;i<N;i++){
+            int temp = f0+f1;
+            f0 = f1;
+            f1 = temp;
+        }
+        
+        return f1;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Fibonacci Number.
+Memory Usage: 36.2 MB, less than 64.26% of Java online submissions for Fibonacci Number.
+```
+
+### 887. Super Egg Drop
+
+You are given K eggs, and you have access to a building with N floors from 1 to N. 
+
+Each egg is identical in function, and if an egg breaks, you cannot drop it again.
+
+You know that there exists a floor F with 0 <= F <= N such that any egg dropped at a floor higher than F will break, and any egg dropped at or below floor F will not break.
+
+Each move, you may take an egg (if you have an unbroken one) and drop it from any floor X (with 1 <= X <= N). 
+
+Your goal is to know with certainty what the value of F is.
+
+What is the minimum number of moves that you need to know with certainty what F is, regardless of the initial value of F?
+
+```
+
+Example 1:
+
+Input: K = 1, N = 2
+Output: 2
+Explanation: 
+Drop the egg from floor 1.  If it breaks, we know with certainty that F = 0.
+Otherwise, drop the egg from floor 2.  If it breaks, we know with certainty that F = 1.
+If it didn't break, then we know with certainty F = 2.
+Hence, we needed 2 moves in the worst case to know what F is with certainty.
+Example 2:
+
+Input: K = 2, N = 6
+Output: 3
+Example 3:
+
+Input: K = 3, N = 14
+Output: 4
+ 
+
+Note:
+
+1 <= K <= 100
+1 <= N <= 10000
+```
+
+#### Solution 1
+
+```java
+class Solution {
+
+    private int[][] dpTable;
+    public int dp(int k,int n){
+        int res = Integer.MAX_VALUE;
+        // 状态转移
+        if(k==1){
+            this.dpTable[k][n] = n;
+            return n;
+        }
+        // dp[k][n] 代表的是 还有 k 个鸡蛋去测试 n 层
+        // basecase 就是 k=1 的时候，一个鸡蛋只能线性查找
+        // basecase 另外一个就是 n=0 的时候，不需要扔鸡蛋
+        
+        if(n==0){
+            this.dpTable[k][n]=0;
+            return 0;
+        }
+
+        if(this.dpTable[k][n]!=Integer.MAX_VALUE){
+            return this.dpTable[k][n];
+        }
+
+        for(int i=1;i<=n;i++){
+            res = Math.min(res,Math.max(this.dp(k-1,i-1),this.dp(k,n-i))+1);
+        }
+        this.dpTable[k][n] = res;
+        return res;
+    }
+    public int superEggDrop(int K, int N) {
+        // 备忘录 dpTable
+        this.dpTable = new int[K+1][N+1];
+        for(int i=0;i<dpTable.length;i++){
+            for(int j=0;j<dpTable[i].length;j++){
+                this.dpTable[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        // 动态规划
+        this.dp(K,N);
+
+        return this.dpTable[K][N];
+
+
+    }
+
+}
+```
+
+超时
+
+#### Solution 2 二分查找优化
+
+```java
+class Solution {
+
+    private int[][] dpTable;
+    public int dp(int k,int n){
+        int res = Integer.MAX_VALUE;
+        // 状态转移
+        if(k==1){
+            this.dpTable[k][n] = n;
+            return n;
+        }
+        // dp[k][n] 代表的是 还有 k 个鸡蛋去测试 n 层
+        // basecase 就是 k=1 的时候，一个鸡蛋只能线性查找
+        // basecase 另外一个就是 n=0 的时候，不需要扔鸡蛋
+        
+        if(n==0){
+            this.dpTable[k][n]=0;
+            return 0;
+        }
+
+        if(this.dpTable[k][n]!=Integer.MAX_VALUE){
+            return this.dpTable[k][n];
+        }
+
+        // 线性搜索
+        // for(int i=1;i<=n;i++){
+        //     res = Math.min(res,Math.max(this.dp(k-1,i-1),this.dp(k,n-i))+1);
+        // }
+        
+        // 二分搜索
+        int lo = 1;
+        int hi = n;
+        
+        while(lo<=hi){
+            int mid = (lo+hi)/2;
+            int broken = this.dp(k-1,mid-1);
+            int unBroken = this.dp(k,n-mid);
+            
+            if(broken > unBroken){
+                hi = mid - 1;
+                res = Math.min(res,broken+1);
+            }else{
+                lo = mid+1;
+                res = Math.min(res,unBroken+1);
+            }
+        }
+        this.dpTable[k][n] = res;
+        return res;
+    }
+    public int superEggDrop(int K, int N) {
+        // 备忘录 dpTable
+        this.dpTable = new int[K+1][N+1];
+        for(int i=0;i<dpTable.length;i++){
+            for(int j=0;j<dpTable[i].length;j++){
+                this.dpTable[i][j] = Integer.MAX_VALUE;
+            }
+        }
+
+        // 动态规划
+        this.dp(K,N);
+
+        return this.dpTable[K][N];
+
+    }
+
+}
+```
+
+```
+Runtime: 53 ms, faster than 26.87% of Java online submissions for Super Egg Drop.
+Memory Usage: 40 MB, less than 50.24% of Java online submissions for Super Egg Drop.
+```
+
+## 回溯法
+
+### 980. Unique Paths III
+
+```
+On a 2-dimensional grid, there are 4 types of squares:
+
+1 represents the starting square.  There is exactly one starting square.
+2 represents the ending square.  There is exactly one ending square.
+0 represents empty squares we can walk over.
+-1 represents obstacles that we cannot walk over.
+Return the number of 4-directional walks from the starting square to the ending square, that walk over every non-obstacle square exactly once.
+
+ 
+
+Example 1:
+
+Input: [[1,0,0,0],[0,0,0,0],[0,0,2,-1]]
+Output: 2
+Explanation: We have the following two paths: 
+1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2)
+2. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2)
+Example 2:
+
+Input: [[1,0,0,0],[0,0,0,0],[0,0,0,2]]
+Output: 4
+Explanation: We have the following four paths: 
+1. (0,0),(0,1),(0,2),(0,3),(1,3),(1,2),(1,1),(1,0),(2,0),(2,1),(2,2),(2,3)
+2. (0,0),(0,1),(1,1),(1,0),(2,0),(2,1),(2,2),(1,2),(0,2),(0,3),(1,3),(2,3)
+3. (0,0),(1,0),(2,0),(2,1),(2,2),(1,2),(1,1),(0,1),(0,2),(0,3),(1,3),(2,3)
+4. (0,0),(1,0),(2,0),(2,1),(1,1),(0,1),(0,2),(0,3),(1,3),(1,2),(2,2),(2,3)
+Example 3:
+
+Input: [[0,1],[2,0]]
+Output: 0
+Explanation: 
+There is no path that walks over every empty square exactly once.
+Note that the starting and ending square can be anywhere in the grid.
+ 
+
+Note:
+
+1 <= grid.length * grid[0].length <= 20
+```
+
+```java
+class Solution {
+    int row, col; // 地图
+    boolean[][] visted; // 备忘录
+    
+    int x, y; // 起始位置
+    
+    public int uniquePathsIII(int[][] grid) {
+        row = grid.length;
+        col = grid[0].length;
+        visted = new boolean[row][col];
+        int count=0; //可行走的空位个数，防止重复行走
+        int res = 0; //路条数
+        
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < col; j++){
+                if(grid[i][j] == 0){
+                    count++;
+                }
+                if(grid[i][j] == 1){
+                    x = i;
+                    y = j;
+                }
+            }
+        }
+        dfs(x, y, grid, visted, count);
+        
+        return res;
+        
+    }
+    
+    public dfs(int x, int y, int[][] grid, boolean[][] visted, int count){
+        if(x < 0 || x >= grid.length || y < 0 || y >= grid[0].length || visted[x][y] || grid[x][y] == -1){
+            return;
+        }
+        if(grid[x][y] == 2 && count == -1){
+            res++;
+            return;
+        }
+
+        
+        visted[x][y] = true;
+        dfs(x + 1, y, grid, visted, count - 1);
+        dfs(x - 1, y, grid, visted, count - 1);
+        dfs(x, y + 1, grid, visted, count - 1);
+        dfs(x, y - 1, grid, visted, count - 1);
+        visted[x][y] = false;
+    }
+}
 ```
