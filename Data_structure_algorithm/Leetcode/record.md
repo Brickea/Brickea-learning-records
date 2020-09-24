@@ -3352,45 +3352,16 @@ class Solution {
         if(coins.length == 0){
             return 0;
         }
-//         // 完全背包问题
-//         // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
-//         // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
-//         int[][] dp = new int[coins.length+1][amount+1];
-        
-//         // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
-//         // j=0的时候，不论用那种面额，都只有一种结果，所以
-//         for(int i=1;i<coins.length+1;i++){
-//             dp[i][0] = 1;
-//         }
-        
-//         // 动态规划，自顶向下
-//         // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
-//         for(int i=1;i<coins.length+1;i++){
-//             // 因为定义的i比coins实际对应面额的下标小1，所以减1
-//             for(int j=1;j<amount+1;j++){
-//                 // 防止越界
-//                 if(j - coins[i-1]>=0){
-//                     dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
-//                 }else{
-//                     dp[i][j] = dp[i-1][j];
-//                 }
-//             }
-//         }
-        
-        
-//         // 返回结果
-//         return dp[coins.length][amount];
-        // 状态压缩
         // 完全背包问题
         // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
         // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
-        int[] dp = new int[amount+1];
+        int[][] dp = new int[coins.length+1][amount+1];
         
         // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
         // j=0的时候，不论用那种面额，都只有一种结果，所以
-        
-            dp[0] = 1;
-        
+        for(int i=1;i<coins.length+1;i++){
+            dp[i][0] = 1;
+        }
         
         // 动态规划，自顶向下
         // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
@@ -3399,16 +3370,17 @@ class Solution {
             for(int j=1;j<amount+1;j++){
                 // 防止越界
                 if(j - coins[i-1]>=0){
-                    dp[j] = dp[j]+dp[j-coins[i-1]];  
+                    dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
                 }else{
-                    dp[j] = dp[j];
+                    dp[i][j] = dp[i-1][j];
                 }
             }
         }
         
         
         // 返回结果
-        return dp[amount];
+        return dp[coins.length][amount];
+       
     }
 }
 ```
