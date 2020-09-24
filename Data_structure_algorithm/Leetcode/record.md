@@ -50,6 +50,9 @@
   - [134. Gas Station M](#134-gas-station-m)
   - [146. LRU Cache](#146-lru-cache)
   - [78. Subsets](#78-subsets)
+  - [118. Pascal's Triangle](#118-pascals-triangle)
+  - [119. Pascal's Triangle II](#119-pascals-triangle-ii)
+  - [169. Majority Element](#169-majority-element)
 - [Bit Manipulation](#bit-manipulation)
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
@@ -2826,6 +2829,155 @@ Output:
 ]
 ```
 
+### 118. Pascal's Triangle
+
+Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif)
+
+In Pascal's triangle, each number is the sum of the two numbers directly above it.
+
+```
+Example:
+
+Input: 5
+Output:
+[
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+```
+
+```java
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(numRows==0){
+            return res;
+        }
+        res.add(new ArrayList<>(Arrays.asList(1)));        
+        for(int i=2;i<=numRows;i++){
+            List<Integer> temp = new ArrayList<>();
+            List<Integer> pre = res.get(i-2);
+            temp.add(1);
+            for(int j=2;j<i;j++){
+                temp.add(pre.get(j-2)+pre.get(j-1));
+            }
+            temp.add(1);
+            res.add(temp);
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Pascal's Triangle.
+Memory Usage: 37.2 MB, less than 55.03% of Java online submissions for Pascal's Triangle.
+```
+
+### 119. Pascal's Triangle II
+
+Given an integer rowIndex, return the rowIndexth row of the Pascal's triangle.
+
+Notice that the row index starts from 0.
+
+![](https://upload.wikimedia.org/wikipedia/commons/0/0d/PascalTriangleAnimated2.gif)
+
+In Pascal's triangle, each number is the sum of the two numbers directly above it.
+
+Follow up:
+
+Could you optimize your algorithm to use only O(k) extra space?
+
+```
+Example 1:
+
+Input: rowIndex = 3
+Output: [1,3,3,1]
+Example 2:
+
+Input: rowIndex = 0
+Output: [1]
+Example 3:
+
+Input: rowIndex = 1
+Output: [1,1]
+ 
+
+Constraints:
+
+0 <= rowIndex <= 40
+```
+
+```java
+class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        List<Integer> row = new ArrayList<>(rowIndex);
+        row.add(1);
+        int prev = row.get(0);
+        for (int i = 1; i <= rowIndex; i++) {
+            for (int j = 0; j < i - 1; j++) {
+                prev = row.set(j + 1, row.get(j + 1) + prev);
+            }
+            row.add(1);
+        }
+        return row;
+    }
+}
+```
+
+```
+Runtime: 2 ms, faster than 11.30% of Java online submissions for Pascal's Triangle II.
+Memory Usage: 38.4 MB, less than 10.25% of Java online submissions for Pascal's Triangle II.
+```
+
+### 169. Majority Element
+
+Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+
+You may assume that the array is non-empty and the majority element always exist in the array.
+
+```
+Example 1:
+
+Input: [3,2,3]
+Output: 3
+Example 2:
+
+Input: [2,2,1,1,1,2,2]
+Output: 2
+```
+
+```java
+class Solution {
+    public int majorityElement(int[] nums) {
+        // 摩尔投票法
+        // 因为已知一定有超过 n/2 的数字
+        // 遍历一遍，出现相同 count ++ 不同 count--，count = 0 的时候 res 为当前的数字，最后res即为要求的数字
+        // 时间复杂度为O(n)，空间复杂度为O(1)
+        
+        int res = nums[0];
+        int count = 0;
+        
+        for(int i:nums){
+            if(count==0){
+                count=1;
+                res = i;
+            }else if(res==i){
+                count++;
+            }else{
+                count--;
+            }
+        }
+        return res;
+    }
+}
+```
+
 ## Bit Manipulation
 
 ### 389. Find the Difference E
@@ -3190,8 +3342,8 @@ Solution 1
 完全背包问题，自顶向下动态规划。不压缩状态
 
 ```java
+
 class Solution {
-    private int[][] dp;
     public int change(int amount, int[] coins) {
         // 处理输入边界条件
         if(amount == 0){
@@ -3200,16 +3352,45 @@ class Solution {
         if(coins.length == 0){
             return 0;
         }
+//         // 完全背包问题
+//         // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
+//         // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
+//         int[][] dp = new int[coins.length+1][amount+1];
+        
+//         // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
+//         // j=0的时候，不论用那种面额，都只有一种结果，所以
+//         for(int i=1;i<coins.length+1;i++){
+//             dp[i][0] = 1;
+//         }
+        
+//         // 动态规划，自顶向下
+//         // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
+//         for(int i=1;i<coins.length+1;i++){
+//             // 因为定义的i比coins实际对应面额的下标小1，所以减1
+//             for(int j=1;j<amount+1;j++){
+//                 // 防止越界
+//                 if(j - coins[i-1]>=0){
+//                     dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
+//                 }else{
+//                     dp[i][j] = dp[i-1][j];
+//                 }
+//             }
+//         }
+        
+        
+//         // 返回结果
+//         return dp[coins.length][amount];
+        // 状态压缩
         // 完全背包问题
         // 考虑状态，有两个，一个是使用了前几种面值的硬币，一个是当前要凑的总额
         // dp[i][j] 表示为，在使用前i种面额的硬币凑 j 的方法数量
-        dp = new int[coins.length+1][amount+1];
+        int[] dp = new int[amount+1];
         
         // base case是，i=0的时候，意味着没有面额给是使用，所以dp[0][:]=0
         // j=0的时候，不论用那种面额，都只有一种结果，所以
-        for(int i=1;i<coins.length+1;i++){
-            dp[i][0] = 1;
-        }
+        
+            dp[0] = 1;
+        
         
         // 动态规划，自顶向下
         // 有两种前置 一种是使用前i种面额凑钱，一种是使用前i-1种凑钱，但因为是可能性的总数，所以要相加
@@ -3218,16 +3399,16 @@ class Solution {
             for(int j=1;j<amount+1;j++){
                 // 防止越界
                 if(j - coins[i-1]>=0){
-                    dp[i][j] = dp[i-1][j]+dp[i][j-coins[i-1]];  
+                    dp[j] = dp[j]+dp[j-coins[i-1]];  
                 }else{
-                    dp[i][j] = dp[i-1][j];
+                    dp[j] = dp[j];
                 }
             }
         }
         
         
         // 返回结果
-        return dp[coins.length][amount];
+        return dp[amount];
     }
 }
 ```
@@ -3336,44 +3517,77 @@ Solution
 
 ```java
 class Solution {
-    private boolean[] dp;
     public boolean canPartition(int[] nums) {
-        int sum = 0;
-        for(int item:nums){
-            sum+=item;
-        }
-        if(sum%2==1){
-            // 总和为奇数的时候，不可能划分成两个相等的子集合
-            return false;
-        }
-        if(nums.length==0){
-            // 没有数字给你凑
-            return false;
-        }
-        
-        sum = sum/2;
         // 背包问题
-        // dp[i][j] 状态为，用nums前i个凑j能不能凑出来
-        // 初始化，凑0的话就是无为而治
-        dp = new boolean[sum+1];
-        dp[0]=true;
+        // 抽象为：用一个背包，容量为 sum(nums)/2 ，物品重量为 nums ，是否能恰好装满
+        
+        // 计算 sum
+        int sum = 0;
+        for(int i:nums)
+            sum+=i;
+        
+        // 基本判断
+        if(sum%2!=0)
+            // sum为奇数，不可能划分成两个相等的子集
+            return false;
+        
+        if(nums.length==0)
+            // 没有数字可以用来凑
+            return false;
+        
+//         // 状态定义 dp[i][j] 代表 容量为 j 的时候，用前 i 个数字是否能恰好装满
+//         boolean[][] dp = new boolean[nums.length+1][sum/2+1];
+        
+//         // basecase 
+//         // 当 j 为 0 的时候，不用装就是已满
+//         // 当 i 为 0 的时候，除了 j 为 0 ，其他情况一定装不满
+//         for(int i=0;i<=nums.length;i++){
+//             dp[i][0] = true;
+//         }
+        
+//         // 状态转移
+//         for(int i=1;i<=nums.length;i++){
+//             for(int j=sum/2;j>=0;j--){
+//                 if(j-nums[i-1]<0){
+//                     // 容量不足
+//                     dp[i][j] = dp[i-1][j];
+//                 }else{
+//                     // 不装入或者装入
+//                     dp[i][j] = dp[i-1][j] || dp[i-1][j-nums[i-1]];
+//                 }
+//             }
+//         }
+        
+//         return dp[nums.length][sum/2];
+        
+        // 空间压缩
+        // 注意到 dp[i][j] 都是通过上一行 dp[i-1][..] 转移过来的，之前的数据都不会再使用了
+        
+        // 状态定义 dp[i][j] 代表 容量为 j 的时候，用前 i 个数字是否能恰好装满
+        boolean[] dp = new boolean[sum/2+1];
+        
+        // basecase 
+        // 当 j 为 0 的时候，不用装就是已满
+        // 当 i 为 0 的时候，除了 j 为 0 ，其他情况一定装不满
+        
+        dp[0] = true;
         
         
-        // 自顶向下
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = sum; j >= 0; j--) {
-                if (j - nums[i] < 0) {
-                   // 背包容量不足，不能装入第 i 个物品
-                    dp[j] = dp[j]; 
-                } else {
-                    // 装入或不装入背包
-                    dp[j] = dp[j] || dp[j-nums[i]];
+        // 状态转移
+        for(int i=1;i<=nums.length;i++){
+            for(int j=sum/2;j>=0;j--){
+                if(j-nums[i-1]<0){
+                    // 容量不足
+                    dp[j] = dp[j];
+                }else{
+                    // 不装入或者装入
+                    dp[j] = dp[j] || dp[j-nums[i-1]];
                 }
             }
         }
         
+        return dp[sum/2];
         
-        return dp[sum];
     }
 }
 
