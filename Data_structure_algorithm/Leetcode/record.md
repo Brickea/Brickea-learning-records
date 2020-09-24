@@ -2978,6 +2978,11 @@ class Solution {
 }
 ```
 
+```
+Runtime: 1 ms, faster than 99.93% of Java online submissions for Majority Element.
+Memory Usage: 42.3 MB, less than 87.67% of Java online submissions for Majority Element.
+```
+
 ## Bit Manipulation
 
 ### 389. Find the Difference E
