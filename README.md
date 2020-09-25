@@ -231,10 +231,19 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
+打卡记录
+
+* 20200925
+  * [1312. Minimum Insertion Steps to Make a String Palindrome](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
+  * [300. Longest Increasing Subsequence M](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
+  * [200. Number of Islands](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
+  * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#130-surrounded-regions)
+  * [162. Find Peak Element](Data_structure_algorithm/Leetcode/record.md#162-find-peak-element)
+
 ### 解题思路强化
 
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
-  * [509. Fibonacci Number](Data_structure_algorithm/Leetcode/record.md##509-fibonacci-number-e)
+  * [509. Fibonacci Number](Data_structure_algorithm/Leetcode/record.md#509-fibonacci-number-e)
   * [300. Longest Increasing Subsequence M](Data_structure_algorithm/Leetcode/record.md#300.-Longest-Increasing-Subsequence-M)
   * [53. Maximum Subarray E](Data_structure_algorithm/Leetcode/record.md#53.-Maximum-Subarray-E)
   * [518. Coin Change 2 M](Data_structure_algorithm/Leetcode/record.md#518.-Coin-Change-2-M)
