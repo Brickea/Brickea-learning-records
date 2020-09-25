@@ -32,6 +32,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [面试类](#面试类)
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
+  - [打卡记录](#打卡记录)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -231,7 +232,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
-打卡记录
+### 打卡记录
 
 * 20200925
   * [1312. Minimum Insertion Steps to Make a String Palindrome](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
