@@ -37,6 +37,7 @@
   - [113. Path Sum II](#113-path-sum-ii)
   - [129. Sum Root to Leaf Numbers](#129-sum-root-to-leaf-numbers)
 - [Binary search](#binary-search)
+  - [162. Find Peak Element](#162-find-peak-element)
 - [String](#string)
   - [3 Longest Substring Without Repeating Characters M](#3-longest-substring-without-repeating-characters-m)
 - [Math](#math)
@@ -67,6 +68,10 @@
   - [887. Super Egg Drop](#887-super-egg-drop)
     - [Solution 1](#solution-1-1)
     - [Solution 2 二分查找优化](#solution-2-二分查找优化)
+  - [1312. Minimum Insertion Steps to Make a String Palindrome](#1312-minimum-insertion-steps-to-make-a-string-palindrome)
+- [BFS DFS](#bfs-dfs)
+  - [200. Number of Islands](#200-number-of-islands)
+  - [130. Surrounded Regions](#130-surrounded-regions)
 - [回溯法](#回溯法)
   - [980. Unique Paths III](#980-unique-paths-iii)
 
@@ -2099,6 +2104,58 @@ class Solution {
     Memory Usage: 39.5 MB, less than 36.19% of Java online submissions for Find Minimum in Rotated Sorted Array II.
     ```
 
+### 162. Find Peak Element
+
+A peak element is an element that is greater than its neighbors.
+
+Given an input array nums, where nums[i] ≠ nums[i+1], find a peak element and return its index.
+
+The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.
+
+You may imagine that nums[-1] = nums[n] = -∞.
+```
+Example 1:
+
+Input: nums = [1,2,3,1]
+Output: 2
+Explanation: 3 is a peak element and your function should return the index number 2.
+Example 2:
+
+Input: nums = [1,2,1,3,5,6,4]
+Output: 1 or 5 
+Explanation: Your function can return either index number 1 where the peak element is 2, 
+             or index number 5 where the peak element is 6.
+Follow up: Your solution should be in logarithmic complexity.
+```
+
+```java
+class Solution {
+    public int findPeakElement(int[] nums) {
+        // basecase 只有一个数字
+        if (nums.length == 1) return 0;
+        
+        // 两边垫两个数字
+        int[] newNums = new int[nums.length + 2];
+        System.arraycopy(nums, 0, newNums, 1, nums.length);
+        newNums[0] = Integer.MIN_VALUE;
+        newNums[newNums.length - 1] = Integer.MIN_VALUE;
+        
+        // 一边遍历找顶峰
+        for (int i = 1; i < newNums.length - 1; ++i) {
+            if (newNums[i] > newNums[i - 1] && newNums[i] > newNums[i + 1]) return i - 1;
+        }
+        
+        return -1;
+    }
+}
+```
+
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Find Peak Element.
+Memory Usage: 38.9 MB, less than 91.05% of Java online submissions for Find Peak Element.
+```
+
 ## String
 
 ### 3 Longest Substring Without Repeating Characters M
@@ -3219,19 +3276,27 @@ Solution 1
 
 ```java
 class Solution {
-    private int[] dp;
     public int lengthOfLIS(int[] nums) {
-        // 动态规划初始化
-        // dp[i]代表的是以nums第i个结尾的最长增长子序列的长度
-        dp = new int[nums.length];
-        Arrays.fill(dp,1); // dp每个的base case是自己
+        // 直观上去看，nums的最长递增子序列取决于以某个元素 A 结尾的递增序列长度，并且该序列的长度取决于“A 大于的上一个元素结尾的递增序列的最长长度”
+        // “A 大于的上一个元素结尾的递增序列” 可以包含 A 元素，这样就会原来序列的基础上+1
+        // 若不包含，考虑 以A 本身结尾的递增序列  和 其他序列的长度哪个大
         
-        // 自顶向下求解问题
+        // 新状态取决于旧状态，动规开始
+        
+        // 状态定义
+        // dp[i] 为以 nums[i] 结尾的最长递增子序列的个数
+
+        int[] dp = new int[nums.length];
+        
+        // basecase 就是至少要包含 nums[i] 这个数字，长度至少为 1
+        Arrays.fill(dp,1);
+        
+        // 状态转移
         for(int i=0;i<nums.length;i++){
             for(int j=0;j<i;j++){
-                // 状态转移
                 if(nums[i]>nums[j]){
-                    dp[i] = Math.max(dp[i],dp[j]+1);
+                    // 原来的递增序列包不包含 nums[i]
+                    dp[i] = Math.max(dp[j]+1,dp[i]);
                 }
             }
         }
@@ -3247,8 +3312,8 @@ class Solution {
 ```
 
 ```
-Runtime: 19 ms, faster than 22.62% of Java online submissions for Longest Increasing Subsequence.
-Memory Usage: 39.1 MB, less than 15.50% of Java online submissions for Longest Increasing Subsequence.
+Runtime: 11 ms, faster than 62.23% of Java online submissions for Longest Increasing Subsequence.
+Memory Usage: 37.3 MB, less than 85.70% of Java online submissions for Longest Increasing Subsequence.
 ```
 
 ### 53. Maximum Subarray E
@@ -3796,6 +3861,330 @@ class Solution {
 Runtime: 53 ms, faster than 26.87% of Java online submissions for Super Egg Drop.
 Memory Usage: 40 MB, less than 50.24% of Java online submissions for Super Egg Drop.
 ```
+
+### 1312. Minimum Insertion Steps to Make a String Palindrome
+
+Given a string s. In one step you can insert any character at any index of the string.
+
+Return the minimum number of steps to make s palindrome.
+
+A Palindrome String is one that reads the same backward as well as forward.
+
+```
+
+Example 1:
+
+Input: s = "zzazz"
+Output: 0
+Explanation: The string "zzazz" is already palindrome we don't need any insertions.
+Example 2:
+
+Input: s = "mbadm"
+Output: 2
+Explanation: String can be "mbdadbm" or "mdbabdm".
+Example 3:
+
+Input: s = "leetcode"
+Output: 5
+Explanation: Inserting 5 characters the string becomes "leetcodocteel".
+Example 4:
+
+Input: s = "g"
+Output: 0
+Example 5:
+
+Input: s = "no"
+Output: 1
+ 
+
+Constraints:
+
+1 <= s.length <= 500
+All characters of s are lower case English letters.
+
+```
+
+```java
+class Solution {
+    public int minInsertions(String s) {
+        // 最直观的想法就是双指针，一个从左往右一个从右往左同时移动
+        // 判断 s[i] 是否等于 s[j]
+        // 如果相同则说明这两个位置已成回文
+        // 不相同则说明需要插入
+        
+        // 相同的时候不用多说，主要考虑不相同的时候，最小的插入次数
+        // 假设为 a......b 这样子的最少需要两次插入(为方便表示，大写字母为后插入的字母)
+        // 最少的插入方式为 aB.....bA 或者 Ba......Ab。此时是两次
+        
+        // 但是如果考虑 s[i] s[j]中间的字母，则会有如下情况
+        // aaaaaaaab 这样子的时候最小需要一次插入即可完成回文
+        // 也就是 baaaaaaaab
+        // 通过这个情况，会发现如果我在发现 s[i] 和 s[j] 不相等的时候。有一种普世的过程，如下
+        // aXXXXb 无论X是什么，我都可以考虑： 先把 s[i] 放到一边，只看 s[i+1...j] 这一段，也就是 XXXb 这一段。
+        //                                  此时假设 XXXb 这一段 已是回文，那么就可以直接在 XXXb 的右边添加一个 a 从而形成回文
+        //                                  若假设 XXXb 这一段 不是回文，我此时可以对 XXXb 进行递归调，重复第一行的过程，那么我是可以得到 XXXb 这一段的最小插入次数的
+        //                                  再抽象一点就是 用插入次数为 "s[i+1....j]形成回文的最小次数 + 1"
+        
+        // 因为最终是要求最小的插入次数，所以不光一边需要检查最小，另一边也需要，那么 s[i.....j] 这一段的最小插入次数可以为 Min(s[i+1.....j],s[i.....j-1]) + 1
+        
+        // 当相同的时候 s[i.....j] 的最小插入次数取决于 s[i+1.....j-1]
+        // 当不同的时候 s[i.....j] 的最小插入次数取决于 Min(s[i+1.....j],s[i.....j-1]) + 1
+        // ok 开始用 动规 解决问题
+        
+        char[] sA = s.toCharArray();
+        
+//         // dp 状态定义
+//         // dp[i][j] 代表 s[i....j] 变成回文的最小插入次数
+        
+//         int[][] dp = new int[sA.length][sA.length];
+        
+//         // basecase 就是 i==j 的时候为 0
+        
+//         // dp是一个二维数组，dp[i][j] 取决于 dp[i+1][j-1] 或 (dp[i+1][j],dp[i][j-1]) 需要保证是从basecase开始
+//         for(int i=sA.length-2;i>=0;i--){
+//             for(int j=i+1;j<sA.length;j++){
+//                 if(sA[i]==sA[j]){
+//                     dp[i][j] = dp[i+1][j-1];
+//                 }else{
+//                     dp[i][j] = Math.min(dp[i+1][j],dp[i][j-1])+1;
+//                 }
+//             }
+//         }
+        
+//         return dp[0][sA.length-1];
+        
+        // 状态压缩
+        // 直接从二维 dp 的变化来进行压缩，不考虑实际对题目的意义
+        // 首先 dp[i][j] 只跟相邻的有关，所以可以进行压缩
+        // 假设 dp 是 3X3 的
+        // X  X  X
+        // X  X  O
+        // X  X  X
+        // 那么 O 只和相邻的左、左下、下元素有关
+        // 对于斜对角的左下元素，我们可以用一个变量来存储
+        // 对于相邻的左和下元素，可以用一维数组来存储
+        
+        // dp 状态定义
+        // dp[i][j] 代表 s[i....j] 变成回文的最小插入次数
+        
+        int[] dp = new int[sA.length];
+        
+        // basecase 就是 i==j 的时候为 0
+        
+        // dp是一个二维数组，dp[i][j] 取决于 dp[i+1][j-1] 或 (dp[i+1][j],dp[i][j-1]) 需要保证是从basecase开始
+        for(int i=sA.length-2;i>=0;i--){
+            int pre = 0;
+            for(int j=i+1;j<sA.length;j++){
+                int temp = dp[j];
+                if(sA[i]==sA[j]){
+                    dp[j] = pre;
+                }else{
+                    dp[j] = Math.min(dp[j],dp[j-1])+1;
+                }
+                pre = temp;
+            }
+            ;
+        }
+        
+        return dp[sA.length-1];
+    }
+}
+```
+
+```
+Runtime: 6 ms, faster than 100.00% of Java online submissions for Minimum Insertion Steps to Make a String Palindrome.
+Memory Usage: 37.1 MB, less than 99.81% of Java online submissions for Minimum Insertion Steps to Make a String Palindrome.
+```
+
+## BFS DFS
+
+### 200. Number of Islands
+
+```java
+Given a 2d grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+ 
+
+Example 1:
+
+Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+Example 2:
+
+Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3
+```
+
+```java
+class Solution {
+    private char[][] map;
+    private boolean[][] visited;
+    private void bfsHelper(int row, int col){
+        // bfs 所有 1 的位置
+        // 并将 visited 置为 true
+        
+        if(map[row][col]=='1'&&!visited[row][col]){
+            visited[row][col]=true;
+            if(row-1>-1){
+                bfsHelper(row-1,col);
+            }
+            if(row+1<map.length){
+                bfsHelper(row+1,col);
+            }
+            if(col-1>-1){
+                bfsHelper(row,col-1);
+            }
+            if(col+1<map[0].length){
+                bfsHelper(row,col+1);
+            }
+        }else{
+            return ;
+        }
+        
+    }
+    
+    public int numIslands(char[][] grid) {
+        // 每当遇到 island 的数字，就从该数字开始进行 bfs
+        // 并将遇到的位置 设置为 visited = true 减少重复遍历
+        map = grid;
+        int ROW = map.length;
+        int COL = ROW==0?0:map[0].length;
+        visited = new boolean[ROW][COL];
+        
+        
+        int res = 0;
+        
+        for(int i=0;i<ROW;i++){
+            for(int j=0;j<COL;j++){
+                if(!visited[i][j]){
+                    // 没有拜访过
+                    if(map[i][j]=='1'){
+                        // 如果是岛就开始 bfs
+                        res++;
+                        bfsHelper(i,j);
+                    }
+                }
+            }
+        }
+        
+        return res;
+        
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 99.95% of Java online submissions for Number of Islands.
+Memory Usage: 41.6 MB, less than 96.38% of Java online submissions for Number of Islands.
+```
+
+### 130. Surrounded Regions
+
+Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+```
+Example:
+
+X X X X
+X O O X
+X X O X
+X O X X
+After running your function, the board should be:
+
+X X X X
+X X X X
+X X X X
+X O X X
+```
+
+```java
+class Solution {
+    // 普遍的做法是扫矩阵的四条边，如果有O，则用 DFS 遍历，将所有连着的O都变成另一个字符，比如 @，这样剩下的O都是被包围的，然后将这些O变成X，把$变回O就行了
+    private char[][] map;
+    private boolean[][] visited;
+    private void bfsHelper(int row, int col){
+        // bfs 所有 O 的位置
+        // 并将 visited 置为 true
+        
+        if(map[row][col]=='O'&&!visited[row][col]){
+            visited[row][col]=true;
+            map[row][col] = '@';
+            if(row-1>-1){
+                bfsHelper(row-1,col);
+            }
+            if(row+1<map.length){
+                bfsHelper(row+1,col);
+            }
+            if(col-1>-1){
+                bfsHelper(row,col-1);
+            }
+            if(col+1<map[0].length){
+                bfsHelper(row,col+1);
+            }
+        }else{
+            return ;
+        }
+        
+    }
+    
+    public void solve(char[][] board) {
+        // 每当遇到 island 的数字，就从该数字开始进行 bfs
+        // 并将遇到的位置 设置为 visited = true 减少重复遍历
+        map = board;
+        int ROW = map.length;
+        int COL = ROW==0?0:map[0].length;
+        visited = new boolean[ROW][COL];
+        
+        // 先从两边查找 O
+        for(int i=0;i<ROW;i++){
+            if(map[i][0]=='O'&&!visited[i][0]){
+                 bfsHelper(i,0);
+            }
+            if(map[i][COL-1]=='O'&&!visited[i][COL-1]){
+                 bfsHelper(i,COL-1);
+            }
+        }
+        
+        for(int i=0;i<COL;i++){
+            if(map[0][i]=='O'&&!visited[0][i]){
+                 bfsHelper(0,i);
+            }
+            if(map[ROW-1][i]=='O'&&!visited[ROW-1][i]){
+                 bfsHelper(ROW-1,i);
+            }
+        }
+        
+        for(int i=0;i<ROW;i++){
+            for(int j=0;j<COL;j++){
+                if(map[i][j]=='O'){
+                    map[i][j]='X';
+                }
+                if(map[i][j]=='@'){
+                    map[i][j] = 'O';
+                }
+            }
+        }
+        
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 99.78% of Java online submissions for Surrounded Regions.
+Memory Usage: 41.4 MB, less than 82.24% of Java online submissions for Surrounded Regions.
+```
+
 
 ## 回溯法
 

@@ -225,9 +225,9 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-56-brightgreen)
-![](https://img.shields.io/badge/Medium-35-orange)
-![](https://img.shields.io/badge/Hard-6-red)
+![](https://img.shields.io/badge/Easy-58-brightgreen)
+![](https://img.shields.io/badge/Medium-38-orange)
+![](https://img.shields.io/badge/Hard-7-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
@@ -247,6 +247,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [剑指offer 13 机器人运动范围](Data_structure_algorithm/剑指offer/record.md#13-机器人运动范围)
   * [494 Target Sum M](Data_structure_algorithm/Leetcode/record.md#solution-1-回溯)
   * [980 unique paths iii H](Data_structure_algorithm/Leetcode/record.md#980-unique-paths-iii)
+  * [1312. Minimum Insertion Steps to Make a String Palindrome](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
 
 ### 字节跳动分类
 
@@ -261,7 +262,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## 剑指offer 练习
 
-![](https://img.shields.io/badge/Status-40/66-red)
+![](https://img.shields.io/badge/Status-41/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
 
