@@ -241,6 +241,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#130-surrounded-regions)
   * [162. Find Peak Element](Data_structure_algorithm/Leetcode/record.md#162-find-peak-element)
 
+* 20200926
+  * [1143. Longest Common Subsequence  DP](Data_structure_algorithm/Leetcode/record.md#1143-longest-common-subsequence)
+  * [435. Non-overlapping Intervals 贪心](Data_structure_algorithm/Leetcode/record.md#435-non-overlapping-intervals)
+  * [452. Minimum Number of Arrows to Burst Balloons 贪心](Data_structure_algorithm/Leetcode/record.md#452-minimum-number-of-arrows-to-burst-balloons)
+  * [111. Minimum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#111-minimum-depth-of-binary-tree)
+  * [104. Maximum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#104-maximum-depth-of-binary-tree)
+
 ### 解题思路强化
 
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
