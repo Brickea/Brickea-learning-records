@@ -36,6 +36,8 @@
   - [112. Path Sum](#112-path-sum)
   - [113. Path Sum II](#113-path-sum-ii)
   - [129. Sum Root to Leaf Numbers](#129-sum-root-to-leaf-numbers)
+  - [111. Minimum Depth of Binary Tree](#111-minimum-depth-of-binary-tree)
+  - [104. Maximum Depth of Binary Tree](#104-maximum-depth-of-binary-tree)
 - [Binary search](#binary-search)
   - [162. Find Peak Element](#162-find-peak-element)
 - [String](#string)
@@ -69,6 +71,10 @@
     - [Solution 1](#solution-1-1)
     - [Solution 2 二分查找优化](#solution-2-二分查找优化)
   - [1312. Minimum Insertion Steps to Make a String Palindrome](#1312-minimum-insertion-steps-to-make-a-string-palindrome)
+  - [1143. Longest Common Subsequence](#1143-longest-common-subsequence)
+- [贪心](#贪心)
+  - [435. Non-overlapping Intervals](#435-non-overlapping-intervals)
+  - [452. Minimum Number of Arrows to Burst Balloons](#452-minimum-number-of-arrows-to-burst-balloons)
 - [BFS DFS](#bfs-dfs)
   - [200. Number of Islands](#200-number-of-islands)
   - [130. Surrounded Regions](#130-surrounded-regions)
@@ -2065,6 +2071,129 @@ class Solution {
 
 ---
 
+### 111. Minimum Depth of Binary Tree
+
+Given a binary tree, find its minimum depth.
+
+The minimum depth is the number of nodes along the shortest path from the root node down to the nearest leaf node.
+
+Note: A leaf is a node with no children.
+
+```
+
+Example:
+
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its minimum depth = 2.
+```
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        // 最小深度指根节点到最近叶子结点的距离
+        // 递归求解
+        if(root == null){
+            return 0;
+        }
+        if(root.left == null){
+            return minDepth(root.right)+1;
+        }
+        if(root.right == null){
+            return minDepth(root.left)+1;
+        }
+        return 1+Math.min(minDepth(root.left),minDepth(root.right));
+        
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Minimum Depth of Binary Tree.
+Memory Usage: 41.2 MB, less than 18.81% of Java online submissions for Minimum Depth of Binary Tree.
+```
+
+### 104. Maximum Depth of Binary Tree
+
+Given a binary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Note: A leaf is a node with no children.
+
+```
+Example:
+
+Given binary tree [3,9,20,null,null,15,7],
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its depth = 3.
+
+```
+
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public int maxDepth(TreeNode root) {
+        // 最大深度指根节点到最远叶子结点的距离
+        // 递归求解
+        if(root == null){
+            return 0;
+        }
+        if(root.left == null){
+            return maxDepth(root.right)+1;
+        }
+        if(root.right == null){
+            return maxDepth(root.left)+1;
+        }
+        return 1+Math.max(maxDepth(root.left),maxDepth(root.right));
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Maximum Depth of Binary Tree.
+Memory Usage: 40.5 MB, less than 20.13% of Java online submissions for Maximum Depth of Binary Tree.
+```
+
 ## Binary search
 
 * 278 First Bad Version e
@@ -3994,6 +4123,250 @@ class Solution {
 ```
 Runtime: 6 ms, faster than 100.00% of Java online submissions for Minimum Insertion Steps to Make a String Palindrome.
 Memory Usage: 37.1 MB, less than 99.81% of Java online submissions for Minimum Insertion Steps to Make a String Palindrome.
+```
+
+### 1143. Longest Common Subsequence
+
+Given two strings text1 and text2, return the length of their longest common subsequence.
+
+A subsequence of a string is a new string generated from the original string with some characters(can be none) deleted without changing the relative order of the remaining characters. (eg, "ace" is a subsequence of "abcde" while "aec" is not). A common subsequence of two strings is a subsequence that is common to both strings.
+
+ 
+
+If there is no common subsequence, return 0.
+
+```
+
+Example 1:
+
+Input: text1 = "abcde", text2 = "ace" 
+Output: 3  
+Explanation: The longest common subsequence is "ace" and its length is 3.
+Example 2:
+
+Input: text1 = "abc", text2 = "abc"
+Output: 3
+Explanation: The longest common subsequence is "abc" and its length is 3.
+Example 3:
+
+Input: text1 = "abc", text2 = "def"
+Output: 0
+Explanation: There is no such common subsequence, so the result is 0.
+ 
+
+Constraints:
+
+1 <= text1.length <= 1000
+1 <= text2.length <= 1000
+The input strings consist of lowercase English characters only.
+
+```
+
+```java
+class Solution {
+    private int [][] dp;
+    public int longestCommonSubsequence(String text1, String text2) {
+        // 首先想到的是 300. 最长上升子序列。不过思路还是不一样==
+        
+        // 直观的想法是，s1 s2 分别有一个指针从左到右遍历。
+        // 判断 s1[i] == s2[j] 如果相同则说明 s[i] s[j] 的这个字母一定在 lcs 中
+        // 不相同的时候，可以想到此时 i 位置 和 j 位置的 lcs 长度取决于 s1[i] s2[j-1] 或者 s1[i-1][j]
+        
+        // 动规开始
+        // 状态定义，dp[i][j] 代表 s1[1...i] 和 s2[1....j] 中的 lcs 长度
+        
+        char[] s1 = text1.toCharArray();
+        char[] s2 = text2.toCharArray();
+        
+        // 因为 text1 和 text2 最少有一个字符，为了方便看，使 dp 下标直接代表第几个字符
+        this.dp = new int[s1.length+1][s2.length+1]; 
+        
+        // basecase 就是当 s1 或 s2 是空的时候，此时 dp[0][j] =0 dp[i][0]=0
+        
+        // 状态转移
+        for(int i=1;i<=s1.length;i++){
+            for(int j=1;j<=s2.length;j++){
+                if(s1[i-1]==s2[j-1]){
+                    dp[i][j] = dp[i-1][j-1]+1;
+                }else{
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i][j-1]);
+                }
+            }
+        }
+        
+        return this.dp[s1.length][s2.length];
+        
+    }
+}
+```
+
+```
+Runtime: 7 ms, faster than 95.11% of Java online submissions for Longest Common Subsequence.
+Memory Usage: 42.8 MB, less than 87.88% of Java online submissions for Longest Common Subsequence.
+```
+
+## 贪心
+
+### 435. Non-overlapping Intervals
+
+Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+```
+
+Example 1:
+
+Input: [[1,2],[2,3],[3,4],[1,3]]
+Output: 1
+Explanation: [1,3] can be removed and the rest of intervals are non-overlapping.
+Example 2:
+
+Input: [[1,2],[1,2],[1,2]]
+Output: 2
+Explanation: You need to remove two [1,2] to make the rest of intervals non-overlapping.
+Example 3:
+
+Input: [[1,2],[2,3]]
+Output: 0
+Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+ 
+
+Note:
+
+You may assume the interval's end point is always bigger than its start point.
+Intervals like [1,2] and [2,3] have borders "touching" but they don't overlap each other.
+
+```
+
+```java
+class Solution {
+    // 参考：https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95%E4%B9%8B%E5%8C%BA%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98.html
+    
+    private int intervalSchedule(int[][] intervals){
+        // 区间调度算法
+        // 先按照 end 进行排序
+        // 从区间集合 intvs 中选择一个区间 x，这个 x 是在当前所有区间中结束最早的（end 最小）。
+        // 把所有与 x 区间相交的区间从区间集合 intvs 中删除。
+        // 重复步骤 1 和 2，直到 intvs 为空为止。之前选出的那些 x 就是最大不相交子集。
+        
+        // basecase
+        if(intervals.length==0){
+            return 0;
+        }
+        
+        // 按照 end 排序
+        Arrays.sort(intervals,new Comparator<int[]>(){
+            public int compare(int[] a, int[] b) {
+                return a[1] - b[1];
+            }
+        });
+        
+        // 排序后 第一个元素 即为所有区间中结束最早的
+        int x_end = intervals[0][1];
+        
+        // 计数，有多少不重叠区间
+        int count = 1; // 至少一个
+        
+        for(int[] intv: intervals){
+            int start = intv[0];
+            if(start>=x_end){
+                count++;
+                x_end = intv[1];
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    public int eraseOverlapIntervals(int[][] intervals) {
+        // 使用区间调度算法
+        // 因为 intervalSchedule 返回的是 不重叠区间的数量
+        // 那么依据题意 只需返回 intervals.length - intervalSchedule 即(重叠的区间数量)
+        
+        return intervals.length - this.intervalSchedule(intervals);
+        
+        
+    }
+}
+```
+
+```
+Runtime: 4 ms, faster than 29.31% of Java online submissions for Non-overlapping Intervals.
+Memory Usage: 41.9 MB, less than 19.40% of Java online submissions for Non-overlapping Intervals.
+```
+
+### 452. Minimum Number of Arrows to Burst Balloons
+
+There are a number of spherical balloons spread in two-dimensional space. For each balloon, provided input is the start and end coordinates of the horizontal diameter. Since it's horizontal, y-coordinates don't matter and hence the x-coordinates of start and end of the diameter suffice. Start is always smaller than end. There will be at most 104 balloons.
+
+An arrow can be shot up exactly vertically from different points along the x-axis. A balloon with xstart and xend bursts by an arrow shot at x if xstart ≤ x ≤ xend. There is no limit to the number of arrows that can be shot. An arrow once shot keeps travelling up infinitely. The problem is to find the minimum number of arrows that must be shot to burst all balloons.
+
+```
+Example:
+
+Input:
+[[10,16], [2,8], [1,6], [7,12]]
+
+Output:
+2
+
+Explanation:
+One way is to shoot one arrow for example at x = 6 (bursting the balloons [2,8] and [1,6]) and another arrow at x = 11 (bursting the other two balloons).
+```
+
+```java
+class Solution {
+    
+    private int intervalSchedule(int[][] intervals){
+        // 区间调度算法
+        // 先按照 end 进行排序
+        // 从区间集合 intvs 中选择一个区间 x，这个 x 是在当前所有区间中结束最早的（end 最小）。
+        // 把所有与 x 区间相交的区间从区间集合 intvs 中删除。
+        // 重复步骤 1 和 2，直到 intvs 为空为止。之前选出的那些 x 就是最大不相交子集。
+        
+        // basecase
+        if(intervals.length==0){
+            return 0;
+        }
+        
+        // 按照 end 排序
+        Arrays.sort(intervals,new Comparator<int[]>(){
+            public int compare(int[] a, int[] b) {
+                return a[1] - b[1];
+            }
+        });
+        
+        // 排序后 第一个元素 即为所有区间中结束最早的
+        int x_end = intervals[0][1];
+        
+        // 计数，有多少不重叠区间
+        int count = 1; // 至少一个
+        
+        for(int[] intv: intervals){
+            int start = intv[0];
+            if(start> x_end){ // 边界条件修改
+                count++;
+                x_end = intv[1];
+            }
+        }
+        
+        return count;
+        
+    }
+    
+    public int findMinArrowShots(int[][] points) {
+        // 如果最多有 n 个不重叠的区间，那么就至少需要 n 个箭头穿透所有区间
+        // 擦边也算，所以区间调度算法修改一下边界条件即可
+        
+        return this.intervalSchedule(points);
+        
+    }
+}
+```
+
+```
+Runtime: 21 ms, faster than 39.23% of Java online submissions for Minimum Number of Arrows to Burst Balloons.
+Memory Usage: 56.9 MB, less than 17.37% of Java online submissions for Minimum Number of Arrows to Burst Balloons.
 ```
 
 ## BFS DFS
