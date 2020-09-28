@@ -3388,7 +3388,7 @@ class Solution {
         }
         Arrays.sort(numsC,(a,b)-> (b+a).compareTo(a+b));
         
-        if(numsC[0]=="0"){
+        if(numsC[0].equals("0")){
             return "0";
         }
         
@@ -3401,6 +3401,11 @@ class Solution {
         return sb.toString();
     }
 }
+```
+
+```java
+Runtime: 4 ms, faster than 97.36% of Java online submissions for Largest Number.
+Memory Usage: 38.4 MB, less than 94.21% of Java online submissions for Largest Number.
 ```
 
 ## Bit Manipulation
