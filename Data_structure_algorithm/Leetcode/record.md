@@ -38,6 +38,8 @@
   - [129. Sum Root to Leaf Numbers](#129-sum-root-to-leaf-numbers)
   - [111. Minimum Depth of Binary Tree](#111-minimum-depth-of-binary-tree)
   - [104. Maximum Depth of Binary Tree](#104-maximum-depth-of-binary-tree)
+  - [662. Maximum Width of Binary Tree](#662-maximum-width-of-binary-tree)
+  - [559. Maximum Depth of N-ary Tree](#559-maximum-depth-of-n-ary-tree)
 - [Binary search](#binary-search)
   - [162. Find Peak Element](#162-find-peak-element)
 - [String](#string)
@@ -56,6 +58,7 @@
   - [118. Pascal's Triangle](#118-pascals-triangle)
   - [119. Pascal's Triangle II](#119-pascals-triangle-ii)
   - [169. Majority Element](#169-majority-element)
+  - [179. Largest Number](#179-largest-number)
 - [Bit Manipulation](#bit-manipulation)
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
@@ -72,6 +75,10 @@
     - [Solution 2 二分查找优化](#solution-2-二分查找优化)
   - [1312. Minimum Insertion Steps to Make a String Palindrome](#1312-minimum-insertion-steps-to-make-a-string-palindrome)
   - [1143. Longest Common Subsequence](#1143-longest-common-subsequence)
+  - [516. Longest Palindromic Subsequence](#516-longest-palindromic-subsequence)
+  - [877. Stone Game](#877-stone-game)
+    - [双指针](#双指针)
+    - [动规解法](#动规解法)
 - [贪心](#贪心)
   - [435. Non-overlapping Intervals](#435-non-overlapping-intervals)
   - [452. Minimum Number of Arrows to Burst Balloons](#452-minimum-number-of-arrows-to-burst-balloons)
@@ -2194,6 +2201,191 @@ Runtime: 0 ms, faster than 100.00% of Java online submissions for Maximum Depth 
 Memory Usage: 40.5 MB, less than 20.13% of Java online submissions for Maximum Depth of Binary Tree.
 ```
 
+### 662. Maximum Width of Binary Tree
+
+Given a binary tree, write a function to get the maximum width of the given tree. The maximum width of a tree is the maximum width among all levels.
+
+The width of one level is defined as the length between the end-nodes (the leftmost and right most non-null nodes in the level, where the null nodes between the end-nodes are also counted into the length calculation.
+
+It is guaranteed that the answer will in the range of 32-bit signed integer.
+```
+Example 1:
+
+Input: 
+
+           1
+         /   \
+        3     2
+       / \     \  
+      5   3     9 
+
+Output: 4
+Explanation: The maximum width existing in the third level with the length 4 (5,3,null,9).
+Example 2:
+
+Input: 
+
+          1
+         /  
+        3    
+       / \       
+      5   3     
+
+Output: 2
+Explanation: The maximum width existing in the third level with the length 2 (5,3).
+Example 3:
+
+Input: 
+
+          1
+         / \
+        3   2 
+       /        
+      5      
+
+Output: 2
+Explanation: The maximum width existing in the second level with the length 2 (3,2).
+Example 4:
+
+Input: 
+
+          1
+         / \
+        3   2
+       /     \  
+      5       9 
+     /         \
+    6           7
+Output: 8
+Explanation:The maximum width existing in the fourth level with the length 8 (6,null,null,null,null,null,null,7).
+ 
+
+Constraints:
+
+The given binary tree will have between 1 and 3000 nodes.
+```
+
+```java
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    class Pair{
+        TreeNode node;
+        int index;
+
+        Pair(TreeNode node,int index){
+            this.node = node;
+            this.index = index;
+        }
+
+    }
+    public int widthOfBinaryTree(TreeNode root) {
+        // 做法是层次遍历 + 完全二叉树的节点位置性质
+        // 这个性质指的是，每层都有 2 ^ (n-1)个节点。某节点的左孩子的标号是2n, 右节点的标号是2n + 1。
+        // 因为这个题，中间缺少了节点的话，仍然要“认为”节点存在，所以需要使用这种标号的方法强制计算，而不是直接遍历。
+        if(root==null){
+            return 0;
+        }
+        
+        
+        LinkedList<Pair> level = new LinkedList<>();
+        
+        int width = 1;
+        
+        level.addLast(new Pair(root,1));
+        
+        while(level.size()!=0){
+            int n = level.size();
+            width = Math.max(width,level.getLast().index - level.getFirst().index+1);
+            
+            for(int i=0;i<n;i++){
+                Pair currentNode = level.removeFirst();
+                if(currentNode.node.left!=null){
+                    level.addLast(new Pair(currentNode.node.left,currentNode.index*2));
+                }
+                if(currentNode.node.right!=null){
+                    level.addLast(new Pair(currentNode.node.right,currentNode.index*2+1));
+                }
+            }
+        }
+        
+        return width;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 92.52% of Java online submissions for Maximum Width of Binary Tree.
+Memory Usage: 38.1 MB, less than 100.00% of Java online submissions for Maximum Width of Binary Tree.
+```
+
+### 559. Maximum Depth of N-ary Tree
+
+Given a n-ary tree, find its maximum depth.
+
+The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the null value (See examples).
+
+![](https://assets.leetcode.com/uploads/2019/11/08/sample_4_964.png)
+
+```
+Input: root = [1,null,2,3,4,5,null,null,6,7,null,8,null,9,10,null,null,11,null,12,null,13,null,null,14]
+Output: 5
+```
+
+```java
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> children;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, List<Node> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Solution {
+    public int maxDepth(Node root) {
+        if(root==null){
+            return 0;
+        }Q
+        if(root.children.size()==0){
+            return 1;
+        }
+        int res =0;
+        for(Node child: root.children){
+            res = Math.max(res,maxDepth(child));
+        }
+        
+        return res+1;
+    }
+}
+```
+
 ## Binary search
 
 * 278 First Bad Version e
@@ -3167,6 +3359,48 @@ class Solution {
 ```
 Runtime: 1 ms, faster than 99.93% of Java online submissions for Majority Element.
 Memory Usage: 42.3 MB, less than 87.67% of Java online submissions for Majority Element.
+```
+
+### 179. Largest Number
+
+Given a list of non negative integers, arrange them such that they form the largest number.
+```
+Example 1:
+
+Input: [10,2]
+Output: "210"
+Example 2:
+
+Input: [3,30,34,5,9]
+Output: "9534330"
+Note: The result may be very large, so you need to return a string instead of an integer.
+```
+
+```java
+class Solution {
+    public String largestNumber(int[] nums) {
+        // 这种解法对于两个数字a和b来说，如果将其都转为字符串，如果 ab > ba，则a排在前面，
+        // 比如9和34，由于 934>349，所以9排在前面，再比如说 30 和3，由于 303<330，所以3排在 30 的前面。
+        // 按照这种规则对原数组进行排序后，将每个数字转化为字符串再连接起来就是最终结果
+        String[] numsC = new String[nums.length];
+        for(int i=0;i<nums.length;i++){
+            numsC[i] = String.valueOf(nums[i]);
+        }
+        Arrays.sort(numsC,(a,b)-> (b+a).compareTo(a+b));
+        
+        if(numsC[0]=="0"){
+            return "0";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(String c:numsC){
+            sb.append(c);
+        }
+        
+        return sb.toString();
+    }
+}
 ```
 
 ## Bit Manipulation
@@ -4203,6 +4437,204 @@ class Solution {
 ```
 Runtime: 7 ms, faster than 95.11% of Java online submissions for Longest Common Subsequence.
 Memory Usage: 42.8 MB, less than 87.88% of Java online submissions for Longest Common Subsequence.
+```
+
+### 516. Longest Palindromic Subsequence
+
+Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
+```
+
+Example 1:
+Input:
+
+"bbbab"
+Output:
+4
+One possible longest palindromic subsequence is "bbbb".
+ 
+
+Example 2:
+Input:
+
+"cbbd"
+Output:
+2
+One possible longest palindromic subsequence is "bb".
+ 
+
+Constraints:
+
+1 <= s.length <= 1000
+s consists only of lowercase English letters.
+```
+
+```java
+class Solution {
+    public int longestPalindromeSubseq(String s) {
+        // 对于子序列和最值的问题，一般考虑动规
+        // 子序列有两种通用的状态定义方式，
+        // 如果没有涉及到两个字符串：
+        //                          1. dp[i] 代表以 i 结尾的状态
+        //                          2. dp[i][j] 代表 s[i...j] 的状态
+        // 对于涉及到两个字符串的情况：
+        //                          dp[i][j] 代表 s1[1...i] s2[1...j] 的状态
+        
+        // 对最长回文字串，直观思路会是：从字符串中间出发，分别向两头检查
+        // 当 s[i] == s[j] 的时候，可以从上一状态 s[i+1....j-1] + 2 得到
+        // 当 s[i] != s[j] 的时候，可以从 s[i+1...j] 和 s[i...j-1] 中取最大得到
+        
+        
+        
+        // 状态定义
+        // dp[i][j] 代表 s[i....j] 中最长回文的长度
+        int n = s.length();
+        int[][] dp = new int[n][n];
+        
+        // basecase
+        // 当 i > j 的时候不存在回文 此时都应为0
+        // i = j 的时候 为 1
+        for(int i=0;i<n;i++){
+            dp[i][i] = 1;
+        }
+        
+        // 状态转移
+        for(int i=n-1;i>=0;i--){
+            for(int j=i+1;j<n;j++){
+                if(s.charAt(i)==s.charAt(j)){
+                    dp[i][j] = dp[i+1][j-1]+2;
+                }else{
+                    dp[i][j] = Math.max(dp[i+1][j],dp[i][j-1]);
+                }
+            }
+        }
+        
+        return dp[0][n-1];
+        
+        
+    }
+}
+```
+
+### 877. Stone Game
+
+Alex and Lee play a game with piles of stones.  There are an even number of piles arranged in a row, and each pile has a positive integer number of stones piles[i].
+
+The objective of the game is to end with the most stones.  The total number of stones is odd, so there are no ties.
+
+Alex and Lee take turns, with Alex starting first.  Each turn, a player takes the entire pile of stones from either the beginning or the end of the row.  This continues until there are no more piles left, at which point the person with the most stones wins.
+
+Assuming Alex and Lee play optimally, return True if and only if Alex wins the game.
+```
+ 
+
+Example 1:
+
+Input: piles = [5,3,4,5]
+Output: true
+Explanation: 
+Alex starts first, and can only take the first 5 or the last 5.
+Say he takes the first 5, so that the row becomes [3, 4, 5].
+If Lee takes 3, then the board is [4, 5], and Alex takes 5 to win with 10 points.
+If Lee takes the last 5, then the board is [3, 4], and Alex takes 4 to win with 9 points.
+This demonstrated that taking the first 5 was a winning move for Alex, so we return true.
+ 
+
+Constraints:
+
+2 <= piles.length <= 500
+piles.length is even.
+1 <= piles[i] <= 500
+sum(piles) is odd.
+
+```
+
+#### 双指针
+
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        
+        int al_st = 0;
+        int l_st = 0;
+        boolean alex = true;
+        int i=0;
+        int j = piles.length-1;
+        while(i<j){
+            if(alex){
+                if(piles[i]>piles[j]){
+                    al_st+=piles[i++];
+                }
+                else{
+                    al_st+=piles[j--];
+                }
+            }
+            else{
+               if(piles[i]>piles[j]){
+                    l_st+=piles[i];
+                    i++;
+                }
+                else{
+                    l_st+=piles[j--];
+                } 
+            }
+        }
+        return (al_st>l_st)?true:false;
+    }
+}
+```
+
+#### 动规解法
+
+```java
+class Solution {
+    public boolean stoneGame(int[] piles) {
+        
+        // 参考https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%B9%8B%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98.html
+        // 先后手问题属于博弈问题，后手状态会依据先手状态来转移，并且先手在选择后，相对而言会变成后手
+        // 因为石头堆是从两边开始选择的，直观的想会考虑如下：
+        //                                              作为先手，可以从两边选一堆，如果我选择的是右边的那一堆 piles[j] 剩下能得到的应该是从 [i...j-1]，反之则是从 [i+1...j] 中得到
+        //                                              先手选完后，后手应依据其先手的左右选择，对应能拿到的最大为 [i...j-1] 中（先手选了 piles[j]）或者 [i+1...j-1] 中（先手选了 piles[i]）
+        
+        // 此时对于 dp 的定义考虑如下 dp[i][j] 表示能从 piles[i....j] 这些中获得的最大数量
+        
+        // 但是此时会发现，先后手会对 dp[i][j] 产生影响
+        // 为了表示出先后手的不同影响，dp[i][j] 一个元组，表示先后手两种不同的情况下 能从 piles[i....j] 中获得的最大数量
+        
+        // 状态定义 dp[i][j][o] 代表能从 piles[i....j] 中获得的最大数量 o=0 表示先手 o=1 表示后手
+        
+        int n = piles.length;
+        int[][][] dp = new int[n][n][2];
+        
+        // basecase i=j 的时候，先手拿走唯一的那一堆石头，后手能拿的只有 0
+        for(int i=0;i<n;i++){
+            dp[i][i][0] = piles[i];
+            dp[i][i][1] = 0;
+        }
+        
+        // 状态转移
+        for(int l=2;l<=n;l++){
+            for(int i=0;i<=n-l;i++){
+                int j = i+l-1; // 斜着遍历二维dp
+    
+                // 先手选择后，就会作为下一次的后手，所以要加上下一次的后手情况
+                int left = piles[i]+dp[i+1][j][1];
+                int right = piles[j]+dp[i][j-1][1];
+                
+                if(left>right){
+                    dp[i][j][0] = left;
+                    dp[i][j][1] = dp[i+1][j][0]; //此时在先手选完后，后手变为剩下那些石头堆的先手
+                }else{
+                    dp[i][j][0] = right;
+                    dp[i][j][1] = dp[i][j-1][0]; //此时在先手选完后，后手变为剩下那些石头堆的先手
+                }
+                
+            }
+        }
+        
+        return (dp[0][n-1][0] - dp[0][n-1][1]) > 0;
+        
+    }
+}
 ```
 
 ## 贪心
