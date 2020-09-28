@@ -248,6 +248,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [111. Minimum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#111-minimum-depth-of-binary-tree)
   * [104. Maximum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#104-maximum-depth-of-binary-tree)
 
+* 20200928
+  * [516. Longest Palindromic Subsequence](Data_structure_algorithm/Leetcode/record.md#516-longest-palindromic-subsequence)
+  * [877. Stone Game](Data_structure_algorithm/Leetcode/record.md#877-stone-game)
+  * [662. Maximum Width of Binary Tree](Data_structure_algorithm/Leetcode/record.md#662-maximum-width-of-binary-tree)
+  * [559. Maximum Depth of N-ary Tree](Data_structure_algorithm/Leetcode/record.md#559-maximum-depth-of-n-ary-tree)
+  * [179. Largest Number](Data_structure_algorithm/Leetcode/record.md#179-largest-number)
+
 ### 解题思路强化
 
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)
