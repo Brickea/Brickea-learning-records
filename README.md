@@ -235,11 +235,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ### 打卡记录
 
 * 20200925
-  * [1312. Minimum Insertion Steps to Make a String Palindrome](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
-  * [300. Longest Increasing Subsequence M](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
-  * [200. Number of Islands](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
-  * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#130-surrounded-regions)
-  * [162. Find Peak Element](Data_structure_algorithm/Leetcode/record.md#162-find-peak-element)
+  * [1312. Minimum Insertion Steps to Make a String Palindrome DP](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
+  * [300. Longest Increasing Subsequence M DP](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
+  * [200. Number of Islands DFS](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
+  * [130. Surrounded Regions DFS](Data_structure_algorithm/Leetcode/record.md#130-surrounded-regions)
+  * [162. Find Peak Element BinarySearch](Data_structure_algorithm/Leetcode/record.md#162-find-peak-element)
 
 * 20200926
   * [1143. Longest Common Subsequence  DP](Data_structure_algorithm/Leetcode/record.md#1143-longest-common-subsequence)
@@ -249,11 +249,18 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [104. Maximum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#104-maximum-depth-of-binary-tree)
 
 * 20200928
-  * [516. Longest Palindromic Subsequence](Data_structure_algorithm/Leetcode/record.md#516-longest-palindromic-subsequence)
-  * [877. Stone Game](Data_structure_algorithm/Leetcode/record.md#877-stone-game)
+  * [516. Longest Palindromic Subsequence DP](Data_structure_algorithm/Leetcode/record.md#516-longest-palindromic-subsequence)
+  * [877. Stone Game DP](Data_structure_algorithm/Leetcode/record.md#877-stone-game)
   * [662. Maximum Width of Binary Tree](Data_structure_algorithm/Leetcode/record.md#662-maximum-width-of-binary-tree)
   * [559. Maximum Depth of N-ary Tree](Data_structure_algorithm/Leetcode/record.md#559-maximum-depth-of-n-ary-tree)
-  * [179. Largest Number](Data_structure_algorithm/Leetcode/record.md#179-largest-number)
+  * [179. Largest Number OverrideSort](Data_structure_algorithm/Leetcode/record.md#179-largest-number)
+
+* 20200930 UF 强化
+  * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#uf-并查集)
+  * [200. Number of Islands](Data_structure_algorithm/Leetcode/record.md#uf-并查集-1)
+  * [261. Graph Valid Tree](Data_structure_algorithm/Leetcode/record.md#261-graph-valid-tree)
+  * [323. Number of Connected Components in an Undirected Graph](Data_structure_algorithm/Leetcode/record.md#323-number-of-connected-components-in-an-undirected-graph)
+  * [547. Friend Circles](Data_structure_algorithm/Leetcode/record.md#547-friend-circles)
 
 ### 解题思路强化
 
