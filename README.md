@@ -33,6 +33,10 @@ It is because the Github only support the raw markdown. So all the formula I wro
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
   - [打卡记录](#打卡记录)
+    - [20200925](#20200925)
+    - [20200926](#20200926)
+    - [20200928](#20200928)
+    - [20200930 UF 强化](#20200930-uf-强化)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -234,28 +238,28 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### 打卡记录
 
-* 20200925
+#### 20200925
   * [1312. Minimum Insertion Steps to Make a String Palindrome DP](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
   * [300. Longest Increasing Subsequence M DP](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
   * [200. Number of Islands DFS](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
   * [130. Surrounded Regions DFS](Data_structure_algorithm/Leetcode/record.md#130-surrounded-regions)
   * [162. Find Peak Element BinarySearch](Data_structure_algorithm/Leetcode/record.md#162-find-peak-element)
 
-* 20200926
+#### 20200926
   * [1143. Longest Common Subsequence  DP](Data_structure_algorithm/Leetcode/record.md#1143-longest-common-subsequence)
   * [435. Non-overlapping Intervals 贪心](Data_structure_algorithm/Leetcode/record.md#435-non-overlapping-intervals)
   * [452. Minimum Number of Arrows to Burst Balloons 贪心](Data_structure_algorithm/Leetcode/record.md#452-minimum-number-of-arrows-to-burst-balloons)
   * [111. Minimum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#111-minimum-depth-of-binary-tree)
   * [104. Maximum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#104-maximum-depth-of-binary-tree)
 
-* 20200928
+#### 20200928
   * [516. Longest Palindromic Subsequence DP](Data_structure_algorithm/Leetcode/record.md#516-longest-palindromic-subsequence)
   * [877. Stone Game DP](Data_structure_algorithm/Leetcode/record.md#877-stone-game)
   * [662. Maximum Width of Binary Tree](Data_structure_algorithm/Leetcode/record.md#662-maximum-width-of-binary-tree)
   * [559. Maximum Depth of N-ary Tree](Data_structure_algorithm/Leetcode/record.md#559-maximum-depth-of-n-ary-tree)
   * [179. Largest Number OverrideSort](Data_structure_algorithm/Leetcode/record.md#179-largest-number)
 
-* 20200930 UF 强化
+#### 20200930 UF 强化
   * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#uf-并查集)
   * [200. Number of Islands](Data_structure_algorithm/Leetcode/record.md#uf-并查集-1)
   * [261. Graph Valid Tree](Data_structure_algorithm/Leetcode/record.md#261-graph-valid-tree)
