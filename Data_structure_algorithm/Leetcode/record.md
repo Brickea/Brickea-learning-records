@@ -84,7 +84,15 @@
   - [452. Minimum Number of Arrows to Burst Balloons](#452-minimum-number-of-arrows-to-burst-balloons)
 - [BFS DFS](#bfs-dfs)
   - [200. Number of Islands](#200-number-of-islands)
+    - [Solution BFS 2](#solution-bfs-2)
+    - [UF 并查集 1](#uf-并查集-1)
   - [130. Surrounded Regions](#130-surrounded-regions)
+    - [Solution BFS 1](#solution-bfs-1)
+    - [UF 并查集 2](#uf-并查集-2)
+- [并查集](#并查集)
+  - [261. Graph Valid Tree](#261-graph-valid-tree)
+  - [323. Number of Connected Components in an Undirected Graph](#323-number-of-connected-components-in-an-undirected-graph)
+  - [547. Friend Circles](#547-friend-circles)
 - [回溯法](#回溯法)
   - [980. Unique Paths III](#980-unique-paths-iii)
 
@@ -4835,6 +4843,8 @@ Input: grid = [
 Output: 3
 ```
 
+#### Solution BFS 2
+
 ```java
 class Solution {
     private char[][] map;
@@ -4898,6 +4908,135 @@ Runtime: 1 ms, faster than 99.95% of Java online submissions for Number of Islan
 Memory Usage: 41.6 MB, less than 96.38% of Java online submissions for Number of Islands.
 ```
 
+#### UF 并查集 1
+
+```java
+class Solution {
+    
+    // 并查集解法 UF
+    
+    
+    // 并查集
+    // 采用 weighted + path comparess 并查集
+    private int[] points;
+    private int[] sz;
+    private void UF(int pointsNumber){
+        this.points = new int[pointsNumber];
+        this.sz = new int[pointsNumber];
+        
+        for(int i=0;i<pointsNumber;i++){
+            this.points[i] = i;
+            this.sz[i] = 1;
+        }
+    }
+    
+    
+    // find 节点的连通根节点 lgN
+    private int find(int point){
+        while(this.points[point]!=point){
+            // path compress
+            this.points[point] = this.points[this.points[point]];
+            // find root
+            point = this.points[point];
+        }
+        
+        return this.points[point];
+    }
+    
+    // connected 判断是否连通 lgN
+    private boolean connected(int p, int q){
+        return this.find(p)==this.find(q);
+    }
+    
+    // union 连通节点 lgN
+    private void union(int p, int q){
+        int rootP = this.find(p);
+        int rootQ = this.find(q);
+        
+        // 已连通
+        if(rootP==rootQ)
+            return;
+        
+        // 保证 N*M 永远都是根节点
+        if(this.sz[rootP]>this.sz[rootQ]){
+            this.points[rootQ] = rootP;
+            this.sz[rootP]+=this.sz[rootP];
+        }else{
+            this.points[rootP] = rootQ;
+            this.sz[rootQ]+=this.sz[rootP];
+        }
+    }
+    
+    public int numIslands(char[][] grid) {
+        // 初始化
+        final int N = grid.length;
+        if(N==0){
+            return 0;
+        }
+        final int M = grid[0].length;
+        this.UF(N*M);
+        
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if(grid[i][j]=='1'){
+                    if (i-1>-1&&grid[i-1][j] == '1') {
+                         this.union(i * M + j, (i-1) * M + j);
+                     }
+                     if (i+1<N&&grid[i+1][j] == '1') {
+                         this.union(i * M + j, (i+1) * M + j);
+                     }
+                     if (j-1>-1&&grid[i][j-1] == '1') {
+                         this.union(i * M + j, i * M + j - 1);
+                     }
+                     if (j+1<M&&grid[i][j+1] == '1') {
+                         this.union(i * M + j, i * M + j  + 1);
+                     }
+                }else{
+                    if (i-1>-1&&grid[i-1][j] == '0') {
+                         this.union(i * M + j, (i-1) * M + j);
+                     }
+                     if (i+1<N&&grid[i+1][j] == '0') {
+                         this.union(i * M + j, (i+1) * M + j);
+                     }
+                     if (j-1>-1&&grid[i][j-1] == '0') {
+                         this.union(i * M + j, i * M + j - 1);
+                     }
+                     if (j+1<M&&grid[i][j+1] == '0') {
+                         this.union(i * M + j, i * M + j  + 1);
+                     }
+                }
+            }
+        }
+        
+        HashSet<Integer> temp = new HashSet<>();
+        
+        int res = 0;
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if(grid[i][j]=='1'){
+                    int root = this.find(i*M+j);
+                    if(!temp.contains(root)){
+                        temp.add(root);
+                        res++;
+                    }
+                        
+                }
+            }
+        }
+        
+        return res;
+    }
+}
+```
+
+
+```
+Runtime: 9 ms, faster than 7.15% of Java online submissions for Number of Islands.
+Memory Usage: 41.6 MB, less than 91.99% of Java online submissions for Number of Islands.
+```
+
+用 BFS 不香吗，就当练习了一下 UF 吧
+
 ### 130. Surrounded Regions
 
 Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
@@ -4917,6 +5056,8 @@ X X X X
 X X X X
 X O X X
 ```
+
+#### Solution BFS 1
 
 ```java
 class Solution {
@@ -4995,6 +5136,444 @@ Runtime: 1 ms, faster than 99.78% of Java online submissions for Surrounded Regi
 Memory Usage: 41.4 MB, less than 82.24% of Java online submissions for Surrounded Regions.
 ```
 
+#### UF 并查集 2
+
+```java
+class Solution {
+    // 并查集解法 UF
+    // 可以通过设置一个 dummy 节点表示边界，如果 "O" 没有和 dummy 边界相连通，就将其变成 "X"
+    
+    
+    // 并查集
+    // 采用 path comparess 并查集
+    private int[] points;
+    private void UF(int pointsNumber){
+        this.points = new int[pointsNumber+1];
+        // 并查集初始化 points[pointsNumber] 为 dummy 边界
+        for(int i=0;i<=pointsNumber;i++){
+            this.points[i] = i;
+        }
+    }
+    
+    
+    // find 节点的连通根节点 lgN
+    private int find(int point){
+        while(this.points[point]!=point){
+            // path compress
+            this.points[point] = this.points[this.points[point]];
+            // find root
+            point = this.points[point];
+        }
+        
+        return this.points[point];
+    }
+    
+    // connected 判断是否连通 lgN
+    private boolean connected(int p, int q){
+        return this.find(p)==this.find(q);
+    }
+    
+    // union 连通节点 lgN
+    private void union(int p, int q){
+        int rootP = this.find(p);
+        int rootQ = this.find(q);
+        
+        // 已连通
+        if(rootP==rootQ)
+            return;
+        
+        // 保证 N*M 永远都是根节点
+        if(this.points[rootP]>this.points[rootQ]){
+            this.points[rootQ] = rootP;
+        }else{
+            this.points[rootP] = rootQ;
+        }
+    }
+    
+    
+    
+    public void solve(char[][] board) {
+        // 初始化
+        final int N = board.length;
+        if(N==0){
+            return;
+        }
+        final int M = board[0].length;
+        this.UF(N*M);
+        
+        // 进行联通
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if(board[i][j]=='O'){
+                    // 判断是否是在边界
+                    if(i==0||j==0||i==N-1||j==M-1){
+                        // 在边界就和 dummy 节点相连通
+                        this.union(i*M+j,N*M);
+                    }else{
+                        // 和四周都是 O 的节点相连通
+                        if (i-1>-1&&board[i-1][j] == 'O') {
+                             this.union(i * M + j, (i-1) * M + j);
+                         }
+                         if (i+1<N&&board[i+1][j] == 'O') {
+                             this.union(i * M + j, (i+1) * M + j);
+                         }
+                         if (j-1>-1&&board[i][j-1] == 'O') {
+                             this.union(i * M + j, i * M + j - 1);
+                         }
+                         if (j+1<M&&board[i][j+1] == 'O') {
+                             this.union(i * M + j, i * M + j  + 1);
+                         }
+                    }
+                }
+            }
+        }
+        
+        // 将和 dummy 连通的节点变为 X
+        
+        for(int i=0;i<N;i++){
+            for(int j=0;j<M;j++){
+                if(this.find(i*M+j)!=N*M){
+                    board[i][j]='X';
+                }
+            }
+        }
+        
+    }
+}
+```
+
+```
+Runtime: 9 ms, faster than 9.60% of Java online submissions for Surrounded Regions.
+Memory Usage: 41.3 MB, less than 89.62% of Java online submissions for Surrounded Regions.
+```
+
+效率很差，就当作练习一下并查集。  
+原因是因为为了保证连通 dummy 节点的树根节点一定是 N*M，不能很好的用加权的结构。
+
+## 并查集
+
+### 261. Graph Valid Tree
+
+Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
+
+```
+Example 1:
+Input: n = 5, and edges = [[0,1], [0,2], [0,3], [1,4]]
+Output: trueExample 2:
+Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
+Output: falseNote: you can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0,1] is the same as [1,0] and thus will not appear together in edges.
+```
+
+```java
+class Solution {
+    // 并查集解法 UF
+    // 采用 weighted + path comparess 并查集
+    private int[] points;
+    private int[] sz;
+    private void UF(int pointsNumber){
+        this.points = new int[pointsNumber];
+        this.sz = new int[pointsNumber];
+
+        for(int i=0;i<pointsNumber;i++){
+            this.points[i] = i;
+            this.sz[i] = 1;
+        }
+    }
+
+
+    // find 节点的连通根节点 lgN
+    private int find(int point){
+        while(this.points[point]!=point){
+            // path compress
+            this.points[point] = this.points[this.points[point]];
+            // find root
+            point = this.points[point];
+        }
+
+        return this.points[point];
+    }
+
+    // connected 判断是否连通 lgN
+    private boolean connected(int p, int q){
+        return this.find(p)==this.find(q);
+    }
+
+    // union 连通节点 lgN
+    private void union(int p, int q){
+        int rootP = this.find(p);
+        int rootQ = this.find(q);
+
+        // 已连通
+        if(rootP==rootQ)
+            return;
+
+        if(this.sz[rootP]>this.sz[rootQ]){
+            this.points[rootQ] = rootP;
+            this.sz[rootP]+=this.sz[rootP];
+        }else{
+            this.points[rootP] = rootQ;
+            this.sz[rootQ]+=this.sz[rootP];
+        }
+    }
+    public boolean validTree(int n, int[][] edges) {
+        // 先检查边集合是否等于 n-1
+        final int EDGESLENGTH = edges.length;
+        if(EDGESLENGTH!=n-1)
+            return false;
+
+        this.UF(n);
+
+        for(int i=0;i<EDGESLENGTH;i++){
+            // 检查是否有环
+            if(this.find(edges[i][0])==this.find(edges[i][1])){
+                return false;
+            }
+            this.union(edges[i][0],edges[i][1]);
+        }
+
+        return true;
+
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Graph Valid Tree.
+Memory Usage: 39.8 MB, less than 73.28% of Java online submissions for Graph Valid Tree.
+```
+
+### 323. Number of Connected Components in an Undirected Graph
+
+Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.
+
+```
+Example 1:
+Input: n = 5 and edges = [[0, 1], [1, 2], [3, 4]]
+
+     0          3
+     |          |
+     1 --- 2    4 
+
+Output: 2
+Example 2:
+Input: n = 5 and edges = [[0, 1], [1, 2], [2, 3], [3, 4]]
+
+     0           4
+     |           |
+     1 --- 2 --- 3
+
+Output:  1
+Note:
+You can assume that no duplicate edges will appear in edges. Since all edges are undirected, [0, 1] is the same as [1, 0] and thus will not appear together in edges.
+```
+
+```java
+class Solution {
+    // 并查集解法 UF
+    // 采用 weighted + path comparess 并查集
+    private int[] points;
+    private int[] sz;
+    private void UF(int pointsNumber){
+        this.points = new int[pointsNumber];
+        this.sz = new int[pointsNumber];
+
+        for(int i=0;i<pointsNumber;i++){
+            this.points[i] = i;
+            this.sz[i] = 1;
+        }
+    }
+
+
+    // find 节点的连通根节点 lgN
+    private int find(int point){
+        while(this.points[point]!=point){
+            // path compress
+            this.points[point] = this.points[this.points[point]];
+            // find root
+            point = this.points[point];
+        }
+
+        return this.points[point];
+    }
+
+    // connected 判断是否连通 lgN
+    private boolean connected(int p, int q){
+        return this.find(p)==this.find(q);
+    }
+
+    // union 连通节点 lgN
+    private void union(int p, int q){
+        int rootP = this.find(p);
+        int rootQ = this.find(q);
+
+        // 已连通
+        if(rootP==rootQ)
+            return;
+
+        if(this.sz[rootP]>this.sz[rootQ]){
+            this.points[rootQ] = rootP;
+            this.sz[rootP]+=this.sz[rootP];
+        }else{
+            this.points[rootP] = rootQ;
+            this.sz[rootQ]+=this.sz[rootP];
+        }
+    }
+
+    private int getCount(){
+        int res=0;
+        for(int i=0;i<this.points.length;i++){
+            if(find(this.points[i])==i){
+                res++;
+            }
+        }
+        return res;
+    }
+    public int countComponents(int n, int[][] edges) {
+        // 直接链接判断
+        final int EDGESNUMBER = edges.length;
+        if(n==0){
+            return 0;
+        }
+        // 初始化并查集
+        this.UF(n);
+        // 连接
+        for(int i=0;i<EDGESNUMBER;i++){
+            this.union(edges[i][0],edges[i][1]);
+        }
+
+        return this.getCount();
+
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 100.00% of Java online submissions for Number of Connected Components in an Undirected Graph.
+Memory Usage: 39.7 MB, less than 88.79% of Java online submissions for Number of Connected Components in an Undirected Graph.
+```
+
+### 547. Friend Circles
+
+There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B is a direct friend of C, then A is an indirect friend of C. And we defined a friend circle is a group of students who are direct or indirect friends.
+
+Given a N*N matrix M representing the friend relationship between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not. And you have to output the total number of friend circles among all the students.
+
+```
+Example 1:
+
+Input: 
+[[1,1,0],
+ [1,1,0],
+ [0,0,1]]
+Output: 2
+Explanation:The 0th and 1st students are direct friends, so they are in a friend circle. 
+The 2nd student himself is in a friend circle. So return 2.
+ 
+
+Example 2:
+
+Input: 
+[[1,1,0],
+ [1,1,1],
+ [0,1,1]]
+Output: 1
+Explanation:The 0th and 1st students are direct friends, the 1st and 2nd students are direct friends, 
+so the 0th and 2nd students are indirect friends. All of them are in the same friend circle, so return 1.
+
+ 
+
+Constraints:
+
+1 <= N <= 200
+M[i][i] == 1
+M[i][j] == M[j][i]
+```
+
+```java
+class Solution {
+    // 并查集解法 UF
+    // 采用 weighted + path comparess 并查集
+    private int[] points;
+    private int[] sz;
+    private void UF(int pointsNumber){
+        this.points = new int[pointsNumber];
+        this.sz = new int[pointsNumber];
+
+        for(int i=0;i<pointsNumber;i++){
+            this.points[i] = i;
+            this.sz[i] = 1;
+        }
+    }
+
+
+    // find 节点的连通根节点 lgN
+    private int find(int point){
+        while(this.points[point]!=point){
+            // path compress
+            this.points[point] = this.points[this.points[point]];
+            // find root
+            point = this.points[point];
+        }
+
+        return this.points[point];
+    }
+
+    // connected 判断是否连通 lgN
+    private boolean connected(int p, int q){
+        return this.find(p)==this.find(q);
+    }
+
+    // union 连通节点 lgN
+    private void union(int p, int q){
+        int rootP = this.find(p);
+        int rootQ = this.find(q);
+
+        // 已连通
+        if(rootP==rootQ)
+            return;
+
+        if(this.sz[rootP]>this.sz[rootQ]){
+            this.points[rootQ] = rootP;
+            this.sz[rootP]+=this.sz[rootP];
+        }else{
+            this.points[rootP] = rootQ;
+            this.sz[rootQ]+=this.sz[rootP];
+        }
+    }
+
+    private int getCount(){
+        int res=0;
+        for(int i=0;i<this.points.length;i++){
+            if(find(this.points[i])==i){
+                res++;
+            }
+        }
+        return res;
+    }
+    public int findCircleNum(int[][] M) {
+        // 连通解决
+        if(M.length==0){
+            return 0;
+        }
+        
+        this.UF(M.length);
+        for(int i=0;i<M.length;i++){
+            for(int j=0;j<M[0].length;j++){
+                if(M[i][j]==1){
+                    this.union(i,j);
+                }
+            }
+        }
+        
+        return this.getCount();
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 77.88% of Java online submissions for Friend Circles.
+Memory Usage: 39.9 MB, less than 93.39% of Java online submissions for Friend Circles.
+```
 
 ## 回溯法
 
