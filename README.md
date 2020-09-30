@@ -238,6 +238,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### 打卡记录
 
+
 #### 20200925
   * [1312. Minimum Insertion Steps to Make a String Palindrome DP](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
   * [300. Longest Increasing Subsequence M DP](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
@@ -252,12 +253,14 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [111. Minimum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#111-minimum-depth-of-binary-tree)
   * [104. Maximum Depth of Binary Tree 树](Data_structure_algorithm/Leetcode/record.md#104-maximum-depth-of-binary-tree)
 
+
 #### 20200928
   * [516. Longest Palindromic Subsequence DP](Data_structure_algorithm/Leetcode/record.md#516-longest-palindromic-subsequence)
   * [877. Stone Game DP](Data_structure_algorithm/Leetcode/record.md#877-stone-game)
   * [662. Maximum Width of Binary Tree](Data_structure_algorithm/Leetcode/record.md#662-maximum-width-of-binary-tree)
   * [559. Maximum Depth of N-ary Tree](Data_structure_algorithm/Leetcode/record.md#559-maximum-depth-of-n-ary-tree)
   * [179. Largest Number OverrideSort](Data_structure_algorithm/Leetcode/record.md#179-largest-number)
+
 
 #### 20200930 UF 强化
   * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#uf-并查集)
