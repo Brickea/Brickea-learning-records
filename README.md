@@ -25,6 +25,9 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [并查集](#并查集)
   - [排序](#排序)
   - [链表](#链表)
+  - [背包](#背包)
+  - [栈](#栈)
+  - [队列](#队列)
 - [Java 每天一个知识点](#java-每天一个知识点)
   - [基础类](#基础类)
   - [J2EE](#j2ee)
@@ -166,6 +169,21 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [判断单链表是否成环](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/HasCircle.java)
 * [寻找单链表环的入口节点](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/FindEntryOfCircle.java)
 * [寻找两个单链表的交点](Java%20Day%20Day%20Up/手撕代码/src/main/java/linkedlist/HasIntersection.java)
+
+### 背包
+
+* [基于数组不定长背包](Java%20Day%20Day%20Up/手撕代码/src/main/java/bag/BagArray.java)
+* [基于链表不定长背包](Java%20Day%20Day%20Up/手撕代码/src/main/java/bag/BagLinkedList.java)
+
+### 栈
+
+* [基于数组不定长栈](Java%20Day%20Day%20Up/手撕代码/src/main/java/stack/StackArray.java)
+* [基于链表不定长栈](Java%20Day%20Day%20Up/手撕代码/src/main/java/stack/StackLinkedList.java)
+
+### 队列
+
+* [基于链表不定长队列](Java%20Day%20Day%20Up/手撕代码/src/main/java/queue/QueueLinkedList.java)
+* [基于数组定长优先队列](Java%20Day%20Day%20Up/手撕代码/src/main/java/queue/priorityQueue/MaxPQ.java)
 
 
 ## Java 每天一个知识点
