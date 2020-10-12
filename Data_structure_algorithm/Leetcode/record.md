@@ -59,6 +59,7 @@
   - [119. Pascal's Triangle II](#119-pascals-triangle-ii)
   - [169. Majority Element](#169-majority-element)
   - [179. Largest Number](#179-largest-number)
+  - [229. Majority Element II](#229-majority-element-ii)
 - [Bit Manipulation](#bit-manipulation)
   - [389. Find the Difference E](#389-find-the-difference-e)
   - [136. Single Number E](#136-single-number-e)
@@ -79,6 +80,13 @@
   - [877. Stone Game](#877-stone-game)
     - [双指针](#双指针)
     - [动规解法](#动规解法)
+  - [股票买卖](#股票买卖)
+    - [121. Best Time to Buy and Sell Stock](#121-best-time-to-buy-and-sell-stock)
+    - [122. Best Time to Buy and Sell Stock II](#122-best-time-to-buy-and-sell-stock-ii)
+    - [309. Best Time to Buy and Sell Stock with Cooldown](#309-best-time-to-buy-and-sell-stock-with-cooldown)
+    - [714. Best Time to Buy and Sell Stock with Transaction Fee](#714-best-time-to-buy-and-sell-stock-with-transaction-fee)
+    - [123. Best Time to Buy and Sell Stock III](#123-best-time-to-buy-and-sell-stock-iii)
+    - [188. Best Time to Buy and Sell Stock IV](#188-best-time-to-buy-and-sell-stock-iv)
 - [贪心](#贪心)
   - [435. Non-overlapping Intervals](#435-non-overlapping-intervals)
   - [452. Minimum Number of Arrows to Burst Balloons](#452-minimum-number-of-arrows-to-burst-balloons)
@@ -3416,6 +3424,96 @@ Runtime: 4 ms, faster than 97.36% of Java online submissions for Largest Number.
 Memory Usage: 38.4 MB, less than 94.21% of Java online submissions for Largest Number.
 ```
 
+### 229. Majority Element II
+
+Given an integer array of size n, find all elements that appear more than ⌊ n/3 ⌋ times.
+
+Follow-up: Could you solve the problem in linear time and in O(1) space?
+
+```
+
+Example 1:
+
+Input: nums = [3,2,3]
+Output: [3]
+Example 2:
+
+Input: nums = [1]
+Output: [1]
+Example 3:
+
+Input: nums = [1,2]
+Output: [1,2]
+ 
+
+Constraints:
+
+1 <= nums.length <= 5 * 104
+-109 <= nums[i] <= 109
+
+```
+
+```java
+class Solution {
+    public List<Integer> majorityElement(int[] nums) {
+        // 摩尔投票法
+        // 每次删除三个不相同的数，最后留下的一定是出现次数超过1/3的数，这个思想可以推广到出现次数超过1/k次的元素有哪些
+        
+        // 因为出现次数大于n/3的元素最多只有两个，所以最开始可以维护两个数字(num1,num2)和两个计数器(counter1,counter2)；
+        // 遍历数组，当数组中元素和num1或者num2相同，对应的counter1或者counter2加1；
+        // 如果counter1或counter2为0，将遍历到的该元素赋给num1或者nums2；
+        // 否则counter1和counter2都减1。
+
+        int counter1=0,counter2=0;
+        int nums1 = 0;
+        int nums2 = 0;
+        for(int i:nums){
+            if(nums1==(i)){
+                counter1++;
+            }else if(nums2==(i)){
+                counter2++;
+            }else if(counter1==0){
+                counter1++;
+                nums1 = i;
+            }else if(counter2==0){
+                counter2++;
+                nums2 = i; 
+            }else{
+                counter1--;
+                counter2--;
+            }
+        }
+        
+        counter1=0;
+        counter2=0;
+        
+        for(int i:nums){
+            if(nums1==(i)){
+                counter1++;
+            }else if(nums2==(i)){
+                counter2++;
+            }
+        }
+        
+        List<Integer> res =new ArrayList<>();
+        if(counter1>nums.length/3){
+            res.add(nums1);
+
+        }
+        if(counter2>nums.length/3){
+            res.add(nums2);
+
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 99.95% of Java online submissions for Majority Element II.
+Memory Usage: 43 MB, less than 8.34% of Java online submissions for Majority Element II.
+```
+
 ## Bit Manipulation
 
 ### 389. Find the Difference E
@@ -4648,6 +4746,678 @@ class Solution {
         
     }
 }
+```
+
+### 股票买卖
+
+#### 121. Best Time to Buy and Sell Stock
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+If you were only permitted to complete at most one transaction (i.e., buy one and sell one share of the stock), design an algorithm to find the maximum profit.
+
+Note that you cannot sell a stock before you buy one.
+
+```
+Example 1:
+
+Input: [7,1,5,3,6,4]
+Output: 5
+Explanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+             Not 7-1 = 6, as selling price needs to be larger than buying price.
+Example 2:
+
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+
+```
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 只能进行一次交易
+        
+//         // 定义状态
+//         // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+//         final int DAYS = prices.length;
+//         final int STOCK_STATUS = 2;
+        
+//         int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        
+//         // basecase
+//         // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+//         // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+//         dp[0][0] = 0;
+//         dp[0][1] = Integer.MIN_VALUE;
+        
+//         // 状态转移 i 代表 第 i 天
+//         // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+//         // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+//         // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+//         // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入（因为只能买入一次，此时前一天利润必定为 0）
+        
+//         for(int i=1;i<=DAYS;i++){
+//             dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1]+prices[i-1]);
+//             dp[i][1] = Math.max(dp[i-1][1],0-prices[i-1]);
+//         }
+        
+//         return dp[DAYS][0];
+        
+        
+        // 空间压缩
+        // 定义状态
+        // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        
+        // int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        int status_0 = 0;
+        int status_1 = Integer.MIN_VALUE;
+        
+        // basecase
+        // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+        // dp[0][0] = 0;
+        // dp[0][1] = Integer.MIN_VALUE;
+        
+        // 状态转移 i 代表 第 i 天
+        // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+        // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+        // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+        // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入（因为只能买入一次，此时前一天利润必定为 0）
+        
+        for(int i=1;i<=DAYS;i++){
+            status_0 = Math.max(status_0,status_1+prices[i-1]);
+            status_1 = Math.max(status_1,0-prices[i-1]);
+        }
+        
+        return status_0;
+        
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 98.77% of Java online submissions for Best Time to Buy and Sell Stock.
+Memory Usage: 38.6 MB, less than 11.78% of Java online submissions for Best Time to Buy and Sell Stock.
+```
+
+#### 122. Best Time to Buy and Sell Stock II
+
+Say you have an array prices for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (i.e., buy one and sell one share of the stock multiple times).
+
+Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+```
+Example 1:
+
+Input: [7,1,5,3,6,4]
+Output: 7
+Explanation: Buy on day 2 (price = 1) and sell on day 3 (price = 5), profit = 5-1 = 4.
+             Then buy on day 4 (price = 3) and sell on day 5 (price = 6), profit = 6-3 = 3.
+Example 2:
+
+Input: [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+             Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are
+             engaging multiple transactions at the same time. You must sell before buying again.
+Example 3:
+
+Input: [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 3 * 10 ^ 4
+0 <= prices[i] <= 10 ^ 4
+```
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 不限制交易次数
+        
+//         // 定义状态
+//         // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+//         final int DAYS = prices.length;
+//         final int STOCK_STATUS = 2;
+        
+//         int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        
+//         // basecase
+//         // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+//         // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+//         dp[0][0] = 0;
+//         dp[0][1] = Integer.MIN_VALUE;
+        
+//         // 状态转移 i 代表 第 i 天
+//         // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+//         // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+//         // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+//         // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入
+        
+//         for(int i=1;i<=DAYS;i++){
+//             dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1]+prices[i-1]);
+//             dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0]-prices[i-1]);
+//         }
+        
+//         return dp[DAYS][0];
+        
+        // 空间压缩
+        // 定义状态
+        // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        
+        // int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        int status_0 = 0;
+        int status_1 = Integer.MIN_VALUE;
+        
+        // basecase
+        // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+        // dp[0][0] = 0;
+        // dp[0][1] = Integer.MIN_VALUE;
+        
+        // 状态转移 i 代表 第 i 天
+        // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+        // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+        // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+        // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入（因为只能买入一次，此时前一天利润必定为 0）
+        
+        for(int i=1;i<=DAYS;i++){
+            int temp = status_0;
+            status_0 = Math.max(status_0,status_1+prices[i-1]);
+            status_1 = Math.max(status_1,temp-prices[i-1]);
+        }
+        
+        return status_0;
+        
+    }
+}
+```
+
+```
+Runtime: 1 ms, faster than 85.47% of Java online submissions for Best Time to Buy and Sell Stock II.
+Memory Usage: 38.9 MB, less than 14.19% of Java online submissions for Best Time to Buy and Sell Stock II.
+```
+
+#### 309. Best Time to Buy and Sell Stock with Cooldown
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete as many transactions as you like (ie, buy one and sell one share of the stock multiple times) with the following restrictions:
+
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+After you sell your stock, you cannot buy stock on next day. (ie, cooldown 1 day)
+Example:
+```
+Input: [1,2,3,0,2]
+Output: 3 
+Explanation: transactions = [buy, sell, cooldown, buy, sell]
+```
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 不限制交易次数
+        // 有冷冻期，为 1 天，只需修改转移方程，如果在第 i 天买的时候需要看第 i-2 天的状态 (因为必不能从第 i-1 天买入)
+        
+//         // 定义状态
+//         // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+//         final int DAYS = prices.length;
+//         final int STOCK_STATUS = 2;
+        
+//         int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        
+//         // basecase
+//         // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+//         // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+//         dp[0][0] = 0;
+//         dp[0][1] = Integer.MIN_VALUE;
+        
+//         // 状态转移 i 代表 第 i 天
+//         // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+//         // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+//         // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+//         // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入
+        
+//         for(int i=1;i<=DAYS;i++){
+//             dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1]+prices[i-1]);
+//             if(i!=1){
+//                 dp[i][1] = Math.max(dp[i-1][1],dp[i-2][0]-prices[i-1]);
+//             }else{
+//                 // 第二天买入
+//                 dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0]-prices[i-1]);
+//             }
+//         }
+        
+//         return dp[DAYS][0];
+        
+        // 空间压缩
+        // 定义状态
+        // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        
+        // int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        int status_0,status_0_pre;
+        int status_1;
+        
+        
+        // basecase
+        // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+        // dp[0][0] = 0;
+        // dp[0][1] = Integer.MIN_VALUE;
+        
+        status_0 = 0;
+        status_0_pre = 0;
+        status_1 = Integer.MIN_VALUE;
+        
+        // 状态转移 i 代表 第 i 天
+        // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+        // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+        // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+        // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入
+        
+        for(int i=1;i<=DAYS;i++){
+            int temp = status_0;
+            // dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1]+prices[i-1]);
+            status_0 = Math.max(status_0,status_1 + prices[i-1]);
+            // if(i!=1){
+            //     dp[i][1] = Math.max(dp[i-1][1],dp[i-2][0]-prices[i-1]);
+            // }else{
+            //     // 第二天买入
+            //     dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0]-prices[i-1]);
+            // }
+            status_1 = Math.max(status_1,status_0_pre - prices[i-1]);
+            status_0_pre = temp;
+        }
+        
+        return status_0;
+    }
+}
+```
+
+```
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Best Time to Buy and Sell Stock with Cooldown.
+Memory Usage: 36.9 MB, less than 14.88% of Java online submissions for Best Time to Buy and Sell Stock with Cooldown.
+```
+
+#### 714. Best Time to Buy and Sell Stock with Transaction Fee
+
+Your are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee.
+
+You may complete as many transactions as you like, but you need to pay the transaction fee for each transaction. You may not buy more than 1 share of a stock at a time (ie. you must sell the stock share before you buy again.)
+
+Return the maximum profit you can make.
+
+```
+Example 1:
+Input: prices = [1, 3, 2, 8, 4, 9], fee = 2
+Output: 8
+Explanation: The maximum profit can be achieved by:
+Buying at prices[0] = 1
+Selling at prices[3] = 8
+Buying at prices[4] = 4
+Selling at prices[5] = 9
+The total profit is ((8 - 1) - 2) + ((9 - 4) - 2) = 8.
+Note:
+
+0 < prices.length <= 50000.
+0 < prices[i] < 50000.
+0 <= fee < 50000.
+```
+
+```java
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 不限制交易次数，但是要付交易费
+        
+//         // 定义状态
+//         // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+//         final int DAYS = prices.length;
+//         final int STOCK_STATUS = 2;
+        
+//         int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        
+//         // basecase
+//         // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+//         // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+//         dp[0][0] = 0;
+//         dp[0][1] = Integer.MIN_VALUE;
+        
+//         // 状态转移 i 代表 第 i 天
+//         // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+//         // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+//         // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+//         // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入
+        
+//         for(int i=1;i<=DAYS;i++){
+//             dp[i][0] = Math.max(dp[i-1][0],dp[i-1][1]+prices[i-1]);
+//             dp[i][1] = Math.max(dp[i-1][1],dp[i-1][0]-prices[i-1]-fee);
+//         }
+        
+//         return dp[DAYS][0];
+        
+        // 空间压缩
+        // 定义状态
+        // dp[i][s] 其中，i 代表第 i 天， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        
+        // int[][] dp = new int[DAYS+1][STOCK_STATUS];
+        int status_0 = 0;
+        int status_1 = Integer.MIN_VALUE;
+        
+        // basecase
+        // dp[i][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        
+        // dp[0][0] = 0;
+        // dp[0][1] = Integer.MIN_VALUE;
+        
+        // 状态转移 i 代表 第 i 天
+        // dp[i][0] = max(dp[i-1][0],dp[i-1][1] + prices[i])
+        // 第 i 天没有持有股票，前一天可以没有持有股票，也可以持有股票但是在第 i 天卖出
+        // dp[i][1] = max(dp[i-1][1],dp[i-1][0] - prices[i])
+        // 第 i 天持有股票，前一天可以持有股票，也可以不持有股票但是在第 i 天买入（因为只能买入一次，此时前一天利润必定为 0）
+        
+        for(int i=1;i<=DAYS;i++){
+            int temp = status_0;
+            status_0 = Math.max(status_0,status_1+prices[i-1]);
+            status_1 = Math.max(status_1,temp-prices[i-1]-fee);
+        }
+        
+        return status_0;
+        
+    }
+}
+```
+
+```
+Runtime: 3 ms, faster than 93.90% of Java online submissions for Best Time to Buy and Sell Stock with Transaction Fee.
+Memory Usage: 48.2 MB, less than 8.05% of Java online submissions for Best Time to Buy and Sell Stock with Transaction Fee.
+```
+
+#### 123. Best Time to Buy and Sell Stock III
+
+Say you have an array for which the ith element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most two transactions.
+
+Note: You may not engage in multiple transactions at the same time (i.e., you must sell the stock before you buy again).
+
+```
+Example 1:
+
+Input: prices = [3,3,5,0,0,3,1,4]
+Output: 6
+Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+Example 2:
+
+Input: prices = [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are engaging multiple transactions at the same time. You must sell before buying again.
+Example 3:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+Example 4:
+
+Input: prices = [1]
+Output: 0
+
+
+Constraints:
+
+1 <= prices.length <= 105
+0 <= prices[i] <= 105
+```
+
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 限制交易次数为两次
+        
+//         final int DAYS = prices.length;
+//         final int STOCK_STATUS = 2;
+//         final int MAX_K = 2;
+        
+//         // 定义状态
+//         // dp[i][k][s] 其中，i 代表第 i 天，k 为截至到第 i 天，进行的交易次数， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+//         int[][][] dp = new int[DAYS+1][MAX_K+1][STOCK_STATUS];
+        
+        
+//         // basecase
+//         // dp[0][0][0]=0 第 0 天，买卖还未开始，利润应为 0
+//         // dp[0][0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+//         for(int i=0;i<=MAX_K;i++){
+//             dp[0][i][0] = 0;
+//             dp[0][i][1] = Integer.MIN_VALUE;
+//         }
+        
+        
+        
+//         // 状态转移
+//         // dp[i][k][0]= max(dp[i-1][k][0],dp[i-1][k][1]+prices[i])
+//         // dp[i][k][1] = max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i])
+//         for(int i=1;i<=DAYS;i++){
+//             for(int j=1;j<=MAX_K;j++){
+//                 dp[i][j][0] = Math.max(dp[i-1][j][0],dp[i-1][j][1]+prices[i-1]);
+//                 if(j==0)
+//                     dp[i][j][1] = Math.max(dp[i-1][j][1],0-prices[i-1]);
+//                 else{
+//                     dp[i][j][1] = Math.max(dp[i-1][j][1],dp[i-1][j-1][0]-prices[i-1]);
+//                 }
+//             }
+//         }
+        
+//         return dp[DAYS][MAX_K][0];
+        
+        // 空间压缩
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        final int MAX_K = 2;
+        
+        
+        
+        // 定义状态
+        // dp[i][k][s] 其中，i 代表第 i 天，k 为截至到第 i 天，进行的交易次数， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        // int[][][] dp = new int[DAYS+1][MAX_K+1][STOCK_STATUS];
+        int dpi10,dpi11,dpi20,dpi21;
+        
+        // basecase
+        // dp[0][0][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        // for(int i=0;i<=MAX_K;i++){
+        //     dp[0][i][0] = 0;
+        //     dp[0][i][1] = Integer.MIN_VALUE;
+        // }
+        dpi10 = 0;
+        dpi20 = 0;
+        dpi11 = Integer.MIN_VALUE;
+        dpi21 = Integer.MIN_VALUE;
+        
+        
+        
+        // 状态转移
+        // dp[i][k][0]= max(dp[i-1][k][0],dp[i-1][k][1]+prices[i])
+        // dp[i][k][1] = max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i])
+        for(int i=1;i<=DAYS;i++){
+            // for(int j=1;j<=MAX_K;j++){
+            //     dp[i][j][0] = Math.max(dp[i-1][j][0],dp[i-1][j][1]+prices[i-1]);
+            //     if(j==0)
+            //         dp[i][j][1] = Math.max(dp[i-1][j][1],0-prices[i-1]);
+            //     else{
+            //         dp[i][j][1] = Math.max(dp[i-1][j][1],dp[i-1][j-1][0]-prices[i-1]);
+            //     }
+            // }
+            
+            dpi20 = Math.max(dpi20,dpi21+prices[i-1]);
+            dpi21 = Math.max(dpi21,dpi10-prices[i-1]);
+            dpi10 = Math.max(dpi10,dpi11+prices[i-1]);
+            dpi11 = Math.max(dpi11,0-prices[i-1]);
+            
+        }
+        
+        return dpi20;
+    }
+}
+```
+
+```
+
+```
+
+#### 188. Best Time to Buy and Sell Stock IV
+
+Say you have an array for which the i-th element is the price of a given stock on day i.
+
+Design an algorithm to find the maximum profit. You may complete at most k transactions.
+
+Note:
+You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+
+```
+Example 1:
+
+Input: [2,4,1], k = 2
+Output: 2
+Explanation: Buy on day 1 (price = 2) and sell on day 2 (price = 4), profit = 4-2 = 2.
+Example 2:
+
+Input: [3,2,6,5,0,3], k = 2
+Output: 7
+Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-2 = 4.
+             Then buy on day 5 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+
+```
+
+```java
+class Solution {
+    private int maxProfit_k_inf(int[] prices) {
+        // 当 k > n/2
+        int n = prices.length;
+        int dp_i_0 = 0, dp_i_1 = Integer.MIN_VALUE;
+        for (int i = 0; i < n; i++) {
+            int temp = dp_i_0;
+            dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i]);
+            dp_i_1 = Math.max(dp_i_1, temp - prices[i]);
+        }
+        return dp_i_0;
+    }
+    
+    public int maxProfit(int k, int[] prices) {
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 出现了一个超内存的错误，原来是传入的 k 值会非常大，dp 数组太大了
+        
+        // 对于股票买卖，一共有三种选择，买入、卖出、休息
+        // 买入一定在卖出之前，卖出一定在买入之后
+        // 休息可以是“持有股票的休息”或者是“不持有股票的休息”
+        
+        // 今天的最高利润依据昨天的选择，上动规
+        
+        // 限制交易次数为k次
+        // 一次交易由买入和卖出构成，至少需要两天。所以说有效的限制 k 应该不超过 n/2，如果超过，就没有约束作用了
+        
+        final int DAYS = prices.length;
+        final int STOCK_STATUS = 2;
+        final int MAX_K = k;
+        
+        if(MAX_K>DAYS/2){
+            return maxProfit_k_inf(prices);
+        }
+        
+        // 定义状态
+        // dp[i][k][s] 其中，i 代表第 i 天，k 为截至到第 i 天，进行的交易次数， s 有两种取值， 0 或者 1，分别代表 没有持有股票 和 持有股票
+        int[][][] dp = new int[DAYS+1][MAX_K+1][STOCK_STATUS];
+        
+        
+        // basecase
+        // dp[0][0][0]=0 第 0 天，买卖还未开始，利润应为 0
+        // dp[0][0][1]=-infinity 第 0 天，不可能持有股票，用负无穷表示不可能（方便 max 函数选择）
+        for(int i=0;i<=MAX_K;i++){
+            dp[0][i][0] = 0;
+            dp[0][i][1] = Integer.MIN_VALUE;
+        }
+        
+        
+        
+        // 状态转移
+        // dp[i][k][0]= max(dp[i-1][k][0],dp[i-1][k][1]+prices[i])
+        // dp[i][k][1] = max(dp[i-1][k][1],dp[i-1][k-1][0]-prices[i])
+        for(int i=1;i<=DAYS;i++){
+            for(int j=1;j<=MAX_K;j++){
+                dp[i][j][0] = Math.max(dp[i-1][j][0],dp[i-1][j][1]+prices[i-1]);
+                if(j==0)
+                    dp[i][j][1] = Math.max(dp[i-1][j][1],0-prices[i-1]);
+                else{
+                    dp[i][j][1] = Math.max(dp[i-1][j][1],dp[i-1][j-1][0]-prices[i-1]);
+                }
+            }
+        }
+        
+        return dp[DAYS][MAX_K][0];
+        
+    }
+}
+```
+
+```
+Runtime: 5 ms, faster than 46.21% of Java online submissions for Best Time to Buy and Sell Stock IV.
+Memory Usage: 40.5 MB, less than 5.51% of Java online submissions for Best Time to Buy and Sell Stock IV.
 ```
 
 ## 贪心

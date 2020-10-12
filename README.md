@@ -40,6 +40,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
     - [20200926](#20200926)
     - [20200928](#20200928)
     - [20200930 UF 强化](#20200930-uf-强化)
+    - [20201012 股票买卖强化](#20201012-股票买卖强化)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -286,6 +287,15 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [261. Graph Valid Tree](Data_structure_algorithm/Leetcode/record.md#261-graph-valid-tree)
   * [323. Number of Connected Components in an Undirected Graph](Data_structure_algorithm/Leetcode/record.md#323-number-of-connected-components-in-an-undirected-graph)
   * [547. Friend Circles](Data_structure_algorithm/Leetcode/record.md#547-friend-circles)
+
+#### 20201012 股票买卖强化
+
+  * [121. Best Time to Buy and Sell Stock](Data_structure_algorithm/Leetcode/record.md#121-best-time-to-buy-and-sell-stock)
+  * [122. Best Time to Buy and Sell Stock II](Data_structure_algorithm/Leetcode/record.md#122-best-time-to-buy-and-sell-stock-ii)
+  * [309. Best Time to Buy and Sell Stock with Cooldown](Data_structure_algorithm/Leetcode/record.md#309-best-time-to-buy-and-sell-stock-with-cooldown)
+  * [714. Best Time to Buy and Sell Stock with Transaction Fee](Data_structure_algorithm/Leetcode/record.md#714-best-time-to-buy-and-sell-stock-with-transaction-fee)
+  * [123. Best Time to Buy and Sell Stock III](Data_structure_algorithm/Leetcode/record.md#123-best-time-to-buy-and-sell-stock-iii)
+  * [188. Best Time to Buy and Sell Stock IV](Data_structure_algorithm/Leetcode/record.md#188-best-time-to-buy-and-sell-stock-iv)
 
 ### 解题思路强化
 
