@@ -103,6 +103,9 @@
   - [547. Friend Circles](#547-friend-circles)
 - [回溯法](#回溯法)
   - [980. Unique Paths III](#980-unique-paths-iii)
+- [数据结构相关](#数据结构相关)
+  - [146. LRU Cache](#146-lru-cache-1)
+  - [460. LFU Cache](#460-lfu-cache)
 
 ## July Challange
 
@@ -6439,4 +6442,333 @@ class Solution {
         visted[x][y] = false;
     }
 }
+```
+
+## 数据结构相关
+
+### 146. LRU Cache
+
+Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+
+Implement the LRUCache class:
+
+LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+int get(int key) Return the value of the key if the key exists, otherwise return -1.
+
+void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+
+Follow up:
+Could you do get and put in O(1) time complexity?
+
+```
+Example 1:
+
+Input
+["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+Output
+[null, null, null, 1, null, -1, null, -1, 3, 4]
+
+Explanation
+LRUCache lRUCache = new LRUCache(2);
+lRUCache.put(1, 1); // cache is {1=1}
+lRUCache.put(2, 2); // cache is {1=1, 2=2}
+lRUCache.get(1);    // return 1
+lRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+lRUCache.get(2);    // returns -1 (not found)
+lRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+lRUCache.get(1);    // return -1 (not found)
+lRUCache.get(3);    // return 3
+lRUCache.get(4);    // return 4
+ 
+
+Constraints:
+
+1 <= capacity <= 3000
+0 <= key <= 3000
+0 <= value <= 104
+At most 3 * 104 calls will be made to get and put.
+```
+
+```java
+class LRUCache {
+    // 开放的API分析：
+    // 1. 存储的 cache 中应有时序，最先访问过的或最新添加的内容应为最新使用过的 (类栈结构)
+    // 2. 存储的 cache 中应支持快速查找，使用 key 能找到对应的 value
+    // 3. 因为访问内容会导致该内容时序发生变化，cache 应支持快速插入和删除操作
+    // 使用 hashtable + doulinkedlist
+    
+    final private int capacity; // cache 容量
+    private int size; // 当前容量
+    final private HashMap<Integer,Node> cacheMapping; // cache mapping
+    final private Node head,tail; // doulinkedlist 头和尾
+    
+    private boolean isFull(){
+        return this.size==this.capacity;
+    }
+    
+    class Node{
+        // doulinkedlist
+        // 只能从尾部添加新元素，保证类栈结构
+        
+        int key;
+        int val;
+    
+        Node pre;
+        Node next;
+        
+        public Node(int key, int val){
+            // 存储 hashtable 的 key
+            Node.this.key = key;
+            Node.this.val = val;
+        }
+    }
+    
+    private void addNode(int key,int val){
+        // 向 doulinkedlist 中添加新的节点
+        // 只从尾部添加
+        Node newNode = new Node(key,val);
+        Node oldPre = this.tail.pre;
+        oldPre.next = newNode;
+        newNode.pre = oldPre;
+        newNode.next = this.tail;
+        this.tail.pre = newNode;
+    }
+    
+    private void addNode(Node newNode){
+        // 向 doulinkedlist 中添加新的节点
+        // 只从尾部添加
+        Node oldPre = this.tail.pre;
+        oldPre.next = newNode;
+        newNode.pre = oldPre;
+        newNode.next = this.tail;
+        this.tail.pre = newNode;
+    }
+    
+    private void removeNode(Node removeNode){
+        // 从 doulinkedlist 中移除某一内容
+        Node preNode = removeNode.pre;
+        Node nextNode = removeNode.next;
+        
+        preNode.next = nextNode;
+        nextNode.pre = preNode;
+    }
+    
+    private Node removeFromHead(){
+        // 从头部移除一个内容
+        // 此时移除的即为最不常用的
+        if(this.size!=0){
+            Node removeNode = this.head.next;
+            this.head.next = removeNode.next;
+            removeNode.next.pre = this.head;
+            return removeNode;
+        }
+        return null;
+    }
+    
+    private void makeFirst(int key){
+        // 将指定内容变成优先程度最高的
+        Node oldNode = this.cacheMapping.get(key);
+        
+        this.removeNode(oldNode);
+        this.addNode(oldNode);
+    }
+    
+    private void addNewCache(int key, int val){
+        // 向 cache 中添加新的内容
+        if(this.cacheMapping.containsKey(key)){
+            // 已存在，更新
+            this.removeNode(this.cacheMapping.get(key)); // 删除旧内容
+        }else{
+            // 不存在内容
+            // 判断是否容量已满
+            if(this.isFull()){
+                // 容量已满，从头移走一个最不常用的
+                this.cacheMapping.remove(this.removeFromHead().key);
+            }else{
+                this.size++;
+            }
+        }
+        Node newNode = new Node(key,val); // 更新/创建内容
+        
+        this.addNode(newNode);
+
+        this.cacheMapping.put(key,newNode);
+        
+    }
+    
+    private void removeCache(int key){
+        // 向 cache 中删除内容
+        this.size--;
+        this.removeNode(this.cacheMapping.get(key));
+        this.cacheMapping.remove(key);
+    }
+    
+    
+    // 开放API--------------------------------------------------------------------------------------
+        
+    public LRUCache(int defineCapacity){
+        this.capacity = defineCapacity;
+        this.size = 0;
+        this.cacheMapping = new HashMap<>();
+        
+        this.head = new Node(0,0);
+        this.tail = new Node(0,0);
+        
+        this.head.next = this.tail;
+        this.tail.pre = this.head;
+    }
+    
+    public void put(int key,int val){
+        // 添加新的值
+        this.addNewCache(key,val);
+    }
+    
+    public int get(int key){
+        // 访问某一值
+        if(!this.cacheMapping.containsKey(key))
+            return -1;
+        
+        Node getNode = this.cacheMapping.get(key);
+        this.makeFirst(key);
+        
+        return getNode.val;
+        
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+```
+Runtime: 14 ms, faster than 53.10% of Java online submissions for LRU Cache.
+Memory Usage: 47.1 MB, less than 13.73% of Java online submissions for LRU Cache.
+```
+
+使用库
+
+```java
+class LRUCache {
+    int cap;
+    LinkedHashMap<Integer, Integer> cache = new LinkedHashMap<>();
+    public LRUCache(int capacity) { 
+        this.cap = capacity;
+    }
+
+    public int get(int key) {
+        if (!cache.containsKey(key)) {
+            return -1;
+        }
+        // 将 key 变为最近使用
+        makeRecently(key);
+        return cache.get(key);
+    }
+
+    public void put(int key, int val) {
+        if (cache.containsKey(key)) {
+            // 修改 key 的值
+            cache.put(key, val);
+            // 将 key 变为最近使用
+            makeRecently(key);
+            return;
+        }
+
+        if (cache.size() >= this.cap) {
+            // 链表头部就是最久未使用的 key
+            int oldestKey = cache.keySet().iterator().next();
+            cache.remove(oldestKey);
+        }
+        // 将新的 key 添加链表尾部
+        cache.put(key, val);
+    }
+
+    private void makeRecently(int key) {
+        int val = cache.get(key);
+        // 删除 key，重新插入到队尾
+        cache.remove(key);
+        cache.put(key, val);
+    }
+}
+```
+
+```
+Runtime: 16 ms, faster than 34.99% of Java online submissions for LRU Cache.
+Memory Usage: 47.5 MB, less than 13.73% of Java online submissions for LRU Cache.
+```
+
+###  460. LFU Cache
+
+```java
+public class LFUCache {
+    HashMap<Integer, Integer> keyVals; // Key val 映射
+    HashMap<Integer, Integer> keyCounts; // key frequency 映射
+    HashMap<Integer, LinkedHashSet<Integer>> countKeySets; // 每个不同 frequency 对应 key list
+    int capacity;
+    int min;
+
+    public LFUCache(int capacity) {
+        this.capacity = capacity;
+        this.min = -1;
+        keyVals = new HashMap<Integer, Integer>();
+        keyCounts = new HashMap<Integer, Integer>();
+        countKeySets = new HashMap<Integer, LinkedHashSet<Integer>>();
+        countKeySets.put(1, new LinkedHashSet<Integer>());
+    }
+
+    public int get(int key) {
+        if(!keyVals.containsKey(key)){
+            return -1;
+        }
+        int count = keyCounts.get(key);
+        keyCounts.put(key, count+1);
+        countKeySets.get(count).remove(key);
+        if(count == min && countKeySets.get(count).size() == 0){
+            min++;
+        }
+        if(!countKeySets.containsKey(count+1)){
+            countKeySets.put(count+1, new LinkedHashSet<Integer>());
+        }
+        countKeySets.get(count+1).add(key);
+        return keyVals.get(key);
+    }
+
+    public void put(int key, int value) {
+        if(capacity <= 0){
+            return;
+        }
+
+        if(keyVals.containsKey(key)){
+            keyVals.put(key, value);
+            get(key);
+            return;
+        }
+        if(keyVals.size() >= capacity){
+            int leastFreq = countKeySets.get(min).iterator().next();
+            keyVals.remove(leastFreq);
+            keyCounts.remove(leastFreq);
+            countKeySets.get(min).remove(leastFreq);
+        }
+        keyVals.put(key, value);
+        keyCounts.put(key, 1);
+        countKeySets.get(1).add(key);
+        min = 1;
+    }
+}
+
+/**
+ * Your LFUCache object will be instantiated and called as such:
+ * LFUCache obj = new LFUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+```
+Runtime: 22 ms, faster than 65.26% of Java online submissions for LFU Cache.
+Memory Usage: 54 MB, less than 6.26% of Java online submissions for LFU Cache.
 ```

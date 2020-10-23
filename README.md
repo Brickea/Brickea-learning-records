@@ -238,6 +238,7 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [网络数据包结构与分片](Java%20Day%20Day%20Up/网络协议.md#一个网络数据包包括哪些)
 * [Cookie和Session](Java%20Day%20Day%20Up/J2EE/HTTP协议.md#cookie-和-session)
 * [TCP-协议的拥塞避免算法](Java%20Day%20Day%20Up/网络协议.md#tcp-协议的拥塞避免算法)
+* [浏览器输入 URL 后发生了什么](Java%20Day%20Day%20Up/URL解析过程.md)
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
@@ -249,9 +250,9 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-60-brightgreen)
-![](https://img.shields.io/badge/Medium-46-orange)
-![](https://img.shields.io/badge/Hard-7-red)
+![](https://img.shields.io/badge/Easy-64-brightgreen)
+![](https://img.shields.io/badge/Medium-58-orange)
+![](https://img.shields.io/badge/Hard-11-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
@@ -308,12 +309,27 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [剑指offer 14 切绳子](Data_structure_algorithm/剑指offer/record.md#14-切绳子)
   * [509. Fibonacci Number E](Data_structure_algorithm/Leetcode/record.md#509-fibonacci-number-e)
   * [887. Super Egg Drop](Data_structure_algorithm/Leetcode/record.md#887-super-egg-drop)
+  * 股票买卖
+    * [121. Best Time to Buy and Sell Stock](Data_structure_algorithm/Leetcode/record.md#121-best-time-to-buy-and-sell-stock)
+    * [122. Best Time to Buy and Sell Stock II](Data_structure_algorithm/Leetcode/record.md#122-best-time-to-buy-and-sell-stock-ii)
+    * [309. Best Time to Buy and Sell Stock with Cooldown](Data_structure_algorithm/Leetcode/record.md#309-best-time-to-buy-and-sell-stock-with-cooldown)
+    * [714. Best Time to Buy and Sell Stock with Transaction Fee](Data_structure_algorithm/Leetcode/record.md#714-best-time-to-buy-and-sell-stock-with-transaction-fee)
+    * [123. Best Time to Buy and Sell Stock III](Data_structure_algorithm/Leetcode/record.md#123-best-time-to-buy-and-sell-stock-iii)
+    * [188. Best Time to Buy and Sell Stock IV](Data_structure_algorithm/Leetcode/record.md#188-best-time-to-buy-and-sell-stock-iv)
 * [回溯方法](https://labuladong.github.io/ebook/%E7%AE%97%E6%B3%95%E6%80%9D%E7%BB%B4%E7%B3%BB%E5%88%97/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3%E4%BF%AE%E8%AE%A2%E7%89%88.html)
   * [剑指offer 12 矩阵中的路径](Data_structure_algorithm/剑指offer/record.md#12-矩阵中的路径)
   * [剑指offer 13 机器人运动范围](Data_structure_algorithm/剑指offer/record.md#13-机器人运动范围)
   * [494 Target Sum M](Data_structure_algorithm/Leetcode/record.md#solution-1-回溯)
   * [980 unique paths iii H](Data_structure_algorithm/Leetcode/record.md#980-unique-paths-iii)
   * [1312. Minimum Insertion Steps to Make a String Palindrome](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
+* 数据结构相关
+  * 并查集
+    * [130. Surrounded Regions](Data_structure_algorithm/Leetcode/record.md#uf-并查集)
+    * [200. Number of Islands](Data_structure_algorithm/Leetcode/record.md#uf-并查集-1)
+    * [261. Graph Valid Tree](Data_structure_algorithm/Leetcode/record.md#261-graph-valid-tree)
+    * [323. Number of Connected Components in an Undirected Graph](Data_structure_algorithm/Leetcode/record.md#323-number-of-connected-components-in-an-undirected-graph)
+    * [547. Friend Circles](Data_structure_algorithm/Leetcode/record.md#547-friend-circles)
+  * [Least Recently Used 算法]
 
 ### 字节跳动分类
 
