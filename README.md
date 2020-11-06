@@ -44,6 +44,8 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
+- [Leetcode 初级算法](#leetcode-初级算法)
+  - [数组](#数组)
 - [职业杂谈](#职业杂谈)
 
 ---
@@ -347,6 +349,12 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 ![](https://img.shields.io/badge/Status-41/66-red)
 
 [练习记录](Data_structure_algorithm/剑指offer/record.md)
+
+## Leetcode 初级算法
+
+### 数组
+
+
 
 ## 职业杂谈
 

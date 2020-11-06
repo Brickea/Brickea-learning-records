@@ -106,6 +106,10 @@
 - [数据结构相关](#数据结构相关)
   - [146. LRU Cache](#146-lru-cache-1)
   - [460. LFU Cache](#460-lfu-cache)
+  - [优先队列](#优先队列)
+    - [295. Find Median from Data Stream](#295-find-median-from-data-stream)
+- [单调队列](#单调队列)
+  - [239. Sliding Window Maximum](#239-sliding-window-maximum)
 
 ## July Challange
 
@@ -6771,4 +6775,189 @@ public class LFUCache {
 ```
 Runtime: 22 ms, faster than 65.26% of Java online submissions for LFU Cache.
 Memory Usage: 54 MB, less than 6.26% of Java online submissions for LFU Cache.
+```
+
+### 优先队列 
+
+#### 295. Find Median from Data Stream
+
+Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.
+
+For example,
+[2,3,4], the median is 3
+
+[2,3], the median is (2 + 3) / 2 = 2.5
+
+Design a data structure that supports the following two operations:
+
+void addNum(int num) - Add a integer number from the data stream to the data structure.
+double findMedian() - Return the median of all elements so far.
+
+```
+
+Example:
+
+addNum(1)
+addNum(2)
+findMedian() -> 1.5
+addNum(3) 
+findMedian() -> 2
+ 
+
+Follow up:
+
+If all integer numbers from the stream are between 0 and 100, how would you optimize it?
+If 99% of all integer numbers from the stream are between 0 and 100, how would you optimize it?
+```
+
+```java
+class MedianFinder {
+
+    private PriorityQueue<Integer> large;
+    private PriorityQueue<Integer> small;
+
+    public MedianFinder() {
+        // 小顶堆
+        large = new PriorityQueue<>();
+        // 大顶堆
+        small = new PriorityQueue<>((a, b) -> {
+            return b - a;
+        });
+    }
+
+    public double findMedian() {
+        // 如果元素不一样多，多的那个堆的堆顶元素就是中位数
+        if (large.size() < small.size()) {
+            return small.peek();
+        } else if (large.size() > small.size()) {
+            return large.peek();
+        }
+        // 如果元素一样多，两个堆堆顶元素的平均数是中位数
+        return (large.peek() + small.peek()) / 2.0;
+    }
+    
+    public void addNum(int num) {
+        // 不仅要维护large和small的元素个数之差不超过 1，还要维护large堆的堆顶元素要大于等于small堆的堆顶元素
+        // 想要往large里添加元素，不能直接添加，而是要先往small里添加，然后再把small的堆顶元素加到large中；向small中添加元素同理
+        
+        if (small.size() >= large.size()) {
+            small.offer(num);
+            large.offer(small.poll());
+        } else {
+            large.offer(num);
+            small.offer(large.poll());
+        }
+    }
+    
+
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
+ ```
+
+ ```
+ Runtime: 46 ms, faster than 86.17% of Java online submissions for Find Median from Data Stream.
+Memory Usage: 49.9 MB, less than 5.39% of Java online submissions for Find Median from Data Stream.
+```
+
+## 单调队列
+
+### 239. Sliding Window Maximum
+
+You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position.
+
+Return the max sliding window.
+
+```
+
+Example 1:
+
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [3,3,5,5,6,7]
+Explanation: 
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+Example 2:
+
+Input: nums = [1], k = 1
+Output: [1]
+Example 3:
+
+Input: nums = [1,-1], k = 1
+Output: [1,-1]
+Example 4:
+
+Input: nums = [9,11], k = 2
+Output: [11]
+Example 5:
+
+Input: nums = [4,-2], k = 2
+Output: [4]
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+-104 <= nums[i] <= 104
+1 <= k <= nums.length
+```
+
+```java
+class Solution {
+    // 在 O(1) 时间算出每个「窗口」中的最大值
+    // 在一堆数字中，已知最值，如果给这堆数添加一个数，那么比较一下就可以很快算出最值；但如果减少一个数，就不一定能很快得到最值了，而要遍历所有数重新找最值
+    class MonotonicQueue {
+        LinkedList<Integer> deque = new LinkedList<>();
+        // 在队尾添加元素 n
+        void push(int n){
+            while ((MonotonicQueue.this.deque.size()!=0) && MonotonicQueue.this.deque.getLast() < n) 
+                MonotonicQueue.this.deque.removeLast();
+           MonotonicQueue.this.deque.addLast(n);
+        }
+        // 返回当前队列中的最大值
+        int max(){
+            return MonotonicQueue.this.deque.getFirst();
+        }
+        // 队头元素如果是 n，删除它
+        void pop(int n){
+            if ((MonotonicQueue.this.deque.size()!=0) && MonotonicQueue.this.deque.getFirst() == n)
+                MonotonicQueue.this.deque.removeFirst();
+        }
+    }
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        MonotonicQueue window = new MonotonicQueue();
+        
+        final int N = nums.length;
+        
+        int[] res = new int[N-k+1];
+        int m = 0;
+        for (int i = 0; i < N; i++) {
+            if (i < k - 1) { //先把窗口的前 k - 1 填满
+                window.push(nums[i]);
+            } else { // 窗口开始向前滑动
+                window.push(nums[i]);
+                res[m++]=window.max();
+                window.pop(nums[i - k + 1]);
+                // nums[i - k + 1] 就是窗口最后的元素
+            }
+        }
+        return res;
+    }
+}
+```
+
+```
+Runtime: 23 ms, faster than 62.79% of Java online submissions for Sliding Window Maximum.
+Memory Usage: 48.9 MB, less than 6.97% of Java online submissions for Sliding Window
 ```
