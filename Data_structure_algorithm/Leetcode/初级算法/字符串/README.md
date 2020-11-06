@@ -449,3 +449,18 @@ class Solution {
 对于本题而言，当 needle 是空字符串时我们应当返回 0 。这与C语言的 strstr() 以及 Java的 indexOf() 定义相符。
 ```
 
+```java
+class Solution {
+  public int strStr(String haystack, String needle) {
+    int L = needle.length(), n = haystack.length();
+
+    for (int start = 0; start < n - L + 1; ++start) {
+      if (haystack.substring(start, start + L).equals(needle)) {
+        return start;
+      }
+    }
+    return -1;
+  }
+}
+
+```
