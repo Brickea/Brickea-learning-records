@@ -33,6 +33,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [J2EE](#j2ee)
   - [框架类](#框架类)
   - [面试类](#面试类)
+  - [杂七杂八](#杂七杂八)
 - [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
   - [打卡记录](#打卡记录)
@@ -243,6 +244,10 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
+### 杂七杂八
+
+* [系统配置及美化](Java%20Day%20Day%20Up/Ubuntu/系统配置及美化.md)
+
 ## Java Redis
 
 * [Redis 基础](Java%20Day%20Day%20Up/数据库/Redis/Redis基础.md)
@@ -367,4 +372,3 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 * [自我驱动职业规划](Career%20Design/Career%20Design.md)
 * [关于入职靠谱IT公司 B站up ```技术胖```](Career%20Design/关于入职靠谱IT公司.md)
 * [Java开发高频面试题全解析](Career%20Design/Java开发高频面试题全解析)
-* [面经](Career%20Design/2021/面经.md)
