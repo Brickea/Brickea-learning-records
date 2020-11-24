@@ -306,11 +306,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
     * 滑动窗口
   * [4. 寻找两个正序数组的中位数 H](Data_structure_algorithm/Leetcode/record.md#4-寻找两个正序数组的中位数)
     * 二分 分治
-  * [15. 三数之和](Data_structure_algorithm/Leetcode/record.md#15-3sum-m)
+  * [15. 三数之和 M ](Data_structure_algorithm/Leetcode/record.md#15-3sum-m)
     * 二分查找
-  * [238. 除自身以外数组的乘积](Data_structure_algorithm/Leetcode/record.md#238-除自身以外数组的乘积)
+  * [238. 除自身以外数组的乘积M ](Data_structure_algorithm/Leetcode/record.md#238-除自身以外数组的乘积)
     * 前后缀乘积
-  * [15. 字符串相加](Data_structure_algorithm/Leetcode/record.md#15-字符串相加)
+  * [15. 字符串相加 E](Data_structure_algorithm/Leetcode/record.md#15-字符串相加)
 
 ### 解题思路强化
 
