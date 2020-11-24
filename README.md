@@ -41,6 +41,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
     - [20200928](#20200928)
     - [20200930 UF 强化](#20200930-uf-强化)
     - [20201012 股票买卖强化](#20201012-股票买卖强化)
+    - [数组与字符串](#数组与字符串)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -258,7 +259,6 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 ### 打卡记录
 
-
 #### 20200925
   * [1312. Minimum Insertion Steps to Make a String Palindrome DP](Data_structure_algorithm/Leetcode/record.md#1312-minimum-insertion-steps-to-make-a-string-palindrome)
   * [300. Longest Increasing Subsequence M DP](Data_structure_algorithm/Leetcode/record.md#300-longest-increasing-subsequence-m)
@@ -297,6 +297,20 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [714. Best Time to Buy and Sell Stock with Transaction Fee](Data_structure_algorithm/Leetcode/record.md#714-best-time-to-buy-and-sell-stock-with-transaction-fee)
   * [123. Best Time to Buy and Sell Stock III](Data_structure_algorithm/Leetcode/record.md#123-best-time-to-buy-and-sell-stock-iii)
   * [188. Best Time to Buy and Sell Stock IV](Data_structure_algorithm/Leetcode/record.md#188-best-time-to-buy-and-sell-stock-iv)
+
+#### 数组与字符串
+
+  * [3. 无重复字符的最长子串 M](Data_structure_algorithm/Leetcode/record.md#3-longest-substring-without-repeating-characters-m)
+    * HashMap
+    * 双指针
+    * 滑动窗口
+  * [4. 寻找两个正序数组的中位数 H](Data_structure_algorithm/Leetcode/record.md#4-寻找两个正序数组的中位数)
+    * 二分 分治
+  * [15. 三数之和](Data_structure_algorithm/Leetcode/record.md#15-3sum-m)
+    * 二分查找
+  * [238. 除自身以外数组的乘积](Data_structure_algorithm/Leetcode/record.md#238-除自身以外数组的乘积)
+    * 前后缀乘积
+  * [15. 字符串相加](Data_structure_algorithm/Leetcode/record.md#15-字符串相加)
 
 ### 解题思路强化
 

@@ -47,6 +47,9 @@
 - [Math](#math)
   - [15. 3Sum M](#15-3sum-m)
 - [Array](#array)
+  - [4. 寻找两个正序数组的中位数](#4-寻找两个正序数组的中位数)
+  - [238. 除自身以外数组的乘积](#238-除自身以外数组的乘积)
+  - [15. 字符串相加](#15-字符串相加)
   - [27. Remove Element E](#27-remove-element-e)
   - [26. Remove Duplicates from Sorted Array E](#26-remove-duplicates-from-sorted-array-e)
   - [80. Remove Duplicates from Sorted Array II M](#80-remove-duplicates-from-sorted-array-ii-m)
@@ -2530,43 +2533,37 @@ Explanation: The answer is "wke", with the length of 3.
 
 Solution 1
 
-双指针思路，一个前置指针向后遍历字符，一个后置指针指向当前子串的开头。每当前置指针向后遍历一个新的字符的时候，就开始从后置指针开始遍历到前置指针-1的位置，判断是否有重复。有重复就将后指针指向子串中重复的位置，没有重复就继续遍历。
+滑动窗口
+
+可以从题目中得到规律，当子串左边界向右移动的时候，有边界必定会向右移动或者不动。
+
+所以可以通过遍历起始位置来得到不同的字串，求出最长即可。
 
 ```java
 class Solution {
     public int lengthOfLongestSubstring(String s) {
-        // 双指针
-        int i =0;
-        int j = 0;
-        int sLen = s.length();
-        int res = 0;
-        
-        while(i<sLen){
-            // 前置指针向后遍历
-            String c = s.substring(i,i+1);
-            
-            // 从后置指针判断是否和已有的重复
-            int m =j;
-            while(m<i){
-                if(s.substring(m,m+1).equals(c)){
-                    // 重复，重置计数并保存最大
-                    res = Math.max(res,i-j);
-                    // 将后置指针指向重复的位置
-                    j= m+1;
-                    break;
-                }
-                m++;
+        // 哈希集合，记录每个字符是否出现过
+        Set<Character> occ = new HashSet<Character>();
+        int n = s.length();
+        // 右指针，初始值为 -1，相当于我们在字符串的左边界的左侧，还没有开始移动
+        int rk = -1, ans = 0;
+        for (int i = 0; i < n; ++i) {
+            if (i != 0) {
+                // 左指针向右移动一格，移除一个字符
+                occ.remove(s.charAt(i - 1));
             }
-            
-            // 无重复，更新最长长度
-            res = Math.max(res,i-j+1);
-            
-            i++;
+            while (rk + 1 < n && !occ.contains(s.charAt(rk + 1))) {
+                // 不断地移动右指针
+                occ.add(s.charAt(rk + 1));
+                ++rk;
+            }
+            // 第 i 到 rk 个字符是一个极长的无重复字符子串
+            ans = Math.max(ans, rk - i + 1);
         }
-        
-        return res;
+        return ans;
     }
 }
+
 ```
 
 ```
@@ -2674,68 +2671,254 @@ Solution 1
 整体思路就是先排序，然后对于每一对计算其相反数，然后用二分查找寻找解，需要注意避免重复的条件
 
 ```java
-
 class Solution {
-    static public int binarySearch(int[] nums,int lo,int hi,int target){
-        while(lo<=hi){
-            int mid = lo+(hi-lo)/2;
-            if(nums[mid]==target){
-                System.out.println(mid);
-                return mid;
-            }
-            if(target>nums[mid]){
-                lo = mid+1;
-            }else if(target<nums[mid]){
-                hi = mid-1;
-            }
-        }
-        return -1;
-    }
-    static public List<List<Integer>> threeSum(int[] nums) {
-        if(nums==null){
-            return null;
-        }
-        // 初始化结果
-        List<List<Integer>> res = new ArrayList<>();
-        // 先将原数组排序
+    public List<List<Integer>> threeSum(int[] nums) {
+        int n = nums.length;
         Arrays.sort(nums);
-
-        // 对于每一对 nums[i] 和 nums[j] 二分查找 对应的 nums[m] = -(nums[i]+nums[j])
-        for(int i =0;i<nums.length-2;i++){
-                if(i>0&&nums[i]==nums[i-1]){
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        // 枚举 a
+        for (int first = 0; first < n; ++first) {
+            // 需要和上一次枚举的数不相同
+            if (first > 0 && nums[first] == nums[first - 1]) {
+                continue;
+            }
+            // c 对应的指针初始指向数组的最右端
+            int third = n - 1;
+            int target = -nums[first];
+            // 枚举 b
+            for (int second = first + 1; second < n; ++second) {
+                // 需要和上一次枚举的数不相同
+                if (second > first + 1 && nums[second] == nums[second - 1]) {
                     continue;
                 }
-            for(int j=nums.length-1;j>i+1;j--){
-
-                
-                if(j<nums.length-1&&nums[j+1]==nums[j]){
-                    continue;
+                // 需要保证 b 的指针在 c 的指针的左侧
+                while (second < third && nums[second] + nums[third] > target) {
+                    --third;
                 }
-                // 二分查找
-                int lo = i+1;
-                int hi =j-1;
-                int target = 0-nums[i]-nums[j];
-                int m = binarySearch(nums,lo,hi,target);
-
-                if(m!=-1){
-                    // 存在一个解
-                    res.add(Arrays.asList(nums[i],nums[j],nums[m]));
+                // 如果指针重合，随着 b 后续的增加
+                // 就不会有满足 a+b+c=0 并且 b<c 的 c 了，可以退出循环
+                if (second == third) {
+                    break;
                 }
-
+                if (nums[second] + nums[third] == target) {
+                    List<Integer> list = new ArrayList<Integer>();
+                    list.add(nums[first]);
+                    list.add(nums[second]);
+                    list.add(nums[third]);
+                    ans.add(list);
+                }
             }
         }
-
-        return res;
+        return ans;
     }
 }
 ```
 
 ```
-Runtime: 358 ms, faster than 20.77% of Java online submissions for 3Sum.
-Memory Usage: 43.4 MB, less than 63.13% of Java online submissions for 3Sum.
+执行用时：22 ms, 在所有 Java 提交中击败了93.68%的用户
+内存消耗：42.4 MB, 在所有 Java 提交中击败了74.67%的用户
 ```
 
 ## Array
+
+### 4. 寻找两个正序数组的中位数
+
+```
+给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数。
+
+进阶：你能设计一个时间复杂度为 O(log (m+n)) 的算法解决此问题吗？
+
+ 
+
+示例 1：
+
+输入：nums1 = [1,3], nums2 = [2]
+输出：2.00000
+解释：合并数组 = [1,2,3] ，中位数 2
+示例 2：
+
+输入：nums1 = [1,2], nums2 = [3,4]
+输出：2.50000
+解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+示例 3：
+
+输入：nums1 = [0,0], nums2 = [0,0]
+输出：0.00000
+示例 4：
+
+输入：nums1 = [], nums2 = [1]
+输出：1.00000
+示例 5：
+
+输入：nums1 = [2], nums2 = []
+输出：2.00000
+ 
+
+提示：
+
+nums1.length == m
+nums2.length == n
+0 <= m <= 1000
+0 <= n <= 1000
+1 <= m + n <= 2000
+-106 <= nums1[i], nums2[i] <= 106
+```
+
+```java
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        // 问题等价为寻找 nums1 和 nums2 中第 k 小的数字
+        // m+n 为奇数的时候，其中 k 为 m+n/2 +1   
+        // m+n 为偶数的时候，其中 k1 为 m+n/2 k2 m+n/2 + 1 ，此时结果为 (k1 + k2) /2
+
+
+        final int m = nums1.length , n = nums2.length;
+
+        if((m+n)%2!=0){
+            // m+n 为奇数
+            int k = (m+n)/2 + 1;
+            return findKthNumber(nums1,nums2,k);
+        }else{
+            int k = (m+n)/2 + 1;
+            return (findKthNumber(nums1,nums2,k-1)+findKthNumber(nums1,nums2,k))/2;
+        }
+
+    }
+
+    private double findKthNumber(int[] nums1,int[] nums2,int k){
+        final int m = nums1.length;
+        final int n = nums2.length;
+
+        int tempK = k;
+
+        int indexM = 0;
+        int indexN = 0;
+
+        while(true){
+            // 边界情况
+            if(indexM == m){
+                return nums2[indexN+tempK-1];
+            }else if(indexN == n){
+                return nums1[indexM+tempK-1];
+            }else if(tempK==1){
+                return Math.min(nums1[indexM+tempK-1],nums2[indexN+tempK-1]);
+            }
+
+            // 二分查找
+            int half = tempK/2;
+            int indexMCo = Math.min(indexM+half,m)-1; // 防止越界
+            int indexNCo = Math.min(indexN+half,n)-1;
+
+            int pivot1 = nums1[indexMCo], pivot2 = nums2[indexNCo];
+
+            if(pivot1<=pivot2){
+                tempK -= indexMCo - indexM + 1;
+                indexM = indexMCo+1;
+            }else{
+                tempK -= indexNCo - indexN + 1;
+                indexN = indexNCo+1;
+            }
+        }
+    }
+}
+```
+
+### 238. 除自身以外数组的乘积
+
+```
+给你一个长度为 n 的整数数组 nums，其中 n > 1，返回输出数组 output ，其中 output[i] 等于 nums 中除 nums[i] 之外其余各元素的乘积。
+
+ 
+
+示例:
+
+输入: [1,2,3,4]
+输出: [24,12,8,6]
+ 
+
+提示：题目数据保证数组之中任意元素的全部前缀元素和后缀（甚至是整个数组）的乘积都在 32 位整数范围内。
+
+说明: 请不要使用除法，且在 O(n) 时间复杂度内完成此题。
+
+进阶：
+你可以在常数空间复杂度内完成这个题目吗？（ 出于对空间复杂度分析的目的，输出数组不被视为额外空间。）
+
+```
+
+前缀后缀乘积
+
+```java
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        int length = nums.length;
+        int[] answer = new int[length];
+
+        // answer[i] 表示索引 i 左侧所有元素的乘积
+        // 因为索引为 '0' 的元素左侧没有元素， 所以 answer[0] = 1
+        answer[0] = 1;
+        for (int i = 1; i < length; i++) {
+            answer[i] = nums[i - 1] * answer[i - 1];
+        }
+
+        // R 为右侧所有元素的乘积
+        // 刚开始右边没有元素，所以 R = 1
+        int R = 1;
+        for (int i = length - 1; i >= 0; i--) {
+            // 对于索引 i，左边的乘积为 answer[i]，右边的乘积为 R
+            answer[i] = answer[i] * R;
+            // R 需要包含右边所有的乘积，所以计算下一个结果时需要将当前值乘到 R 上
+            R *= nums[i];
+        }
+        return answer;
+    }
+}
+
+```
+```
+执行用时：1 ms, 在所有 Java 提交中击败了100.00%的用户
+内存消耗：49.2 MB, 在所有 Java 提交中击败了17.69%的用户
+```
+
+### 15. 字符串相加
+```
+给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
+
+ 
+
+提示：
+
+num1 和num2 的长度都小于 5100
+num1 和num2 都只包含数字 0-9
+num1 和num2 都不包含任何前导零
+你不能使用任何內建 BigInteger 库， 也不能直接将输入的字符串转换为整数形式
+```
+
+```java
+class Solution {
+    public String addStrings(String num1, String num2) {
+        int i = num1.length() - 1, j = num2.length() - 1, add = 0;
+        StringBuffer ans = new StringBuffer();
+        while (i >= 0 || j >= 0 || add != 0) {
+            int x = i >= 0 ? num1.charAt(i) - '0' : 0;
+            int y = j >= 0 ? num2.charAt(j) - '0' : 0;
+            int result = x + y + add;
+            ans.append(result % 10);
+            add = result / 10;
+            i--;
+            j--;
+        }
+        // 计算完以后的答案需要翻转过来
+        ans.reverse();
+        return ans.toString();
+    }
+}
+
+```
+
+```
+执行用时：2 ms, 在所有 Java 提交中击败了99.68%的用户
+内存消耗：38.7 MB, 在所有 Java 提交中击败了67.09%的用户
+```
 
 ### 27. Remove Element E
 
