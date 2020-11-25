@@ -107,12 +107,16 @@
 - [回溯法](#回溯法)
   - [980. Unique Paths III](#980-unique-paths-iii)
 - [数据结构相关](#数据结构相关)
-  - [146. LRU Cache](#146-lru-cache-1)
   - [460. LFU Cache](#460-lfu-cache)
   - [优先队列](#优先队列)
     - [295. Find Median from Data Stream](#295-find-median-from-data-stream)
 - [单调队列](#单调队列)
   - [239. Sliding Window Maximum](#239-sliding-window-maximum)
+- [哈希表](#哈希表)
+  - [974. 和可被 K 整除的子数组 M Amazon PDD ByteDance FB](#974-和可被-k-整除的子数组-m-amazon-pdd-bytedance-fb)
+  - [146. LRU Cache M Amazon ByteDance Mic FB Apple](#146-lru-cache-m-amazon-bytedance-mic-fb-apple)
+    - [简化](#简化)
+  - [560. 和为 K 的子数组 FB Google ByteDance Amazon Mic](#560-和为-k-的子数组-fb-google-bytedance-amazon-mic)
 
 ## July Challange
 
@@ -6633,261 +6637,6 @@ class Solution {
 
 ## 数据结构相关
 
-### 146. LRU Cache
-
-Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
-
-Implement the LRUCache class:
-
-LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
-int get(int key) Return the value of the key if the key exists, otherwise return -1.
-
-void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
-
-Follow up:
-Could you do get and put in O(1) time complexity?
-
-```
-Example 1:
-
-Input
-["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
-[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
-Output
-[null, null, null, 1, null, -1, null, -1, 3, 4]
-
-Explanation
-LRUCache lRUCache = new LRUCache(2);
-lRUCache.put(1, 1); // cache is {1=1}
-lRUCache.put(2, 2); // cache is {1=1, 2=2}
-lRUCache.get(1);    // return 1
-lRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
-lRUCache.get(2);    // returns -1 (not found)
-lRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
-lRUCache.get(1);    // return -1 (not found)
-lRUCache.get(3);    // return 3
-lRUCache.get(4);    // return 4
- 
-
-Constraints:
-
-1 <= capacity <= 3000
-0 <= key <= 3000
-0 <= value <= 104
-At most 3 * 104 calls will be made to get and put.
-```
-
-```java
-class LRUCache {
-    // 开放的API分析：
-    // 1. 存储的 cache 中应有时序，最先访问过的或最新添加的内容应为最新使用过的 (类栈结构)
-    // 2. 存储的 cache 中应支持快速查找，使用 key 能找到对应的 value
-    // 3. 因为访问内容会导致该内容时序发生变化，cache 应支持快速插入和删除操作
-    // 使用 hashtable + doulinkedlist
-    
-    final private int capacity; // cache 容量
-    private int size; // 当前容量
-    final private HashMap<Integer,Node> cacheMapping; // cache mapping
-    final private Node head,tail; // doulinkedlist 头和尾
-    
-    private boolean isFull(){
-        return this.size==this.capacity;
-    }
-    
-    class Node{
-        // doulinkedlist
-        // 只能从尾部添加新元素，保证类栈结构
-        
-        int key;
-        int val;
-    
-        Node pre;
-        Node next;
-        
-        public Node(int key, int val){
-            // 存储 hashtable 的 key
-            Node.this.key = key;
-            Node.this.val = val;
-        }
-    }
-    
-    private void addNode(int key,int val){
-        // 向 doulinkedlist 中添加新的节点
-        // 只从尾部添加
-        Node newNode = new Node(key,val);
-        Node oldPre = this.tail.pre;
-        oldPre.next = newNode;
-        newNode.pre = oldPre;
-        newNode.next = this.tail;
-        this.tail.pre = newNode;
-    }
-    
-    private void addNode(Node newNode){
-        // 向 doulinkedlist 中添加新的节点
-        // 只从尾部添加
-        Node oldPre = this.tail.pre;
-        oldPre.next = newNode;
-        newNode.pre = oldPre;
-        newNode.next = this.tail;
-        this.tail.pre = newNode;
-    }
-    
-    private void removeNode(Node removeNode){
-        // 从 doulinkedlist 中移除某一内容
-        Node preNode = removeNode.pre;
-        Node nextNode = removeNode.next;
-        
-        preNode.next = nextNode;
-        nextNode.pre = preNode;
-    }
-    
-    private Node removeFromHead(){
-        // 从头部移除一个内容
-        // 此时移除的即为最不常用的
-        if(this.size!=0){
-            Node removeNode = this.head.next;
-            this.head.next = removeNode.next;
-            removeNode.next.pre = this.head;
-            return removeNode;
-        }
-        return null;
-    }
-    
-    private void makeFirst(int key){
-        // 将指定内容变成优先程度最高的
-        Node oldNode = this.cacheMapping.get(key);
-        
-        this.removeNode(oldNode);
-        this.addNode(oldNode);
-    }
-    
-    private void addNewCache(int key, int val){
-        // 向 cache 中添加新的内容
-        if(this.cacheMapping.containsKey(key)){
-            // 已存在，更新
-            this.removeNode(this.cacheMapping.get(key)); // 删除旧内容
-        }else{
-            // 不存在内容
-            // 判断是否容量已满
-            if(this.isFull()){
-                // 容量已满，从头移走一个最不常用的
-                this.cacheMapping.remove(this.removeFromHead().key);
-            }else{
-                this.size++;
-            }
-        }
-        Node newNode = new Node(key,val); // 更新/创建内容
-        
-        this.addNode(newNode);
-
-        this.cacheMapping.put(key,newNode);
-        
-    }
-    
-    private void removeCache(int key){
-        // 向 cache 中删除内容
-        this.size--;
-        this.removeNode(this.cacheMapping.get(key));
-        this.cacheMapping.remove(key);
-    }
-    
-    
-    // 开放API--------------------------------------------------------------------------------------
-        
-    public LRUCache(int defineCapacity){
-        this.capacity = defineCapacity;
-        this.size = 0;
-        this.cacheMapping = new HashMap<>();
-        
-        this.head = new Node(0,0);
-        this.tail = new Node(0,0);
-        
-        this.head.next = this.tail;
-        this.tail.pre = this.head;
-    }
-    
-    public void put(int key,int val){
-        // 添加新的值
-        this.addNewCache(key,val);
-    }
-    
-    public int get(int key){
-        // 访问某一值
-        if(!this.cacheMapping.containsKey(key))
-            return -1;
-        
-        Node getNode = this.cacheMapping.get(key);
-        this.makeFirst(key);
-        
-        return getNode.val;
-        
-    }
-}
-
-/**
- * Your LRUCache object will be instantiated and called as such:
- * LRUCache obj = new LRUCache(capacity);
- * int param_1 = obj.get(key);
- * obj.put(key,value);
- */
-```
-
-```
-Runtime: 14 ms, faster than 53.10% of Java online submissions for LRU Cache.
-Memory Usage: 47.1 MB, less than 13.73% of Java online submissions for LRU Cache.
-```
-
-使用库
-
-```java
-class LRUCache {
-    int cap;
-    LinkedHashMap<Integer, Integer> cache = new LinkedHashMap<>();
-    public LRUCache(int capacity) { 
-        this.cap = capacity;
-    }
-
-    public int get(int key) {
-        if (!cache.containsKey(key)) {
-            return -1;
-        }
-        // 将 key 变为最近使用
-        makeRecently(key);
-        return cache.get(key);
-    }
-
-    public void put(int key, int val) {
-        if (cache.containsKey(key)) {
-            // 修改 key 的值
-            cache.put(key, val);
-            // 将 key 变为最近使用
-            makeRecently(key);
-            return;
-        }
-
-        if (cache.size() >= this.cap) {
-            // 链表头部就是最久未使用的 key
-            int oldestKey = cache.keySet().iterator().next();
-            cache.remove(oldestKey);
-        }
-        // 将新的 key 添加链表尾部
-        cache.put(key, val);
-    }
-
-    private void makeRecently(int key) {
-        int val = cache.get(key);
-        // 删除 key，重新插入到队尾
-        cache.remove(key);
-        cache.put(key, val);
-    }
-}
-```
-
-```
-Runtime: 16 ms, faster than 34.99% of Java online submissions for LRU Cache.
-Memory Usage: 47.5 MB, less than 13.73% of Java online submissions for LRU Cache.
-```
-
 ###  460. LFU Cache
 
 ```java
@@ -7144,3 +6893,466 @@ class Solution {
 Runtime: 23 ms, faster than 62.79% of Java online submissions for Sliding Window Maximum.
 Memory Usage: 48.9 MB, less than 6.97% of Java online submissions for Sliding Window
 ```
+
+## 哈希表
+
+### 974. 和可被 K 整除的子数组 M Amazon PDD ByteDance FB
+
+```
+给定一个整数数组 A，返回其中元素之和可被 K 整除的（连续、非空）子数组的数目。
+
+示例：
+
+输入：A = [4,5,0,-2,-3,1], K = 5
+输出：7
+解释：
+有 7 个子数组满足其元素之和可被 K = 5 整除：
+[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]
+ 
+
+提示：
+
+1 <= A.length <= 30000
+-10000 <= A[i] <= 10000
+2 <= K <= 10000
+
+```
+
+```java
+class Solution {
+    public int subarraysDivByK(int[] A, int K) {
+        // 前缀和处理，每一个连续字串的和 s[i,j] 都可以用前缀和 P[j]-P[i] 表示
+        // 所以需要计数的为 P[j]-P[i] mod k，根据同余定理即为 P[j] mod k == P[i] mod k
+
+        // 可以通过一边遍历，用一个 hashmap 存储出现过的 p[j] mod k
+
+        Map<Integer,Integer> record = new HashMap<>();
+        record.put(0,1); // 前缀和被 k 整除
+        int res = 0;
+        int sum = 0; // 用来记录前缀和
+        for(int item : A){
+            sum += item;
+            // 负数取模的处理
+            int mod = (sum%K+K)%K;
+            int sameAmount = record.getOrDefault(mod,0); // 出现相同的模结果
+            res += sameAmount;
+            record.put(mod,sameAmount+1);
+        }
+
+        return res;
+    }
+}
+```
+
+```
+执行用时：21 ms, 在所有 Java 提交中击败了66.41%的用户
+内存消耗：45 MB, 在所有 Java 提交中击败了12.47%的用户
+```
+
+### 146. LRU Cache M Amazon ByteDance Mic FB Apple
+
+Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.
+
+Implement the LRUCache class:
+
+LRUCache(int capacity) Initialize the LRU cache with positive size capacity.
+int get(int key) Return the value of the key if the key exists, otherwise return -1.
+
+void put(int key, int value) Update the value of the key if the key exists. Otherwise, add the key-value pair to the cache. If the number of keys exceeds the capacity from this operation, evict the least recently used key.
+
+Follow up:
+Could you do get and put in O(1) time complexity?
+
+```
+Example 1:
+
+Input
+["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+Output
+[null, null, null, 1, null, -1, null, -1, 3, 4]
+
+Explanation
+LRUCache lRUCache = new LRUCache(2);
+lRUCache.put(1, 1); // cache is {1=1}
+lRUCache.put(2, 2); // cache is {1=1, 2=2}
+lRUCache.get(1);    // return 1
+lRUCache.put(3, 3); // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+lRUCache.get(2);    // returns -1 (not found)
+lRUCache.put(4, 4); // LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+lRUCache.get(1);    // return -1 (not found)
+lRUCache.get(3);    // return 3
+lRUCache.get(4);    // return 4
+ 
+
+Constraints:
+
+1 <= capacity <= 3000
+0 <= key <= 3000
+0 <= value <= 104
+At most 3 * 104 calls will be made to get and put.
+```
+
+```java
+class LRUCache {
+    // 开放的API分析：
+    // 1. 存储的 cache 中应有时序，最先访问过的或最新添加的内容应为最新使用过的 (类栈结构)
+    // 2. 存储的 cache 中应支持快速查找，使用 key 能找到对应的 value
+    // 3. 因为访问内容会导致该内容时序发生变化，cache 应支持快速插入和删除操作
+    // 使用 hashtable + doulinkedlist
+    
+    final private int capacity; // cache 容量
+    private int size; // 当前容量
+    final private HashMap<Integer,Node> cacheMapping; // cache mapping
+    final private Node head,tail; // doulinkedlist 头和尾
+    
+    private boolean isFull(){
+        return this.size==this.capacity;
+    }
+    
+    class Node{
+        // doulinkedlist
+        // 只能从尾部添加新元素，保证类栈结构
+        
+        int key;
+        int val;
+    
+        Node pre;
+        Node next;
+        
+        public Node(int key, int val){
+            // 存储 hashtable 的 key
+            Node.this.key = key;
+            Node.this.val = val;
+        }
+    }
+    
+    private void addNode(int key,int val){
+        // 向 doulinkedlist 中添加新的节点
+        // 只从尾部添加
+        Node newNode = new Node(key,val);
+        Node oldPre = this.tail.pre;
+        oldPre.next = newNode;
+        newNode.pre = oldPre;
+        newNode.next = this.tail;
+        this.tail.pre = newNode;
+    }
+    
+    private void addNode(Node newNode){
+        // 向 doulinkedlist 中添加新的节点
+        // 只从尾部添加
+        Node oldPre = this.tail.pre;
+        oldPre.next = newNode;
+        newNode.pre = oldPre;
+        newNode.next = this.tail;
+        this.tail.pre = newNode;
+    }
+    
+    private void removeNode(Node removeNode){
+        // 从 doulinkedlist 中移除某一内容
+        Node preNode = removeNode.pre;
+        Node nextNode = removeNode.next;
+        
+        preNode.next = nextNode;
+        nextNode.pre = preNode;
+    }
+    
+    private Node removeFromHead(){
+        // 从头部移除一个内容
+        // 此时移除的即为最不常用的
+        if(this.size!=0){
+            Node removeNode = this.head.next;
+            this.head.next = removeNode.next;
+            removeNode.next.pre = this.head;
+            return removeNode;
+        }
+        return null;
+    }
+    
+    private void makeFirst(int key){
+        // 将指定内容变成优先程度最高的
+        Node oldNode = this.cacheMapping.get(key);
+        
+        this.removeNode(oldNode);
+        this.addNode(oldNode);
+    }
+    
+    private void addNewCache(int key, int val){
+        // 向 cache 中添加新的内容
+        if(this.cacheMapping.containsKey(key)){
+            // 已存在，更新
+            this.removeNode(this.cacheMapping.get(key)); // 删除旧内容
+        }else{
+            // 不存在内容
+            // 判断是否容量已满
+            if(this.isFull()){
+                // 容量已满，从头移走一个最不常用的
+                this.cacheMapping.remove(this.removeFromHead().key);
+            }else{
+                this.size++;
+            }
+        }
+        Node newNode = new Node(key,val); // 更新/创建内容
+        
+        this.addNode(newNode);
+
+        this.cacheMapping.put(key,newNode);
+        
+    }
+    
+    private void removeCache(int key){
+        // 向 cache 中删除内容
+        this.size--;
+        this.removeNode(this.cacheMapping.get(key));
+        this.cacheMapping.remove(key);
+    }
+    
+    
+    // 开放API--------------------------------------------------------------------------------------
+        
+    public LRUCache(int defineCapacity){
+        this.capacity = defineCapacity;
+        this.size = 0;
+        this.cacheMapping = new HashMap<>();
+        
+        this.head = new Node(0,0);
+        this.tail = new Node(0,0);
+        
+        this.head.next = this.tail;
+        this.tail.pre = this.head;
+    }
+    
+    public void put(int key,int val){
+        // 添加新的值
+        this.addNewCache(key,val);
+    }
+    
+    public int get(int key){
+        // 访问某一值
+        if(!this.cacheMapping.containsKey(key))
+            return -1;
+        
+        Node getNode = this.cacheMapping.get(key);
+        this.makeFirst(key);
+        
+        return getNode.val;
+        
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+```
+Runtime: 14 ms, faster than 53.10% of Java online submissions for LRU Cache.
+Memory Usage: 47.1 MB, less than 13.73% of Java online submissions for LRU Cache.
+```
+
+使用库
+
+```java
+class LRUCache {
+    int cap;
+    LinkedHashMap<Integer, Integer> cache = new LinkedHashMap<>();
+    public LRUCache(int capacity) { 
+        this.cap = capacity;
+    }
+
+    public int get(int key) {
+        if (!cache.containsKey(key)) {
+            return -1;
+        }
+        // 将 key 变为最近使用
+        makeRecently(key);
+        return cache.get(key);
+    }
+
+    public void put(int key, int val) {
+        if (cache.containsKey(key)) {
+            // 修改 key 的值
+            cache.put(key, val);
+            // 将 key 变为最近使用
+            makeRecently(key);
+            return;
+        }
+
+        if (cache.size() >= this.cap) {
+            // 链表头部就是最久未使用的 key
+            int oldestKey = cache.keySet().iterator().next();
+            cache.remove(oldestKey);
+        }
+        // 将新的 key 添加链表尾部
+        cache.put(key, val);
+    }
+
+    private void makeRecently(int key) {
+        int val = cache.get(key);
+        // 删除 key，重新插入到队尾
+        cache.remove(key);
+        cache.put(key, val);
+    }
+}
+```
+
+```
+Runtime: 16 ms, faster than 34.99% of Java online submissions for LRU Cache.
+Memory Usage: 47.5 MB, less than 13.73% of Java online submissions for LRU Cache.
+```
+
+#### 简化
+
+```java
+class LRUCache {
+    class Node{
+        // 双向链表
+        int key;
+        int val;
+        Node pre;
+        Node next;
+
+        public Node(){}
+        public Node(int _key,int _val){
+            key = _key;
+            val = _val;
+        }
+
+    }
+
+    private Map<Integer,Node> cache = new HashMap<>();
+    private int capacity;
+    private int size;
+    private Node head, tail;
+
+
+    private void removeNode(Node node){
+        Node pre = node.pre;
+        Node next = node.next;
+        pre.next = next;
+        next.pre = pre;
+    }
+
+    private void addFirstNode(Node node){
+        node.pre = this.head;
+        node.next = this.head.next;
+        this.head.next.pre = node;
+        this.head.next = node;
+        
+    }
+
+    private void moveToTop(Node node){
+        this.removeNode(node);
+        this.addFirstNode(node);
+    }
+
+    private int removeLastNode(){
+        Node lastNode = this.tail.pre;
+        this.removeNode(lastNode);
+        return lastNode.key;
+    }
+
+    public LRUCache(int capacity) {
+        this.capacity = capacity;
+        this.size = 0;
+        this.head = new Node();
+        this.tail = new Node();
+        this.head.next = this.tail;
+        this.tail.pre = this.head;
+    }
+    
+    public int get(int key) {
+        Node keyNode = this.cache.get(key);
+        if(keyNode!=null){
+            this.moveToTop(keyNode);
+            return keyNode.val;
+        }
+        return -1;
+    }
+    
+    public void put(int key, int value) {
+        Node newNode = new Node(key,value);
+
+        // 判断是否已存在
+        Node currentNode = this.cache.get(key);
+        if(currentNode!=null){
+            currentNode.val = value;
+            this.moveToTop(currentNode);
+            return ;
+        } 
+
+        this.cache.put(key,newNode);
+        this.addFirstNode(newNode);
+        this.size++;
+        
+        // 判断是否超出了内存限制
+        if(this.size>this.capacity){
+            this.cache.remove(this.removeLastNode());
+            this.size--;
+        }
+    }
+}
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */
+```
+
+```
+执行用时：18 ms, 在所有 Java 提交中击败了90.83%的用户
+内存消耗：46.5 MB, 在所有 Java 提交中击败了82.15%的用户
+```
+
+### 560. 和为 K 的子数组 FB Google ByteDance Amazon Mic
+
+```
+给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
+
+示例 1 :
+
+输入:nums = [1,1,1], k = 2
+输出: 2 , [1,1] 与 [1,1] 为两种不同的情况。
+说明 :
+
+数组的长度为 [1, 20,000]。
+数组中元素的范围是 [-1000, 1000] ，且整数 k 的范围是 [-1e7, 1e7]。
+```
+
+```java
+public class Solution {
+    public int subarraySum(int[] nums, int k) {
+        // 使用前缀和
+        // 需要计算的是 P[j] - P[i] = k
+        // 所以每次只需要统计之前 P[j] - k 的数量即可
+        int res = 0;
+        int sum = 0;
+        Map<Integer,Integer> record = new HashMap<>();
+
+        record.put(0,1); // 需要计算上前缀和正好等于 k 的情况
+
+        for(int item : nums){
+            sum += item;
+
+            int amount = record.getOrDefault(sum-k,0);
+
+            if(record.containsKey(sum-k))
+                res += amount;
+
+            record.put(sum,record.getOrDefault(sum,0)+1);  // 注意此处更新的是 P[j] 的数量
+        }
+
+        return res;
+    }
+}
+```
+
+···
+执行用时：33 ms, 在所有 Java 提交中击败了42.21%的用户
+内存消耗：41.3 MB, 在所有 Java 提交中击败了10.62%的用户
+···

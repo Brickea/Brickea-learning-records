@@ -33,8 +33,8 @@ It is because the Github only support the raw markdown. So all the formula I wro
   - [J2EE](#j2ee)
   - [框架类](#框架类)
   - [面试类](#面试类)
+  - [Java Redis](#java-redis)
   - [杂七杂八](#杂七杂八)
-- [Java Redis](#java-redis)
 - [Leetcode 练习](#leetcode-练习)
   - [打卡记录](#打卡记录)
     - [20200925](#20200925)
@@ -43,6 +43,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
     - [20200930 UF 强化](#20200930-uf-强化)
     - [20201012 股票买卖强化](#20201012-股票买卖强化)
     - [数组与字符串](#数组与字符串)
+    - [哈希表](#哈希表)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -244,21 +245,23 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 [Java算法解题技巧](Java%20Day%20Day%20Up/Java算法题技巧.md)
 
-### 杂七杂八
-
-* [系统配置及美化](Java%20Day%20Day%20Up/Ubuntu/系统配置及美化.md)
-
-## Java Redis
+### Java Redis
 
 * [Redis 基础](Java%20Day%20Day%20Up/数据库/Redis/Redis基础.md)
 * [Redis 配置](Java%20Day%20Day%20Up/数据库/Redis/Redis配置.md)
 * [Redis 连接Java](Java%20Day%20Day%20Up/数据库/Redis/Redis连接Java.md)
 
+### 杂七杂八
+
+* [系统配置及美化](Java%20Day%20Day%20Up/Ubuntu/系统配置及美化.md)
+
+
+
 ## Leetcode 练习
 
-![](https://img.shields.io/badge/Easy-64-brightgreen)
-![](https://img.shields.io/badge/Medium-58-orange)
-![](https://img.shields.io/badge/Hard-11-red)
+![](https://img.shields.io/badge/Easy-70-brightgreen)
+![](https://img.shields.io/badge/Medium-77-orange)
+![](https://img.shields.io/badge/Hard-16-red)
 
 [练习记录](Data_structure_algorithm/Leetcode/record.md)
 
@@ -316,6 +319,13 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [238. 除自身以外数组的乘积M ](Data_structure_algorithm/Leetcode/record.md#238-除自身以外数组的乘积)
     * 前后缀乘积
   * [15. 字符串相加 E](Data_structure_algorithm/Leetcode/record.md#15-字符串相加)
+
+#### 哈希表
+
+  * [974. 和可被 K 整除的子数组 M Amazon PDD ByteDance FB](Data_structure_algorithm/Leetcode/record.md#974-和可被-k-整除的子数组-m-amazon-pdd-bytedance-fb)
+  * [146. LRU Cache M Amazon ByteDance Mic FB Apple](Data_structure_algorithm/Leetcode/record.md#146-lru-cache-1)
+    * [简化](#简化)
+  * [560. 和为 K 的子数组 FB Google ByteDance Amazon Mic](Data_structure_algorithm/Leetcode/record.md#560-和为-k-的子数组)
 
 ### 解题思路强化
 
