@@ -44,6 +44,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
     - [20201012 股票买卖强化](#20201012-股票买卖强化)
     - [数组与字符串](#数组与字符串)
     - [哈希表](#哈希表)
+    - [并查集](#并查集-1)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -326,6 +327,11 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [146. LRU Cache M Amazon ByteDance Mic FB Apple](Data_structure_algorithm/Leetcode/record.md#146-lru-cache-1)
     * [简化](#简化)
   * [560. 和为 K 的子数组 FB Google ByteDance Amazon Mic](Data_structure_algorithm/Leetcode/record.md#560-和为-k-的子数组)
+
+#### 并查集
+
+  * [200. Number of Islands Amazon Huawei ByteDance Mic FB](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
+  * [56. 合并区间](Data_structure_algorithm/Leetcode/record.md#56-合并区间)
 
 ### 解题思路强化
 
