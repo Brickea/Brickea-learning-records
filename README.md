@@ -45,6 +45,7 @@ It is because the Github only support the raw markdown. So all the formula I wro
     - [数组与字符串](#数组与字符串)
     - [哈希表](#哈希表)
     - [并查集](#并查集-1)
+    - [动态规划](#动态规划)
   - [解题思路强化](#解题思路强化)
   - [字节跳动分类](#字节跳动分类)
 - [剑指offer 练习](#剑指offer-练习)
@@ -323,8 +324,8 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
 
 #### 哈希表
 
-  * [974. 和可被 K 整除的子数组 M Amazon PDD ByteDance FB](Data_structure_algorithm/Leetcode/record.md#974-和可被-k-整除的子数组-m-amazon-pdd-bytedance-fb)
-  * [146. LRU Cache M Amazon ByteDance Mic FB Apple](Data_structure_algorithm/Leetcode/record.md#146-lru-cache-1)
+  * [974. 和可被 K 整除的子数组 M ](Data_structure_algorithm/Leetcode/record.md#974-和可被-k-整除的子数组-m-amazon-pdd-bytedance-fb)
+  * [146. LRU Cache M ](Data_structure_algorithm/Leetcode/record.md#146-lru-cache-1)
     * [简化](#简化)
   * [560. 和为 K 的子数组 FB Google ByteDance Amazon Mic](Data_structure_algorithm/Leetcode/record.md#560-和为-k-的子数组)
 
@@ -333,6 +334,10 @@ Here will include two parts. **Notes** are the note during self-learning. 🔥 W
   * [200. Number of Islands Amazon Huawei ByteDance Mic FB](Data_structure_algorithm/Leetcode/record.md#200-number-of-islands)
   * [56. 合并区间](Data_structure_algorithm/Leetcode/record.md#56-合并区间)
 
+#### 动态规划
+
+  * [53. Maximum Subarray E](Data_structure_algorithm/Leetcode/record.md#53-maximum-subarray-e)
+  * [5. 最长回文子串 M](Data_structure_algorithm/Leetcode/record.md#5-最长回文子串)
 ### 解题思路强化
 
 * [动态带规划解题框架](https://labuladong.github.io/ebook/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%B3%BB%E5%88%97/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E8%AF%A6%E8%A7%A3%E8%BF%9B%E9%98%B6.html)

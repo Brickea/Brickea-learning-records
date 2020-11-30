@@ -68,6 +68,9 @@
   - [136. Single Number E](#136-single-number-e)
   - [137. Single Number II M](#137-single-number-ii-m)
 - [Dynamic Programming](#dynamic-programming)
+  - [5. 最长回文子串](#5-最长回文子串)
+    - [动态规划 解法](#动态规划-解法)
+    - [动态规划优化](#动态规划优化)
   - [322. Coin Change](#322-coin-change)
   - [300. Longest Increasing Subsequence M](#300-longest-increasing-subsequence-m)
   - [53. Maximum Subarray E](#53-maximum-subarray-e)
@@ -3874,6 +3877,117 @@ Memory Usage: 39.3 MB, less than 50.72% of Java online submissions for Single Nu
 ```
 
 ## Dynamic Programming 
+
+### 5. 最长回文子串
+
+```
+给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。
+
+示例 1：
+
+输入: "babad"
+输出: "bab"
+注意: "aba" 也是一个有效答案。
+示例 2：
+
+输入: "cbbd"
+输出: "bb"
+```
+
+#### 动态规划 解法
+
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        // 最长回文子串
+        // 状态定义: dp[i][j] 表示为 i...j 子串是否为回文
+        // 状态转移: dp[i][j] 取决于 dp[i+1][j-1] && s[i]==s[j]
+        // 边界条件: 对于长度为1的子串 dp[i][i] = true; 对于长度为2的子串 dp[i][i+1] = s[i]==s[i+1]
+
+        final int sLength = s.length();
+        boolean dp[][] = new boolean[sLength][sLength];
+
+        String res = "";
+        int j=0;
+
+        // 要注意动归的移动方式，应该保证 i..j 长度从小到大移动，也就是长度从 0 到 更长
+        for(int l=0;l<sLength;l++){
+            for(int i=0;i+l<sLength;i++){
+                j = i + l;
+                if(i==j){
+                    dp[i][j]=true;
+                }else if(i>j){
+                    continue;
+                }else if(i+1==j){
+                    dp[i][j] = s.charAt(i)==s.charAt(j)?true:false;
+                }else {
+                    dp[i][j] = dp[i+1][j-1] && s.charAt(i)==s.charAt(j);
+                }
+                res = dp[i][j]&&(j-i+1>res.length())?s.substring(i,j+1):res;
+            }
+        }
+
+        return res;
+    }
+}
+```
+
+```
+执行用时：263 ms, 在所有 Java 提交中击败了25.07%的用户
+内存消耗：44.3 MB, 在所有 Java 提交中击败了11.00%的用户
+```
+
+#### 动态规划优化
+
+```java
+class Solution {
+    public String longestPalindrome(String s) {
+        // 最长回文子串
+        // 状态定义: dp[i][j] 表示为 i...j 子串是否为回文
+        // 状态转移: dp[i][j] 取决于 dp[i+1][j-1] && s[i]==s[j]
+        // 边界条件: 对于长度为1的子串 dp[i][i] = true; 对于长度为2的子串 dp[i][i+1] = s[i]==s[i+1]
+
+        // 空间压缩
+        // 对于每个回文的状态转移，永远都会收敛回两个边界条件的一种，所以可以遍历所有
+        // 边界条件，然后向两边展开，如果不成回文则说明之后也不会成回文
+
+        if(s.length()<0||s==null){
+            return "";
+        }
+
+        int start = 0,end = 0;
+
+        for(int i=0;i<s.length();i++){
+            int len1 = this.expandBothSide(s,i,i); // 边界条件1
+            int len2 = this.expandBothSide(s,i,i+1); // 边界条件2
+
+            int len = Math.max(len1,len2);
+
+            if(len>end-start+1){
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
+            }
+        }
+
+        return s.substring(start,end+1);
+    }
+
+    private int expandBothSide(String ss, int start,int end){
+        // 向两边扩展的辅助函数
+        while((start>=0&&end<ss.length())&&ss.charAt(start)==ss.charAt(end)){
+            start--;
+            end++;
+        }
+        
+        return end-start-1;
+    }
+}
+```
+
+```
+执行用时：31 ms, 在所有 Java 提交中击败了86.74%的用户
+内存消耗：38.6 MB, 在所有 Java 提交中击败了72.75%的用户
+```
 
 ### 322. Coin Change
 
