@@ -1,4 +1,4 @@
-# Why Gradient Descent Work<!-- omit in toc -->
+# Why Gradient Decent Work<!-- omit in toc -->
 
 🔥 Warning of Math 🔥
 
